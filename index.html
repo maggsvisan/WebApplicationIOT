@@ -13,11 +13,13 @@
 
     <div id="menutoolbar">
     <ul>
-    <li id="home"><a href="#page1">Home</a></li>
+    <li id="Home"><a href="#page1">Home</a></li>
     <li id="AboutUs"><a href="#page2">About Us</a></li>
-    <li id="SearchCl"><a href="#page3"> Classroom </a></li>
-    <li id="Regis"><a href="#page4"> Register </a></li>
-    <li id="Login"><a href="#page5"> Login </a></li>
+    <li id="SearchCl"><a href="#page3"> Classrooms </a></li>
+    <li id="Comm"><a href="#page4"> Comments </a></li>
+    <li id="Regis"><a href="#page5"> Register </a></li>
+    <li id="Login"><a href="#page6"> Login </a></li>
+    <li id="Fav"><a href="#page6"> Favorites </a></li>
     <li id="logoutButton" align="right" style="display:block;" > 
         <span id="logButton" type="subBut"> Log out </span>
     </li>
@@ -33,32 +35,155 @@
      </div>
     
     
-    <div id="Login">
+    <div id="LoginSec">
         <form id=loginForm>
-            <p>Username:
-            <input id="userLogin" class="formElement" type="text" />
-            </p>
-                
-             <p>Password:
-             <input id="passwrdLogin" class="formElement" type="password" />
-             </p>    
-                
+           <div class="Username" align=center>
+    			<p>  Username 
+    			<input id="logUsername" type="string" name="Username" value=""></br>
+                </p>
+    		</div>
+
+    		<div class="Password" align=center>
+    			<p>  Password 
+    			<input id="logPassword" type="password" name="Password" value=""></br>
+                </p>
+    		</div>
+
+    		<div class="Remember" align=center>
+    			<input id="logRemember" type="checkbox" name="Remember">Remember me
+            </div>
              <div align="center"> <span id="loginButton"> Login </span> </div>
              <br>
-            
-             <input type="checkbox" id="remPassword"> Remember my credentials?<br>
         </form>
     </div>
+
+
+    <div id="RegSec">
+        <h1> Register Here! </h1>
+        <p id="banner">Sign up now to enjoy the full access to our webpage and the chance to earn great prizes! </p>
+        <div class="Email">
+            <p> Email </p>
+            <input id="inEmail" type="string" name="Email" value="">
+            </br>
+        </div>
+        <div class="Fname">
+            <p> First name </p>
+            <input id="inFname" type="string" name="Fname" value="">
+            </br>
+        </div>
+        <div class="Lname">
+            <p> Last Name </p>
+            <input id="inLname" type="string" name="Lname" value="">
+            </br>
+        </div>
+        <div class="Password">
+            <p> Password </p>
+            <input id="inPassword" type="password" name="Password" value="">
+            </br>
+        </div>
+        <div class="Username">
+            <p> Username </p>
+            <input id="inUsername" type="string" name="Username" value="">
+            </br>
+        </div> <span class="Register">
+                <p id="registerBtn" class="btn">Register</p>
+        </span>
+    </div>
+
+
+
+    <div id="AboutSec">
+        <p> Username </p>
+    </div>
+
+    
+    
+    <div id="SearchSec">
+        <div class= "title" align= center> <h4> Select a building </h4> </div>
+        
+        <div id="images" >
+            <span id="ciap1">
+                <img id="ciap2" src="images/ciap.png" style=" width: 600px ; height: 390px;">
+            </span>
+            
+            <span id="cedes1">
+                <img id="cedes2" src="images/cedes.png" style=" width: 600px ; height: 390px; margin-top: 0.5cm">
+            </span>
+            
+        </div>
+        
+        <div id="images2" >
+            <span id="biotec1">
+                <img id="biotec2" src="images/biotec.jpg" style=" width: 600px ; height: 390px;">
+            </span>
+            
+            <span id="cetec1">
+                <img id="cetec2" src="images/cetec.jpg" style=" width: 600px ; height: 390px; margin-top: 0.5cm; margin-bottom: 1cm">
+            </span>
+            
+        </div>
+    </div>
+
+
+
+    <div id="pickAClassroom">
+        <div class= "title" align= center> <h4> Select a classroom </h4> </div>
+        <div id="menupickC" >
+            <span id="ciap1">
+                <p>holi</p>
+            </span>
+                    
+        </div>
+        
+
+    </div>
+
+      
+    <div id="CommentSec">
+        <div id="allComment" >  <!----Comments ------>
+        <div id="CommLeft"> <!----Comment izquierdo ------>
+            <div id="Left">
+                <p> Add a comment! </p>
+                <p>Name:   </p>
+                <input id="comName" type="string" class="Name"  name="Name" value=""></br>
+                <p>Email:   <p>
+                <input id="comEmail" type="string" class="Email" name="Email" value=""></br>
+                <p>Comment: </p>
+                <textarea id="comComment" class="Comment" name="Comment" rows="4" cols="50" value="" style="margin-bottom: 1cm"></textarea>
+                <div align="center"> <span id="loginButton"> Login </span> </div>
+             </div>
+        </div> <!----End comment izquierdo ------>
+        <div id="CommRight"> <!----Comment derecho------>
+            <div id="Right">
+                <p> Comment </p>
+                <table>
+                    <tr>
+                        <th>Name </th>
+                        <th>Comment </th>
+                    </tr>
+                    <tr>
+                        <td>Name1 </td>
+                        <td style="width = 1">Comment1</td> 
+                    </tr>
+                    <tr>
+                        <td>Name2 </td>
+                        <td>Comment2</td> 
+                    </tr>
+                </table>
+            </div>
+        </div> <!---End comment izquierdo------>
+    </div> <!----End comments ------>
+    </div>
+    
+       
+    <div id="FavSec">
+        <p> Username </p>
+    </div>
+
     
 </body>
 
-<footer id="CopyRight">
-    <h4> 
-        <p>All Rights Reserved.</p> 
-        <p> <span id="devFoot">Developers:</span> Jonathan Rosas. Eva Villarreal. </p>
-    </h4> 
-</footer>
+
+<script src="java.js"> </script>
     
-
-
 </html>
