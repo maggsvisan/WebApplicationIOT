@@ -86,25 +86,133 @@ li a:hover {
 
 h1 { color: #7c795d; font-family: 'Trocchi', serif; font-size: 45px; font-weight: normal; line-height: 48px; margin: 0; }
     
-#loginButton {
-	-moz-box-shadow:inset 0px 1px 0px 0px #caefab;
-	-webkit-box-shadow:inset 0px 1px 0px 0px #caefab;
-	box-shadow:inset 0px 1px 0px 0px #caefab;
-	background:linear-gradient(to bottom, #77d42a 5%, #5cb811 100%);
-	background-color:#77d42a;
-	border-radius:6px;
-	border:1px solid #268a16;
-	display:inline-block;
-	cursor:pointer;
-	color:#306108;
-	font-family:Arial;
-	font-size:15px;
-	font-weight:bold;
-	padding:6px 24px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #aade7c;
+#loginButton{
+  -moz-box-shadow:inset 0px 1px 0px 0px #caefab;
+  -webkit-box-shadow:inset 0px 1px 0px 0px #caefab;
+  box-shadow:inset 0px 1px 0px 0px #caefab;
+  background:linear-gradient(to bottom, #77d42a 5%, #5cb811 100%);
+  background-color:#77d42a;
+  border-radius:6px;
+  border:1px solid #268a16;
+  display:inline-block;
+  cursor:pointer;
+  color:#306108;
+  font-family:Arial;
+  font-size:15px;
+  font-weight:bold;
+  padding:6px 24px;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #aade7c;
 }
+
 #loginButton:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #5cb811), color-stop(1, #77d42a));
-	background-color:#5cb811;
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #5cb811), color-stop(1, #77d42a));
+  background-color:#5cb811;
+}
+
+#postCommentButton {
+  -moz-box-shadow:inset 0px 1px 0px 0px #caefab;
+  -webkit-box-shadow:inset 0px 1px 0px 0px #caefab;
+  box-shadow:inset 0px 1px 0px 0px #caefab;
+  background:linear-gradient(to bottom, #77d42a 5%, #5cb811 100%);
+  background-color:#77d42a;
+  border-radius:6px;
+  border:1px solid #268a16;
+  display:inline-block;
+  cursor:pointer;
+  color:#306108;
+  font-family:Arial;
+  font-size:15px;
+  font-weight:bold;
+  padding:6px 24px;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #aade7c;
+}
+
+#postCommentButton:hover {
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #5cb811), color-stop(1, #77d42a));
+  background-color:#5cb811;
+}
+
+input[type=string], input[type=password],textarea,.Passwrd{
+    width: 8cm;
+    padding: 20px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    margin-left: 100px;
+  border-radius: 4px;
+}
+
+
+#images{
+    width:50%; 
+    float:left;
+    /*background-color:red;*/
+}
+
+#images2{
+    width:50%; 
+    float:left;
+   /* background-color:blue;*/
+}
+
+#CommLeft {
+  width:50%; 
+  float:left;
+  background-color: transparent;
+}
+
+#CommRight{
+  width:50%; 
+  float:right;  
+  background-color: transparent;
+}
+#Right{
+  padding-left: 1cm;
+  margin-bottom: 1cm;
+  background-color: transparent;
+}
+#Left{
+  padding-left: 1cm;
+  margin-bottom: 1cm;
+  background-color: transparent;
+}
+ 
+#menupickC{
+
+padding-bottom:0.5cm;
+padding-left:0.5cm;
+padding-right:0.5cm;
+padding-top: 0.5cm;
+margin-bottom: 3cm;
+margin-left: 3cm;
+margin-right: 3cm;
+margin-top: 3cm;
+background-color:red;   
+
+}
+
+#readAct{
+    width:50%; 
+    float:left;
+    background-color:yellow
+}
+
+#writeAct{
+    width:50%; 
+    float:left;
+    background-color:blue
+}
+
+#readAct2{
+    width:50%; 
+    float:left;
+    background-color:yellow
+}
+
+#writeAct2{
+    width:50%; 
+    float:left;
+    background-color:blue
 }

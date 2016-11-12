@@ -38,19 +38,19 @@
     <div id="LoginSec">
         <form id=loginForm>
            <div class="Username" align=center>
-    			<p>  Username 
-    			<input id="logUsername" type="string" name="Username" value=""></br>
+                <p>  Username 
+                <input id="logUsername" type="string" name="Username" value=""></br>
                 </p>
-    		</div>
+            </div>
 
-    		<div class="Password" align=center>
-    			<p>  Password 
-    			<input id="logPassword" type="password" name="Password" value=""></br>
+            <div class="Password" align=center>
+                <p>  Password 
+                <input id="logPassword" type="password" name="Password" value=""></br>
                 </p>
-    		</div>
+            </div>
 
-    		<div class="Remember" align=center>
-    			<input id="logRemember" type="checkbox" name="Remember">Remember me
+            <div class="Remember" align=center>
+                <input id="logRemember" type="checkbox" name="Remember">Remember me
             </div>
              <div align="center"> <span id="loginButton"> Login </span> </div>
              <br>
@@ -60,32 +60,36 @@
 
     <div id="RegSec">
         <h1> Register Here! </h1>
-        <p id="banner">Sign up now to enjoy the full access to our webpage and the chance to earn great prizes! </p>
-        <div class="Email">
-            <p> Email </p>
-            <input id="inEmail" type="string" name="Email" value="">
-            </br>
-        </div>
+        <p id="banner">Sign up now to monitor</p>
+      
         <div class="Fname">
             <p> First name </p>
-            <input id="inFname" type="string" name="Fname" value="">
+            <input id="inFname" type="string" value="">
             </br>
         </div>
         <div class="Lname">
             <p> Last Name </p>
-            <input id="inLname" type="string" name="Lname" value="">
+            <input id="inLname" type="string" value="">
             </br>
         </div>
         <div class="Password">
             <p> Password </p>
-            <input id="inPassword" type="password" name="Password" value="">
+            <input id="inPassword" type="password" value="">
             </br>
         </div>
-        <div class="Username">
-            <p> Username </p>
-            <input id="inUsername" type="string" name="Username" value="">
+        <div class="Matricula">
+            <p> ID Number (Employee: L0XXXXXXX)  </p>
+            <input id="inMatricula" type="string" value="">
             </br>
-        </div> <span class="Register">
+        </div> 
+
+        <div class="accessType">
+            <p> Access Type  </p>
+            <input id="inAccessType" type="string" value="">
+            </br>
+        </div>
+
+        <span class="Register">
                 <p id="registerBtn" class="btn">Register</p>
         </span>
     </div>
@@ -125,19 +129,27 @@
     </div>
 
 
-
+<!--
     <div id="pickAClassroom">
         <div class= "title" align= center> <h4> Select a classroom </h4> </div>
         <div id="menupickC" >
-            <span id="ciap1">
-                <p>holi</p>
+            <span id="readAct">
+                <input type="checkbox" id="remPassword"> Remember my credentials?<br>
+            <span id="readAct2">
+                <input type="checkbox" id="remPassword"> Remember my credentials?<br>
             </span>
-                    
+            </span>
+            
+            <span id="writeAct">
+                <input type="checkbox" id="remPassword"> Remember my credentials?<br>
+            <span id="writeAct2">
+                <input type="checkbox" id="remPassword"> Remember my credentials?<br>
+            </span>
+            </span>
+            
         </div>
-        
-
     </div>
-
+-->
       
     <div id="CommentSec">
         <div id="allComment" >  <!----Comments ------>
@@ -146,29 +158,23 @@
                 <p> Add a comment! </p>
                 <p>Name:   </p>
                 <input id="comName" type="string" class="Name"  name="Name" value=""></br>
-                <p>Email:   <p>
-                <input id="comEmail" type="string" class="Email" name="Email" value=""></br>
+                <p>ID Number:   <p>
+                <input id="comID" type="string" class="ID" name="ID" value=""></br>
                 <p>Comment: </p>
                 <textarea id="comComment" class="Comment" name="Comment" rows="4" cols="50" value="" style="margin-bottom: 1cm"></textarea>
-                <div align="center"> <span id="loginButton"> Login </span> </div>
+                <div align="center"> <span id="postCommentButton"> Post </span> </div>
              </div>
         </div> <!----End comment izquierdo ------>
         <div id="CommRight"> <!----Comment derecho------>
             <div id="Right">
                 <p> Comment </p>
-                <table>
+                <table id="commentsTable">
                     <tr>
                         <th>Name </th>
-                        <th>Comment </th>
+                        <th>ID</th>
+                        <th>Comment</th>
                     </tr>
-                    <tr>
-                        <td>Name1 </td>
-                        <td style="width = 1">Comment1</td> 
-                    </tr>
-                    <tr>
-                        <td>Name2 </td>
-                        <td>Comment2</td> 
-                    </tr>
+                    <tbody id="submitTable"></tbody>
                 </table>
             </div>
         </div> <!---End comment izquierdo------>
