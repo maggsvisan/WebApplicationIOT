@@ -4,9 +4,8 @@ $(document).ready(function () {
     $("#RegSec").hide(); 
     $("#AboutSec").hide(); 
     $("#SearchSec").hide(); 
-    $("#CommentSec").hide(); 
-    $("#homeImages").show();
-    $("#CommentSec").hide();
+    $("#CommentSec").show(); 
+    $("#homeImages").hide();
     $("#FavSec").hide();
     
   
@@ -79,7 +78,49 @@ $(document).ready(function () {
         $("#CommentSec").hide();
         $("#FavSec").show();
     });
-
+//Comments
+     $("#postCommentButton").on("click", function () {
+        data={};
+        data.name = $("#comName").val(); 
+        data.id = $("#comID").val();
+        data.comment = $("#comComment").val();
+        if (data.name === "" ||data.id === "" ||data.comment === "" )
+            alert("Fill the corresponding fields");
+        else
+        {
+            commentData= {
+               "nameComm"  : data.name ,
+               "idComm"  : data.id,
+               "comComm": data.comment,
+               "action" : "insertcomment"
+            };
+            alert(commentData.action);
+                $.ajax({
+                    url:"data/ApplicationLayer.php",
+                    type:"POST",
+                    data:commentData,
+                    dataType:"json",
+                    success: function (jsonResponse) {
+                    console.log(jsonResponse)
+                    alert("Entra Success") ;                                  
+                        var newComment = "<tr>";
+                            newComment += "<td>" + jsonResponse.name    + "</td>"
+                                       +  "<td>" + jsonResponse.id      + "</td>"
+                                       +  "<td>" + jsonResponse.comment + "</td>"
+                                       +  "</tr>";
+                        alert(newComment);
+                        $("#submitTable").append(newComment);
+                        
+                        $("#comName").val("");
+                        $("#comID").val("");
+                        $("#comComment").val("");
+                    },
+                    error: function (errorMessage){
+                          alert("Error");
+                    }
+                });
+        }
+     });
     
    
 
