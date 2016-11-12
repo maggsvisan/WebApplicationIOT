@@ -33,11 +33,10 @@ switch($action){
 }
 
 function loginFunction(){
-	$userName = $_POST["username"];
+	$mat = $_POST["matricula"];
 	$userPassword = $_POST["password"];
 
-    
-	$result = attemptLogin($userName);  
+	$result = attemptLogin($mat);  
     
 	if ($result["status"] == "SUCCESS"){
 		
@@ -47,11 +46,11 @@ function loginFunction(){
     	if ($decryptedPassword === $userPassword)
 		   	{	
             
-                $newSession= attemptCreateSession($userName, $result['password']);
+                $newSession= attemptCreateSession($mat, $result['password']);
                 echo json_encode(array("message" => "Login Successful", 
                                        "fName" => $result["firstName"] , 
                                         "lName" => $result["lastName"],
-                                        "user" => $result["username"],
+                                        "mat"=> $result["mat"],
                                        ));  
 			}   
         
@@ -133,35 +132,6 @@ function registerFunction(){
 }
 
 
-function loadComments(){
-    
-    $result= loadCommentsDB();
-    echo json_encode($result);
-    
-}
-   
-
-
-function insertComment(){
-    
-    $userName = $_POST["username"]; //POST, parameter passed by the front end
-    $commentsubmit= $_POST["commentsub"];
-    
-    $result= attemptInsertComment ($userName, $commentsubmit);
-    
-    if ($result["status"] == "SUCCESS"){
-		echo json_encode(array("user"=> $userName , "comment" =>$commentsubmit ));
-    }
-    
-    else{
-        header('HTTP/1.1 500' . $result["status"]);
-        die($result["status"]); //returns error from DataLayer
-    }	
-    
-
-}
-
-
 function createCookie(){
     
     $cookieName = $_POST["CookieName"];
@@ -179,12 +149,11 @@ function createCookie(){
     
 }
 
-
 function retrieveCookie(){
     
-    if (isset($_COOKIE['username'])) //this checks if a cookie is set or not
+    if (isset($_COOKIE['matID'])) //this checks if a cookie is set or not
 	{
-		echo json_encode(array('cookieUsername' => $_COOKIE['username'])); 
+		echo json_encode(array('cookieMat' => $_COOKIE['matID'])); 
         
 	}
 	else
@@ -251,6 +220,26 @@ function retrieveCookie(){
 
 	    return $userPassword;
 	}
+
+
+    function insertComment(){
+        $id = $_POST["idcomm"];
+        $name = $_POST["nameComm"]; //POST, parameter passed by the front end
+        $comment= $_POST["comComm"];
+      
+        $result= attemptInsertComment ($comment,$id);
+           
+        if ($result["status"] == "SUCCESS"){
+            echo json_encode(array("name"=> $name , "comment" =>$comment, "id"=>$id));
+        }
+
+        else{
+            header('HTTP/1.1 500' . $result["status"]);
+            die($result["status"]); //returns error from DataLayer
+        }	
+    
+    }
+
 
 
 ?>

@@ -8,6 +8,7 @@
 <header>    
     <div id="PageTitle">
         <h1> Classroom </h1>
+        <h4 id="currentLogin"> Currently login as: </h4>
     </div>    
 </header> 
 
@@ -37,16 +38,14 @@
     
     <div id="LoginSec">
         <form id=loginForm>
-           <div class="Username" align=center>
-    			<p>  Username 
-    			<input id="logUsername" type="string" name="Username" value=""></br>
-                </p>
+           <div class="Matricula" align=center>
+    			<p> ID Number (Employee: L0XXXXXXX)</p>
+    			<input id="logMat" type="string" value=""></br>
     		</div>
 
     		<div class="Password" align=center>
-    			<p>  Password 
-    			<input id="logPassword" type="password" name="Password" value=""></br>
-                </p>
+                <p>  Password  </p>
+    			<input id="logPassword" type="password" value=""></br>
     		</div>
 
     		<div class="Remember" align=center>
@@ -151,42 +150,35 @@
     </div>
 -->
       
-    <div id="CommentSec">
+ <div id="CommentSec">
         <div id="allComment" >  <!----Comments ------>
         <div id="CommLeft"> <!----Comment izquierdo ------>
             <div id="Left">
                 <p> Add a comment! </p>
                 <p>Name:   </p>
                 <input id="comName" type="string" class="Name"  name="Name" value=""></br>
-                <p>Email:   <p>
-                <input id="comEmail" type="string" class="Email" name="Email" value=""></br>
+                <p>ID Number:   <p>
+                <input id="comID" type="string" class="ID" name="ID" value=""></br>
                 <p>Comment: </p>
                 <textarea id="comComment" class="Comment" name="Comment" rows="4" cols="50" value="" style="margin-bottom: 1cm"></textarea>
-                <div align="center"> <span id="loginButton"> Login </span> </div>
+                <div align="center"> <span id="postCommentButton"> Post </span> </div>
              </div>
         </div> <!----End comment izquierdo ------>
         <div id="CommRight"> <!----Comment derecho------>
             <div id="Right">
                 <p> Comment </p>
-                <table>
+                <table id="commentsTable">
                     <tr>
                         <th>Name </th>
-                        <th>Comment </th>
+                        <th>ID</th>
+                        <th>Comment</th>
                     </tr>
-                    <tr>
-                        <td>Name1 </td>
-                        <td style="width = 1">Comment1</td> 
-                    </tr>
-                    <tr>
-                        <td>Name2 </td>
-                        <td>Comment2</td> 
-                    </tr>
+                    <tbody id="submitTable"></tbody>
                 </table>
             </div>
         </div> <!---End comment izquierdo------>
     </div> <!----End comments ------>
     </div>
-    
        
     <div id="FavSec">
         <p> Username </p>

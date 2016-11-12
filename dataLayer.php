@@ -17,13 +17,13 @@
 		}
 	}
 
-	function attemptLogin($userName){
+	function attemptLogin($mat){
 
 		$conn = connectionToDataBase();
 
 		if ($conn != null){
 			
-            $sql = "SELECT fName, lName, username, passwrd FROM Users WHERE username = '$userName'";
+            $sql = "SELECT fName, lName, matricula, passwrd, accessType FROM Users WHERE matricula = '$mat'";
 		
 			$result = $conn->query($sql);
 
@@ -32,8 +32,8 @@
                 $row = $result -> fetch_assoc();
 				$conn -> close();
 			
-                return array("firstName" => $row["fName"], "lastName" => $row["lName"], "username" => $row["username"],
-                             "password" => $row["passwrd"], "status" => "SUCCESS");
+                return array("firstName" => $row["fName"], "lastName" => $row["lName"], "mat" => $row["matricula"],
+                             "password" => $row["passwrd"], "accessType" => $row["accessType"], "status" => "SUCCESS");
 			}
 			else{
 				$conn -> close();
@@ -46,12 +46,12 @@
 	}
 
 
-function attemptCreateSession($userName, $userPassword){
+function attemptCreateSession($mat, $userPassword){
     
     $conn = connectionToDataBase();
 
     if ($conn != null)  { 
-        $sql = "SELECT fName, lName, username FROM Users WHERE username = '$userName' AND passwrd ='$userPassword'";
+        $sql = "SELECT fName, lName, matricula FROM Users WHERE matricula = '$mat' AND passwrd ='$userPassword'";
       
         $result = $conn -> query($sql);
         
@@ -67,7 +67,7 @@ function attemptCreateSession($userName, $userPassword){
                 
 		    	$_SESSION["fName"] = $row["fName"];
 		    	$_SESSION["lName"] = $row["lName"];
-                $_SESSION["username"] = $userName;
+                $_SESSION["matricula"] = $mat;
                 $_SESSION["password"] = $userPassword;		    	      
          }
         
@@ -122,74 +122,33 @@ function attemptRegistration($fName, $lName, $mat, $userPassword, $access){
 }
 
 
-function loadCommentsDB(){  //returns all the comments on the DB
-    
-    $conn = connectionToDataBase();
+    function attemptInsertComment ($comment,$id){
 
-    if ($conn != null){
-    
-    //MySQL query
-    $sql = "SELECT * FROM Comments";
-    
-    // Run query and store resulting data
-    $result = $conn -> query($sql); //
-           
-        if ($result->num_rows > 0)
-        {    
-            $response = array();    
-            
-            while($row = $result -> fetch_assoc()) {
-                array_push($response, array("comment" => $row["ComText"], "user" => $row["userName"])); 
+        $conn = connectionToDataBase();
+        if ($conn != null){
+
+        $sql = "INSERT INTO Comments(commnt,mat) 
+                VALUES ('$comment','$id')";
+
+
+        $result = $conn->query($sql);
+
+            if ($result != null) {
+                return array("status" => "SUCCESS");   
+            } 
+
+
+            else{
+                return array("Error inserting comment");
             }
-            
-            return ($response);
+
         }
-        
-        else{
-             header("Comments don't loaded");
-        }
-            
+            else {
+                $conn -> close();
+                header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+         }
+
+
     }
-        else {
-            $conn -> close();
-            header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
-     }
-    
-        
-}
-
-
-function attemptInsertComment ($userName, $commentsubmit){
-    
-    $conn = connectionToDataBase();
-    if ($conn != null){
-                 
-    $sql = "INSERT INTO Comments(ComText , userName) 
-            VALUES ('$commentsubmit','$userName')";
-        
-    
-    $result = $conn->query($sql);
-        
-        if ($result != null) {
-            return array("status" => "SUCCESS");   
-        } 
-            
-            
-        else{
-            return array("Error inserting comment");
-        }
-            
-    }
-        else {
-            $conn -> close();
-            header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
-     }
-    
-    
-}
-
-
-
-
 
 ?>
