@@ -1,5 +1,10 @@
 $(document).ready(function () {
     
+    
+//////////////////////////////////////////////
+////////// PAGE DIVS SHOW AND HIDE //////////
+//////////////////////////////////////////////
+    
     $("#LoginSec").hide();
     $("#RegSec").hide(); 
     $("#AboutSec").hide(); 
@@ -10,8 +15,10 @@ $(document).ready(function () {
     $("#FavSec").hide();
     $("#logoutButton").hide();
     $("#currentLogin").hide();
+    $("#pickAClassroom").hide();
     
-  
+    
+     
     $("#Home").on("click", function () {
         $("#homeImages").show();
         $("#LoginSec").hide();
@@ -20,6 +27,8 @@ $(document).ready(function () {
         $("#SearchSec").hide();
         $("#CommentSec").hide();
         $("#FavSec").hide();
+        $("#pickAClassroom").hide();
+  
     });
     
     $("#Login").on("click", function () {
@@ -30,6 +39,7 @@ $(document).ready(function () {
         $("#SearchSec").hide();
         $("#CommentSec").hide();
         $("#FavSec").hide();
+        $("#pickAClassroom").hide();
     });
     
     $("#Regis").on("click", function () {
@@ -40,6 +50,7 @@ $(document).ready(function () {
         $("#SearchSec").hide();
         $("#CommentSec").hide();
         $("#FavSec").hide();
+        $("#pickAClassroom").hide();
     });
     
     $("#AboutUs").on("click", function () {
@@ -50,6 +61,7 @@ $(document).ready(function () {
         $("#SearchSec").hide();
         $("#CommentSec").hide();
         $("#FavSec").hide();
+        $("#pickAClassroom").hide();
     });
     
    $("#SearchCl").on("click", function () {
@@ -60,6 +72,8 @@ $(document).ready(function () {
         $("#SearchSec").show(); 
         $("#CommentSec").hide();
         $("#FavSec").hide();
+        $("#pickAClassroom").hide();
+
     });
     
     $("#Comm").on("click", function () {
@@ -70,6 +84,7 @@ $(document).ready(function () {
         $("#SearchSec").hide(); 
         $("#CommentSec").show();
         $("#FavSec").hide();
+        $("#pickAClassroom").hide();
     });  
     
     $("#Fav").on("click", function () {
@@ -80,11 +95,118 @@ $(document).ready(function () {
         $("#SearchSec").hide(); 
         $("#CommentSec").hide();
         $("#FavSec").show();
+        $("#pickAClassroom").hide();
+
     });
 
     
+     $("#cetec2").on("click",function(){
+      
+        $("#LoginSec").hide();
+        $("#RegSec").hide(); 
+        $("#AboutSec").hide(); 
+        $("#SearchSec").hide(); 
+        $("#CommentSec").hide(); 
+        $("#homeImages").hide();
+        $("#CommentSec").hide();
+        $("#FavSec").hide();
+        $("#logoutButton").hide();
+        $("#currentLogin").hide();
+        $("#pickAClassroom").show();
+
+
+    });
+    
+     $("#cedes2").on("click",function(){
+      
+        $("#LoginSec").hide();
+        $("#RegSec").hide(); 
+        $("#AboutSec").hide(); 
+        $("#SearchSec").hide(); 
+        $("#CommentSec").hide(); 
+        $("#homeImages").hide();
+        $("#CommentSec").hide();
+        $("#FavSec").hide();
+        $("#logoutButton").hide();
+        $("#currentLogin").hide();
+        $("#pickAClassroom").show();
+
+
+    });
+    
+    
+     $("#ciap2").on("click",function(){
+      
+        $("#LoginSec").hide();
+        $("#RegSec").hide(); 
+        $("#AboutSec").hide(); 
+        $("#SearchSec").hide(); 
+        $("#CommentSec").hide(); 
+        $("#homeImages").hide();
+        $("#CommentSec").hide();
+        $("#FavSec").hide();
+        $("#logoutButton").hide();
+        $("#currentLogin").hide();
+        $("#pickAClassroom").show();
+
+    });
+    
+    
+     $("#biotec2").on("click",function(){
+      
+        $("#LoginSec").hide();
+        $("#RegSec").hide(); 
+        $("#AboutSec").hide(); 
+        $("#SearchSec").hide(); 
+        $("#CommentSec").hide(); 
+        $("#homeImages").hide();
+        $("#CommentSec").hide();
+        $("#FavSec").hide();
+        $("#logoutButton").hide();
+        $("#currentLogin").hide();
+        $("#pickAClassroom").show();
+
+    });
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+    
+    
 /////////////////////////////////////////////////////
-///////////////// REGISTER SECTION ////////////////// --> creates account
+///////////////// VERIFY SESSION ////////////////// 
+/////////////////////////////////////////////////////
+        
+ $.ajax({
+        url: 'data/ApplicationLayer.php',
+        type: 'POST' ,
+        data: { "action": "verifySession"},
+        dataType: 'json',
+        success: function(jsonResponse){
+          if(jsonResponse.state === "true"){
+            $("#currentLogin").append(jsonResponse.mat);
+            $("#LoginSec").hide();
+          }
+          else{
+            $("#LoginUsername").append("Welcome to out site");
+          }
+
+        },
+        error: function(errorMessage){
+          $("#currentLogin").append("Welcome");
+          alert(errorMessage.responseText);
+          $("#logoutButton").hide();
+        }
+  });
+        
+/////////////////////////////////////////////////////
+///////////////////////////////////////////////////// 
+/////////////////////////////////////////////////////
+    
+
+
+    
+    
+/////////////////////////////////////////////////////
+///////////////// REGISTER SECTION ////////////////// 
 /////////////////////////////////////////////////////
 
     $("#registerBtn").click(function () {
@@ -135,8 +257,8 @@ $(document).ready(function () {
             alert(errorMessage.responseText);
         }
     });
-///////////////////////////////////////////////   
-    
+///////////////////////////////////////////////////   
+///////////////////////////////////////////////////   
 
 ///////////////////////////////////////////////////
 /////////////LOGIN WITH COOKIE/////////////////////
@@ -164,7 +286,7 @@ $(document).ready(function () {
                 $("#currentLogin").append(newHTMLContent); //currently login as
                 $("#currentLogin").show();
                 
-                
+             
                 
                 var jsonData2 = {
                     "CookieValue": $("#logMat").val(), 
@@ -253,7 +375,6 @@ $("#logoutButton").on("click", function () {
          //   alert(commentData.action);
             
                 $.ajax({
-                    alert("entra al else de success"),
                     url:"data/ApplicationLayer.php",
                     type:"POST",
                     data:commentData,
@@ -280,7 +401,68 @@ $("#logoutButton").on("click", function () {
                 });
         }
      });
-    
-    
 
+
+/////////////////////////////////////////////////////
+///////////////// Change Status ////////////////// 
+/////////////////////////////////////////////////////
+  $("#writeClassroomBtn").on("click", function () {
+    alert("le dio change");
+    if ($("input[name=LightStatus].checked").val()>= 0) //dice si es 1 o 0
+    {
+        var valueLight= $("input[name=LightStatus].checked").val();
+    }
+    
+    else{
+        var valueLight=-1;
+    }
+      
+      
+    if ($("input[name=ACStatus].checked").val()>=0) //dice si es 1 o 0
+    {
+        var valueAC= $("input[name=ACStatus].checked").val();
+    }
+    
+    else{
+        var valueAC =-1;
+    }
+    
+        
+       var jsonData = {
+            "action": "changeSts",
+            "lstatus": "valueLight",
+            "ACstatus": "valueAC"
+        };
+      
+        if ((valueAC < 0) && (valueLight < 0)) {
+            
+            $.ajax({
+                url: "data/ApplicationLayer.php", 
+                type: "POST",
+                data: jsonData,
+                dataType: "json",
+                contentType: "application/x-www-form-urlencoded",
+                success: function (jsonResponse) {
+                    console.log(jsonResponse)
+                },
+
+                error: function (errorMessage){
+                              alert("Error");
+                }
+            });
+                
+        }
+      
+        else{
+            
+            alert("Select an option!");
+        }
+        
+  });
+   
+    
+/////////////////////////////////////////////////////
+///////////////////////////////////////////////////// 
+/////////////////////////////////////////////////////
+    
 });

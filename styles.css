@@ -86,27 +86,101 @@ li a:hover {
 
 h1 { color: #7c795d; font-family: 'Trocchi', serif; font-size: 45px; font-weight: normal; line-height: 48px; margin: 0; }
     
-#loginButton {
-	-moz-box-shadow:inset 0px 1px 0px 0px #caefab;
-	-webkit-box-shadow:inset 0px 1px 0px 0px #caefab;
-	box-shadow:inset 0px 1px 0px 0px #caefab;
-	background:linear-gradient(to bottom, #77d42a 5%, #5cb811 100%);
-	background-color:#77d42a;
-	border-radius:6px;
-	border:1px solid #268a16;
-	display:inline-block;
-	cursor:pointer;
-	color:#306108;
-	font-family:Arial;
-	font-size:15px;
-	font-weight:bold;
-	padding:6px 24px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #aade7c;
+#loginButton{
+  -moz-box-shadow:inset 0px 1px 0px 0px #caefab;
+  -webkit-box-shadow:inset 0px 1px 0px 0px #caefab;
+  box-shadow:inset 0px 1px 0px 0px #caefab;
+  background:linear-gradient(to bottom, #77d42a 5%, #5cb811 100%);
+  background-color:#77d42a;
+  border-radius:6px;
+  border:1px solid #268a16;
+  display:inline-block;
+  cursor:pointer;
+  color:#306108;
+  font-family:Arial;
+  font-size:15px;
+  font-weight:bold;
+  padding:6px 24px;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #aade7c;
 }
+
 #loginButton:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #5cb811), color-stop(1, #77d42a));
-	background-color:#5cb811;
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #5cb811), color-stop(1, #77d42a));
+  background-color:#5cb811;
+}
+
+#postCommentButton {
+  -moz-box-shadow:inset 0px 1px 0px 0px #caefab;
+  -webkit-box-shadow:inset 0px 1px 0px 0px #caefab;
+  box-shadow:inset 0px 1px 0px 0px #caefab;
+  background:linear-gradient(to bottom, #77d42a 5%, #5cb811 100%);
+  background-color:#77d42a;
+  border-radius:6px;
+  border:1px solid #268a16;
+  display:inline-block;
+  cursor:pointer;
+  color:#306108;
+  font-family:Arial;
+  font-size:15px;
+  font-weight:bold;
+  padding:6px 24px;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #aade7c;
+}
+
+#postCommentButton:hover {
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #5cb811), color-stop(1, #77d42a));
+  background-color:#5cb811;
+}
+
+
+#readClassroomBtn {
+  -moz-box-shadow:inset 0px 1px 0px 0px #caefab;
+  -webkit-box-shadow:inset 0px 1px 0px 0px #caefab;
+  box-shadow:inset 0px 1px 0px 0px #caefab;
+  background:linear-gradient(to bottom, #77d42a 5%, #5cb811 100%);
+  background-color:#77d42a;
+  border-radius:6px;
+  border:1px solid #268a16;
+  display:inline-block;
+  cursor:pointer;
+  color:#306108;
+  font-family:Arial;
+  font-size:15px;
+  font-weight:bold;
+  padding:6px 24px;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #aade7c;
+}
+
+#readClassroomBtn :hover {
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #5cb811), color-stop(1, #77d42a));
+  background-color:#5cb811;
+}
+
+#writeClassroomBtn {
+  -moz-box-shadow:inset 0px 1px 0px 0px #caefab;
+  -webkit-box-shadow:inset 0px 1px 0px 0px #caefab;
+  box-shadow:inset 0px 1px 0px 0px #caefab;
+  background:linear-gradient(to bottom, #77d42a 5%, #5cb811 100%);
+  background-color:#77d42a;
+  border-radius:6px;
+  border:1px solid #268a16;
+  display:inline-block;
+  cursor:pointer;
+  color:#306108;
+  font-family:Arial;
+  font-size:15px;
+  font-weight:bold;
+  padding:6px 24px;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #aade7c;
+}
+
+#writeClassroomBtn :hover {
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #5cb811), color-stop(1, #77d42a));
+  background-color:#5cb811;
 }
 
 
@@ -117,7 +191,7 @@ input[type=string], input[type=password],textarea,.Passwrd{
     border: 1px solid #ccc;
     box-sizing: border-box;
     margin-left: 100px;
-	border-radius: 4px;
+    border-radius: 4px;
 }
 
 
@@ -125,6 +199,11 @@ input[type=string], input[type=password],textarea,.Passwrd{
     width:50%; 
     float:left;
     /*background-color:red;*/
+}
+
+
+.tablerow{
+    text-align: center;
 }
 
 #images2{
@@ -156,39 +235,40 @@ input[type=string], input[type=password],textarea,.Passwrd{
 }
  
 #menupickC{
-
 padding-bottom:0.5cm;
 padding-left:0.5cm;
 padding-right:0.5cm;
 padding-top: 0.5cm;
-margin-bottom: 3cm;
-margin-left: 3cm;
-margin-right: 3cm;
-margin-top: 3cm;
-background-color:red;   
+margin-bottom: 2cm;
+margin-left: 2cm;
+margin-right: 2cm;
+margin-top: 2cm;
+background-color:dimgray;   
 
 }
 
-#readAct{
-    width:50%; 
-    float:left;
-    background-color:yellow
+table {
+    font-family: arial, sans-serif;
+    width: 70%;
+    margin-left: 4cm;
+    margin-right: 4cm;
+    text-align: center
+    
 }
 
-#writeAct{
-    width:50%; 
-    float:left;
-    background-color:blue
+.tableHeader{
+    background-color: #333333;
+    color: f2f2f2;
+    text-align: center;
 }
 
-#readAct2{
-    width:50%; 
-    float:left;
-    background-color:yellow
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    background-color: #f2f2f2;
+    text-align: center;
 }
 
-#writeAct2{
-    width:50%; 
-    float:left;
-    background-color:blue
-}
+
+

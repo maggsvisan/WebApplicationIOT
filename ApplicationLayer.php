@@ -25,10 +25,12 @@ switch($action){
                           break;
         
     case "register": registerFunction(); //
-                        break;
+                      break;
         
-    case "loadComments": loadComments(); //all comments of the DB 
-                            break;
+    case "changeSts": changeStatus();
+                     break;
+    
+        
         
 }
 
@@ -68,6 +70,25 @@ function loginFunction(){
 }
 
 
+
+function verifySession(){
+    
+    // Start session
+    session_start();
+    //verify if username is set in session
+    if(empty($_SESSION['matricula'])) {
+        $response = array("matricula"=>null, "password"=>null, "state"  =>"false");
+        echo json_encode($response);
+    }
+    else {
+    	$response = array("mat"=>$_SESSION['matricula'], "password"=> $_SESSION['password'], "state"  =>"true");
+        
+    	echo json_encode($response);
+    }
+    
+}
+
+
 function deleteSession(){
     
 	session_start();
@@ -86,23 +107,6 @@ function deleteSession(){
     
 }
 
-
-function verifySession(){
-    
-    // Start session
-    session_start();
-    //verify if username is set in session
-    if(empty($_SESSION['username'])) {
-        $response = array("username"=>null, "password"=>null, "state"  =>"false");
-        echo json_encode($response);
-    }
-    else {
-    	$response = array("username"=>$_SESSION['username'], "password"=> $_SESSION['password'], "state"  =>"true");
-        
-    	echo json_encode($response);
-    }
-    
-}
 
 
 function registerFunction(){ 
@@ -240,6 +244,9 @@ function retrieveCookie(){
     
     }
 
-
+    function changeStatus(){
+        
+        
+    }
 
 ?>

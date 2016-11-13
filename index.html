@@ -128,28 +128,49 @@
     </div>
 
 
-<!--
+
     <div id="pickAClassroom">
-        <div class= "title" align= center> <h4> Select a classroom </h4> </div>
+    <!----   <div class= "title" align= center> <h4> Select a classroom </h4> </div> ------> 
         <div id="menupickC" >
-            <span id="readAct">
-                <input type="checkbox" id="remPassword"> Remember my credentials?<br>
-            <span id="readAct2">
-                <input type="checkbox" id="remPassword"> Remember my credentials?<br>
-            </span>
-            </span>
+            <table>
+                <tr > 
+                    <th class="tableHeader">Change sensors status</th>
+                    <th class="tableHeader">Read sensors status</th>
+                </tr>
+                
+                <tr>
+                    <th> 
+                        <p>Lights</p>
+                         <input id="LturnON" value="1" type="radio" name="LightStatus"> Turn ON lights  <br>
+                         <input id="LturnOFF" value="0" type="radio" name="LightStatus"> Turn OFF lights <br>
+                         <br>  
+                         <p>AC</p>
+                         <input id="ACturnON" value="1" type="radio" name="ACStatus"> Turn ON AC <br>
+                         <input id="ACturnOFF" value="0" type="radio" name="ACStatus"> Turn OFF AC <br>   
+                         <br>
+                    </th>
             
-            <span id="writeAct">
-                <input type="checkbox" id="remPassword"> Remember my credentials?<br>
-            <span id="writeAct2">
-                <input type="checkbox" id="remPassword"> Remember my credentials?<br>
-            </span>
-            </span>
-            
+                    
+                    <th><p> Temperature: </p><br>
+                        <p> Light level: </p><br>  
+                    </th>
+                
+                </tr>
+                
+                
+                <tr>
+                    <th><div class="tablerow" ><span id="writeClassroomBtn"> Change Status </span> </div> </th>
+                    <th><div class="tablerow" ><span id="readClassroomBtn"> Read Status </span> </div> </th>
+                </tr>
+            </table>
+             
         </div>
-    </div>
--->
-      
+        
+     </div>
+
+    
+   
+
  <div id="CommentSec">
         <div id="allComment" >  <!----Comments ------>
         <div id="CommLeft"> <!----Comment izquierdo ------>
