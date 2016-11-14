@@ -17,18 +17,12 @@ CREATE TABLE Register (
     cnum INT NOT NULL,
     timeReg TIME NOT NULL, 
     dateReg DATE NOT NULL,
-    temp INT NOT NULL,
-    light int NOT NULL,
-    window int NOT NULL,
-    numActs INT NOT NULL,
-    
+   
     FOREIGN KEY (cnum) REFERENCES Classroom(id)
 ); 
 
 CREATE TABLE Actuators(  
     id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    tempSensor VARCHAR(30) NOT NULL, #name
-    lightSensor VARCHAR(30) NOT NULL, #name 
     stsTemp INT NOT NULL, #boolean value
     stsLight INT NOT NULL, #boolean value
     rnum INT NOT NULL,   
