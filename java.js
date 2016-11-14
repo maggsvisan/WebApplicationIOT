@@ -16,9 +16,13 @@ $(document).ready(function () {
     $("#logoutButton").hide();
     $("#currentLogin").hide();
     $("#pickAClassroom").hide();
+    $("#CiapDropDownMenu").hide();
+    $("#CetecDropDownMenu").hide();
+    $("#CedesDropDownMenu").hide();
+    $("#BiotecDropDownMenu").hide();
+    $("#RegClass").hide();
+    $("#RegUser").hide();
     
-    
-     
     $("#Home").on("click", function () {
         $("#homeImages").show();
         $("#LoginSec").hide();
@@ -28,6 +32,12 @@ $(document).ready(function () {
         $("#CommentSec").hide();
         $("#FavSec").hide();
         $("#pickAClassroom").hide();
+        $("#CiapDropDownMenu").hide();
+        $("#CetecDropDownMenu").hide();
+        $("#CedesDropDownMenu").hide();
+        $("#BiotecDropDownMenu").hide();
+        $("#RegClass").hide();
+        $("#RegUser").hide();
   
     });
     
@@ -40,6 +50,12 @@ $(document).ready(function () {
         $("#CommentSec").hide();
         $("#FavSec").hide();
         $("#pickAClassroom").hide();
+        $("#CiapDropDownMenu").hide();
+        $("#CetecDropDownMenu").hide();
+        $("#CedesDropDownMenu").hide();
+        $("#BiotecDropDownMenu").hide();
+        $("#RegClass").hide();
+        $("#RegUser").hide();
     });
     
     $("#Regis").on("click", function () {
@@ -51,6 +67,13 @@ $(document).ready(function () {
         $("#CommentSec").hide();
         $("#FavSec").hide();
         $("#pickAClassroom").hide();
+        $("#ClassDropDownMenu").hide();
+        $("#CiapDropDownMenu").hide();
+        $("#CetecDropDownMenu").hide();
+        $("#CedesDropDownMenu").hide();
+        $("#BiotecDropDownMenu").hide();
+        $("#RegClass").hide();
+        $("#RegUser").hide();
     });
     
     $("#AboutUs").on("click", function () {
@@ -62,6 +85,13 @@ $(document).ready(function () {
         $("#CommentSec").hide();
         $("#FavSec").hide();
         $("#pickAClassroom").hide();
+        $("#ClassDropDownMenu").hide();
+        $("#CiapDropDownMenu").hide();
+        $("#CetecDropDownMenu").hide();
+        $("#CedesDropDownMenu").hide();
+        $("#BiotecDropDownMenu").hide();
+        $("#RegClass").hide();
+        $("#RegUser").hide();
     });
     
    $("#SearchCl").on("click", function () {
@@ -73,6 +103,12 @@ $(document).ready(function () {
         $("#CommentSec").hide();
         $("#FavSec").hide();
         $("#pickAClassroom").hide();
+        $("#CiapDropDownMenu").hide();
+        $("#CetecDropDownMenu").hide();
+        $("#CedesDropDownMenu").hide();
+        $("#BiotecDropDownMenu").hide();
+        $("#RegClass").hide();
+        $("#RegUser").hide();
 
     });
     
@@ -85,6 +121,12 @@ $(document).ready(function () {
         $("#CommentSec").show();
         $("#FavSec").hide();
         $("#pickAClassroom").hide();
+        $("#CiapDropDownMenu").hide();
+        $("#CetecDropDownMenu").hide();
+        $("#CedesDropDownMenu").hide();
+        $("#BiotecDropDownMenu").hide();
+        $("#RegClass").hide();
+        $("#RegUser").hide();
     });  
     
     $("#Fav").on("click", function () {
@@ -96,6 +138,13 @@ $(document).ready(function () {
         $("#CommentSec").hide();
         $("#FavSec").show();
         $("#pickAClassroom").hide();
+        $("#ClassDropDownMenu").hide();
+        $("#CiapDropDownMenu").hide();
+        $("#CetecDropDownMenu").hide();
+        $("#CedesDropDownMenu").hide();
+        $("#BiotecDropDownMenu").hide();
+        $("#RegClass").hide();
+        $("#RegUser").hide();
 
     });
 
@@ -113,6 +162,12 @@ $(document).ready(function () {
         $("#logoutButton").hide();
         $("#currentLogin").hide();
         $("#pickAClassroom").show();
+        $("#CiapDropDownMenu").hide();
+        $("#CetecDropDownMenu").show();
+        $("#CedesDropDownMenu").hide();
+        $("#BiotecDropDownMenu").hide();
+        $("#RegClass").hide();
+        $("#RegUser").hide();
 
 
     });
@@ -130,7 +185,12 @@ $(document).ready(function () {
         $("#logoutButton").hide();
         $("#currentLogin").hide();
         $("#pickAClassroom").show();
-
+        $("#CiapDropDownMenu").hide();
+        $("#CetecDropDownMenu").hide();
+        $("#CedesDropDownMenu").show();
+        $("#BiotecDropDownMenu").hide();
+        $("#RegClass").hide();
+        $("#RegUser").hide();
 
     });
     
@@ -148,6 +208,12 @@ $(document).ready(function () {
         $("#logoutButton").hide();
         $("#currentLogin").hide();
         $("#pickAClassroom").show();
+        $("#CiapDropDownMenu").show();
+        $("#CetecDropDownMenu").hide();
+        $("#CedesDropDownMenu").hide();
+        $("#BiotecDropDownMenu").hide();
+        $("#RegClass").hide();
+        $("#RegUser").hide();
 
     });
     
@@ -165,7 +231,57 @@ $(document).ready(function () {
         $("#logoutButton").hide();
         $("#currentLogin").hide();
         $("#pickAClassroom").show();
+        $("#CiapDropDownMenu").hide();
+        $("#CetecDropDownMenu").hide();
+        $("#CedesDropDownMenu").hide();
+        $("#BiotecDropDownMenu").show();
+        $("#RegClass").hide();
+        $("#RegUser").hide();
 
+    });
+    
+    
+    
+    $("#BtnClass").on("click", function(){
+        $("#LoginSec").hide();
+        $("#RegSec").hide(); 
+        $("#AboutSec").hide(); 
+        $("#SearchSec").hide(); 
+        $("#CommentSec").hide(); 
+        $("#homeImages").hide();
+        $("#CommentSec").hide();
+        $("#FavSec").hide();
+        $("#logoutButton").hide();
+        $("#currentLogin").hide();
+        $("#pickAClassroom").hide();
+        $("#CiapDropDownMenu").hide();
+        $("#CetecDropDownMenu").hide();
+        $("#CedesDropDownMenu").hide();
+        $("#BiotecDropDownMenu").hide();
+        $("#RegClass").show();
+        $("#RegUser").hide();
+        
+    });   
+    
+    $("#BtnUser").on("click", function(){
+        $("#LoginSec").hide();
+        $("#RegSec").hide(); 
+        $("#AboutSec").hide(); 
+        $("#SearchSec").hide(); 
+        $("#CommentSec").hide(); 
+        $("#homeImages").hide();
+        $("#CommentSec").hide();
+        $("#FavSec").hide();
+        $("#logoutButton").hide();
+        $("#currentLogin").hide();
+        $("#pickAClassroom").hide();
+        $("#CiapDropDownMenu").hide();
+        $("#CetecDropDownMenu").hide();
+        $("#CedesDropDownMenu").hide();
+        $("#BiotecDropDownMenu").hide();
+        $("#RegClass").hide();
+        $("#RegUser").show();
+        
     });
 ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////
@@ -200,7 +316,37 @@ $(document).ready(function () {
 /////////////////////////////////////////////////////
 ///////////////////////////////////////////////////// 
 /////////////////////////////////////////////////////
-    
+
+/////////////////////////////////////////////////////
+/////////////// REGISTER CLASSROOM ////////////////// 
+/////////////////////////////////////////////////////
+
+    $("#BtnRegisterClass").click(function () {
+       
+        var jsonData = {
+            "building": $("#inBuilding").val(), 
+            "classNum": $("#inClassNum").val(), 
+            "action": "registerClassroom"    
+        };
+        
+        console.log(jsonData);
+        $.ajax({
+            url: "data/ApplicationLayer.php"
+            , type: "POST"
+            , data: jsonData
+            , success: function (jsonResponse) {
+                alert("Added!");
+                //alert("New Register added" + jsonResponse.fName)
+                console.log(jsonResponse);
+            }
+            , error: function (errorMessage) {
+                //alert(errorMessage.responseText);
+                alert("error");
+            }
+        });
+        
+    });
+/////////////////////////////////////////////////////////////
 
 
     

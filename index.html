@@ -57,10 +57,40 @@
     </div>
 
 
+
     <div id="RegSec">
-        <h1> Register Here! </h1>
-        <p id="banner">Sign up now to monitor</p>
-      
+        <table id="RegOption">
+            <tr>
+                <caption><h2> Select one option for registration: </h2> </caption>
+            </tr>
+            
+            <tr>
+                <th><div> <span class="btn"  id="BtnClass"> Register a new classroom </span> </div></th>
+                <th> <span class= "btn" id="BtnUser"> Register a new user </span> </th>
+            </tr>
+        </table>
+     </div>
+    
+    <div id="RegClass">
+        <h2>Register a new classroom:</h2> 
+            
+         <div class="classR">
+            <p> Building: (Format: AX-CIAP-CEDES-CETEC) </p>
+            <input id="inBuilding" type="string" value="">
+            </br>
+        </div>
+        <div class="classNum">
+            <p> Classroom number: (Format: XXX) </p>
+            <input id="inClassNum" type="string" value="">
+            </br>
+        </div>
+        <span class="Register">
+            <p id="BtnRegisterClass" class="btn">Register</p>
+        </span>  
+    </div>
+        
+    <div id="RegUser">
+        <h2> Register a new user: </h2>
         <div class="Fname">
             <p> First name </p>
             <input id="inFname" type="string" value="">
@@ -81,18 +111,16 @@
             <input id="inMatricula" type="string" value="">
             </br>
         </div> 
-
         <div class="accessType">
             <p> Access Type  </p>
             <input id="inAccessType" type="string" value="">
             </br>
         </div>
-
         <span class="Register">
-                <p id="registerBtn" class="btn">Register</p>
+            <p id="registerBtn" class="btn">Register</p>
         </span>
     </div>
-
+        
 
 
     <div id="AboutSec">
@@ -127,10 +155,68 @@
         </div>
     </div>
 
-
+    
 
     <div id="pickAClassroom">
     <!----   <div class= "title" align= center> <h4> Select a classroom </h4> </div> ------> 
+        <div id="CiapDropDownMenu">    
+            <div class="SelectClassroom">
+                <p> Select a classroom:
+                <select id="CiapClass">
+                    <option value="-1"> Select </option>
+                    <option value="1"> CI-232 </option>
+                    <option value="1"> CI-410 </option>
+                    <option value="1"> CI-515 </option>
+                    <option value="1"> CI-415 </option>
+                 </select>
+                 </p>
+            </div>
+        </div>
+
+        <div id="CedesDropDownMenu">
+        <div class="SelectClassroom">
+                <p> Select a classroom:
+                <select id="CiapClass">
+                    <option value="-1"> Select </option>
+                    <option value="1"> CEDES-232 </option>
+                    <option value="1"> CEDES-410 </option>
+                    <option value="1"> CEDES-515 </option>
+                    <option value="1"> CEDES-415 </option>
+                 </select>
+                 </p>
+            </div>
+
+        </div>
+
+        <div id="CetecDropDownMenu">
+        <div class="SelectClassroom">
+            <p> Select a classroom:
+            <select id="CiapClass">
+                <option value="-1"> Select </option>
+                <option value="1"> CET-232 </option>
+                <option value="1"> CET-410 </option>
+                <option value="1"> CET-515 </option>
+                <option value="1"> CET-415 </option>
+             </select>
+             </p>
+        </div>
+
+        </div>
+
+        <div id="BiotecDropDownMenu">
+        <div class="SelectClassroom">
+            <p> Select a classroom:
+            <select id="CiapClass">
+                <option value="-1"> Select </option>
+                <option value="1"> BI-232 </option>
+                <option value="1"> BI-410 </option>
+                <option value="1"> BI-515 </option>
+                <option value="1"> BI-415 </option>
+             </select>
+             </p>
+        </div>
+        </div>
+ 
         <div id="menupickC" >
             <table>
                 <tr > 
@@ -159,8 +245,8 @@
                 
                 
                 <tr>
-                    <th><div class="tablerow" ><span id="writeClassroomBtn"> Change Status </span> </div> </th>
-                    <th><div class="tablerow" ><span id="readClassroomBtn"> Read Status </span> </div> </th>
+                    <th><div class="tablerow" ><span class= btn id="writeClassroomBtn"> Change Status </span> </div> </th>
+                    <th><div class="tablerow" ><span class= btn id="readClassroomBtn"> Read Status </span> </div> </th>
                 </tr>
             </table>
              
