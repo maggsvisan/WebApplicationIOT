@@ -317,15 +317,19 @@ function attemptChangeSts($idRegister, $lightStatus, $ACStatus){
     $conn = connectionToDataBase();
 
 	if ($conn != null){
-        
+       
         $sql = "UPDATE Actuators SET stsTemp='$ACStatus', stsLight='$lightStatus' WHERE rnum='$idRegister'";
-              
+        
+        
         if (mysqli_query($conn, $sql)) {
+            $conn -> close();
             return array("status" => "SUCCESS" );
         }
         
         else {
+            $conn -> close();
             return array("Error updating status");
+            
         }
 
     }

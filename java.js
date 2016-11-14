@@ -4,7 +4,8 @@ $(document).ready(function () {
 //////////////////////////////////////////////
 ////////// PAGE DIVS SHOW AND HIDE //////////
 //////////////////////////////////////////////
-    
+ var imageSelected;
+
     $("#LoginSec").hide();
     $("#RegSec").hide(); 
     $("#AboutSec").hide(); 
@@ -150,6 +151,7 @@ $(document).ready(function () {
 
     
      $("#cetec2").on("click",function(){
+        imageSelected= "cetec";
       
         $("#LoginSec").hide();
         $("#RegSec").hide(); 
@@ -168,13 +170,11 @@ $(document).ready(function () {
         $("#BiotecDropDownMenu").hide();
         $("#RegClass").hide();
         $("#RegUser").hide();
-         
-        alert($(".imagemenu").val());
-
 
     });
     
      $("#cedes2").on("click",function(){
+        imageSelected= "cedes";
       
         $("#LoginSec").hide();
         $("#RegSec").hide(); 
@@ -194,15 +194,12 @@ $(document).ready(function () {
         $("#RegClass").hide();
         $("#RegUser").hide();
          
-          alert($(".imagemenu").val());
     });
     
     
      $("#ciap2").on("click",function(){
-     //   var imageSelected;
-         
-       // localStorage.setItem('imageSelected', $(".imagemenu").val());
-        
+        imageSelected= "ciap";
+                 
         $("#LoginSec").hide();
         $("#RegSec").hide(); 
         $("#AboutSec").hide(); 
@@ -220,13 +217,13 @@ $(document).ready(function () {
         $("#BiotecDropDownMenu").hide();
         $("#RegClass").hide();
         $("#RegUser").hide();
-         
-        
+               
     });
     
     
      $("#biotec2").on("click",function(){
-      
+        imageSelected= "biotec";
+         
         $("#LoginSec").hide();
         $("#RegSec").hide(); 
         $("#AboutSec").hide(); 
@@ -249,7 +246,7 @@ $(document).ready(function () {
 
     });
     
-    
+
     
     $("#BtnClass").on("click", function(){
         $("#LoginSec").hide();
@@ -332,7 +329,7 @@ $(document).ready(function () {
 /////////////// VALIDATE CLASSROOM ////////////////// 
 /////////////////////////////////////////////////////
     
-$("#searchBtn").click(function () {
+$(".searchBtn").click(function () {
        
         var jsonData = {
             "classroom": $(".inClassNum").val(), 
@@ -353,7 +350,7 @@ $("#searchBtn").click(function () {
               var valueLight;
               var valueAC;
               
-              if ($('input:radio[name=LightStatus]:checked').val()> 0){
+              if ($('input:radio[name=LightStatus]:checked').val()>= 0){
                     valueLight= $('input:radio[name=LightStatus]:checked').val();
                 }
 
@@ -369,19 +366,19 @@ $("#searchBtn").click(function () {
                     valueAC =-1;
                 }
                 
-                alert(valueAC);
-                alert(valueLight);
+             
 
                    var jsonData2 = { //hay que mandarle que salón es
                         "action": "changeSts",
                         "classroom": $(".inClassNum").val(),
                        "building": $(".inBuildingNum").val(), 
-                        "lstatus": "valueLight",
-                        "ACstatus": "valueAC"
+                        "lstatus": valueLight,
+                        "ACstatus": valueAC
                     };
                     
+           
               
-                    if ((valueAC > 0) && (valueLight > 0)) {
+                    if ((valueAC >= 0) && (valueLight >= 0)) {
                     alert("entra if");
 
                         $.ajax({

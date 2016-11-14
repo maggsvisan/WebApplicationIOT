@@ -46,3 +46,6 @@ values (1, '13:00:00' , '2008-01-02' )
 
 INSERT INTO Actuators(stsTemp, stsLight, rnum)
 VALUES (1, 0, 1)
+
+INSERT INTO Actuators(stsTemp, stsLight, rnum)
+VALUES (1, 0, 2)

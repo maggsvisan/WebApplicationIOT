@@ -284,7 +284,7 @@ caption {
 
 
 
-#searchBtn {
+.searchBtn {
   background: #34d981;
   background-image: -webkit-linear-gradient(top, #34d981, #36b82b);
   background-image: -moz-linear-gradient(top, #34d981, #36b82b);
@@ -301,7 +301,7 @@ caption {
   text-decoration: none;
 }
 
-#searchBtn:hover {
+.searchBtn:hover {
   background: #3cb0fd;
   background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
   background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
