@@ -117,9 +117,42 @@ function attemptRegistration($fName, $lName, $mat, $userPassword, $access){
             $conn -> close();
             header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
      }
-    
         
 }
+
+
+function attemptInsertClassroom ($building, $num){  
+    $conn = connectionToDataBase();
+
+    if ($conn != null){
+    
+    $sql = "INSERT INTO Classroom(building, num) 
+            VALUES ('$building','$num')";
+        
+    // Run query and store resulting data
+    $result = $conn->query($sql);
+        
+        if ($result == TRUE) {
+            $conn -> close();
+            return array("status" => "SUCCESS");   
+        } 
+            
+            
+        else{
+            $conn -> close();
+            return array ("status" => "Something went wrong");
+        }
+            
+    }
+        else {
+            $conn -> close();
+            header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+     }
+        
+}
+
+
+
 
 
     function attemptInsertComment ($comment,$id){

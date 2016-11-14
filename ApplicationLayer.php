@@ -27,8 +27,11 @@ switch($action){
     case "register": registerFunction(); //
                       break;
         
-    case "changeSts": changeStatus();
+    case "changeSts": changeStatus(); //pendiente
                      break;
+    
+    case "registerClassroom": registerClassroom();
+                    break;
     
         
         
@@ -244,9 +247,26 @@ function retrieveCookie(){
     
     }
 
-    function changeStatus(){
+    function registerClassroom(){
+        $building= $_POST["building"];
+        $num= $_POST["classNum"];
         
+        
+        $result= attemptInsertClassroom ($building, $num);
+        
+        if ($result["status"] == "SUCCESS"){
+            $response = array("message"=> "Now you are register");
+            echo json_encode($response); //sent it to presentation layer
+        }
+
+        else{
+            header('HTTP/1.1 500' . $result["status"]);
+            die($result["status"]); //returns error from DataLayer
+        }	
         
     }
+
+
+
 
 ?>
