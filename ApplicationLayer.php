@@ -287,7 +287,7 @@ function retrieveCookie(){
         }	
             
     }
-
+ 
 
 function changeSts(){
         $lightStatus= $_POST["lstatus"];
