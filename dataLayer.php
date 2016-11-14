@@ -152,9 +152,6 @@ function attemptInsertClassroom ($building, $num){
 }
 
 
-
-
-
     function attemptInsertComment ($comment,$id){
 
         $conn = connectionToDataBase();
@@ -183,5 +180,166 @@ function attemptInsertClassroom ($building, $num){
 
 
     }
+
+    
+    function attemptChangeStatus($lightStatus, $ACStatus){
+        
+        $conn = connectionToDataBase();
+        if ($conn != null){
+
+        $sql = "INSERT INTO Actuators(stsTemp,stsLight) 
+                VALUES ('$comment','$id')";
+
+
+        $result = $conn->query($sql);
+
+            if ($result != null) {
+                return array("status" => "SUCCESS");   
+            } 
+
+
+            else{
+                return array("Error inserting comment");
+            }
+
+        }
+            else {
+                $conn -> close();
+                header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+         }
+        
+        
+        
+    }
+
+
+
+function verifyClassroom ($classNumber){
+    
+    $conn = connectionToDataBase();
+
+	if ($conn != null){
+			
+        $sql = "SELECT building, num FROM Classroom WHERE num = '$classNumber'";
+		
+			$result = $conn->query($sql);
+
+			if ($result->num_rows > 0)
+			{
+                $row = $result -> fetch_assoc();
+				$conn -> close();
+			
+                return array("status" => "SUCCESS");
+			}
+			else{
+				$conn -> close();
+				return array("status" => "CLASSROOM NOT FOUND");
+			}
+		}
+
+    else{
+		$conn -> close();
+		return array("status" => "CONNECTION WITH DB WENT WRONG");
+	}
+        
+        
+}
+
+
+
+function getIDClassroom($classNumber, $buildingNumber){
+        
+    $conn = connectionToDataBase();
+
+	if ($conn != null){
+			
+        $sql = "SELECT id FROM Classroom WHERE building='$buildingNumber' AND num = '$classNumber'";
+		
+			$result = $conn->query($sql);
+
+			if ($result->num_rows > 0)
+			{
+                $row = $result -> fetch_assoc();
+				$conn -> close();
+			
+                return array("idClassroom" => $row["id"], "status" => "SUCCESS");
+			}
+			else{
+				$conn -> close();
+				return array("status" => "CLASSROOM NOT FOUND");
+			}
+		}
+
+    else{
+		$conn -> close();
+		return array("status" => "CONNECTION WITH DB WENT WRONG");
+	}   
+        
+}
+
+
+
+function getIDRegister($idClassroom){
+        
+    $conn = connectionToDataBase();
+
+	if ($conn != null){
+			
+        $sql = "SELECT id FROM Register WHERE cnum='$idClassroom'";
+		
+			$result = $conn->query($sql);
+
+			if ($result->num_rows > 0)
+			{
+                $row = $result -> fetch_assoc();
+				$conn -> close();
+			
+                return array("idRegister" => $row["id"], "status" => "SUCCESS");
+			}
+			else{
+				$conn -> close();
+				return array("status" => "Registration form for this classroom does not exists!");
+			}
+		}
+
+    else{
+		$conn -> close();
+		return array("status" => "CONNECTION WITH DB WENT WRONG");
+	}   
+        
+}
+
+
+
+
+function attemptChangeSts($idRegister, $lightStatus, $ACStatus){
+    
+    $conn = connectionToDataBase();
+
+	if ($conn != null){
+        
+        $sql = "UPDATE Actuators SET stsTemp='$ACStatus', stsLight='$lightStatus' WHERE rnum='$idRegister'";
+       
+        $result = $conn->query($sql);
+
+            if ($result != null) {
+                return array("status" => "SUCCESS" );
+            } 
+
+            else{
+                return array("Error updating status");
+            }
+
+    }
+    
+    else {
+        $conn -> close();
+        header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+     }
+    
+}
+
+
+
 
 ?>

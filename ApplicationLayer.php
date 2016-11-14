@@ -27,11 +27,15 @@ switch($action){
     case "register": registerFunction(); //
                       break;
         
-    case "changeSts": changeStatus(); //pendiente
+    case "changeSts": changeSts(); //
                      break;
     
-    case "registerClassroom": registerClassroom();
-                    break;
+    case "registerClassroom": registerClassroom(); //
+                        break;
+        
+    
+    case "validateClassroom": validateClassroom();
+                        break;
     
         
         
@@ -266,6 +270,68 @@ function retrieveCookie(){
         
     }
 
+
+    function validateClassroom(){ //validate if classroom exists
+        $classNumber= $_POST["classroom"];
+        
+     $result=  verifyClassroom($classNumber);
+            
+     if ($result["status"] == "SUCCESS"){
+         $response = array("message"=> "Classroom Exists!");
+         echo json_encode($response); //sent it to presentation layer  
+      }	
+    
+    else{
+            header('HTTP/1.1 500' . $result["status"]);
+            die($result["status"]); //returns error from DataLayer
+        }	
+            
+    }
+
+
+function changeSts(){
+        $lightStatus= $_POST["lstatus"];
+        $ACStatus= $_POST["ACstatus"];
+        $classNumber= $_POST["classroom"];
+        $buildingNumber= $_POST["building"];
+        
+        $getClassroom= getIDClassroom($classNumber, $buildingNumber); #gets ID classroom    
+
+        
+        if ($getClassroom["status"] == "SUCCESS"){
+                $idClass = $getClassroom["idClassroom"];
+            
+                $getRegister= getIDRegister($idClass); #gets ID Register
+                
+                if($getRegister["status"]== "SUCCESS"){
+                        $idReg= $getRegister["idRegister"];
+                    
+                    $result= attemptChangeSts($idReg, $lightStatus, $ACStatus); #update table
+                            
+                      if ($result["status"] == "SUCCESS"){
+                            $response = array("message"=> "Classroom Updated!");
+                            echo json_encode($response); //sent it to presentation layer  
+                        }	
+    
+                      else{
+                            header('HTTP/1.1 500' . $result["status"]);
+                            die($result["status"]); //returns error from DataLayer
+                     }
+                     
+                    
+                 }     
+                else{
+                    header('HTTP/1.1 500' .  $getRegister["status"]);
+                    die($getRegister["status"]); //returns error from DataLayer
+                }
+        }	
+
+        else{
+            header('HTTP/1.1 500' .  $getClassroom["status"]);
+            die($getClassroom["status"]); //returns error from DataLayer
+        }	        
+        
+    }
 
 
 

@@ -134,10 +134,12 @@
         
         <div id="images" >
             <span id="ciap1">
+                <input type="hidden" class="imagemenu" value="ciap">
                 <img id="ciap2" src="images/ciap.png" style=" width: 600px ; height: 390px;">
             </span>
             
             <span id="cedes1">
+                <input type="hidden" class="imagemenu" value="cedes">
                 <img id="cedes2" src="images/cedes.png" style=" width: 600px ; height: 390px; margin-top: 0.5cm">
             </span>
             
@@ -145,10 +147,12 @@
         
         <div id="images2" >
             <span id="biotec1">
+                <input type="hidden" class="imagemenu" value="biotec">
                 <img id="biotec2" src="images/biotec.jpg" style=" width: 600px ; height: 390px;">
             </span>
             
             <span id="cetec1">
+                  <input type="hidden" class="imagemenu" value="cetec">
                 <img id="cetec2" src="images/cetec.jpg" style=" width: 600px ; height: 390px; margin-top: 0.5cm; margin-bottom: 1cm">
             </span>
             
@@ -161,59 +165,41 @@
     <!----   <div class= "title" align= center> <h4> Select a classroom </h4> </div> ------> 
         <div id="CiapDropDownMenu">    
             <div class="SelectClassroom">
-                <p> Select a classroom:
-                <select id="CiapClass">
-                    <option value="-1"> Select </option>
-                    <option value="1"> CI-232 </option>
-                    <option value="1"> CI-410 </option>
-                    <option value="1"> CI-515 </option>
-                    <option value="1"> CI-415 </option>
-                 </select>
-                 </p>
+            <p> Select a classroom @Ciap, ex: 432, 510 (just three digits):
+               <input class="inClassNum" type="string" value=""></br>
+                <div align="center"> <span id="searchBtn"> Search </span> </div>
+            </p>
+            
+            <p> Building </p>
+             <input class="inBuildingNum" type="string" value=""></br>
             </div>
         </div>
 
         <div id="CedesDropDownMenu">
         <div class="SelectClassroom">
-                <p> Select a classroom:
-                <select id="CiapClass">
-                    <option value="-1"> Select </option>
-                    <option value="1"> CEDES-232 </option>
-                    <option value="1"> CEDES-410 </option>
-                    <option value="1"> CEDES-515 </option>
-                    <option value="1"> CEDES-415 </option>
-                 </select>
-                 </p>
-            </div>
-
+            <p> Select a classroom @CEDES, ex: 432, 510 (just three digits):
+               <input class="inClassNum" type="string" value=""></br>
+               <div align="center"> <span id="searchBtn"> Search </span> </div>
+            </p>
+        </div>
         </div>
 
         <div id="CetecDropDownMenu">
         <div class="SelectClassroom">
-            <p> Select a classroom:
-            <select id="CiapClass">
-                <option value="-1"> Select </option>
-                <option value="1"> CET-232 </option>
-                <option value="1"> CET-410 </option>
-                <option value="1"> CET-515 </option>
-                <option value="1"> CET-415 </option>
-             </select>
-             </p>
+            <p> Select a classroom @CETEC, ex: 432, 510 (just three digits):
+               <input class="inClassNum" type="string" value=""></br>
+               <div align="center"> <span id="searchBtn"> Search </span> </div>
+            </p>
         </div>
 
         </div>
 
         <div id="BiotecDropDownMenu">
         <div class="SelectClassroom">
-            <p> Select a classroom:
-            <select id="CiapClass">
-                <option value="-1"> Select </option>
-                <option value="1"> BI-232 </option>
-                <option value="1"> BI-410 </option>
-                <option value="1"> BI-515 </option>
-                <option value="1"> BI-415 </option>
-             </select>
-             </p>
+            <p> Select a classroom @Biotecnologia, ex: 432, 510 (just three digits):
+               <input class="inClassNum" type="string" value=""></br>
+               <div align="center"> <span id="searchBtn"> Search </span> </div>
+            </p>
         </div>
         </div>
  
@@ -228,11 +214,11 @@
                     <th> 
                         <p>Lights</p>
                          <input id="LturnON" value="1" type="radio" name="LightStatus"> Turn ON lights  <br>
-                         <input id="LturnOFF" value="0" type="radio" name="LightStatus"> Turn OFF lights <br>
+                         <input id="LturnOFF" value="2" type="radio" name="LightStatus"> Turn OFF lights <br>
                          <br>  
                          <p>AC</p>
                          <input id="ACturnON" value="1" type="radio" name="ACStatus"> Turn ON AC <br>
-                         <input id="ACturnOFF" value="0" type="radio" name="ACStatus"> Turn OFF AC <br>   
+                         <input id="ACturnOFF" value="2" type="radio" name="ACStatus"> Turn OFF AC <br>   
                          <br>
                     </th>
             
