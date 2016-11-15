@@ -1,4 +1,4 @@
-<html>
+    <html>
 
 <head>
     <link rel="stylesheet" type="text/css" href="styles.css" />
@@ -8,6 +8,7 @@
 <header>    
     <div id="PageTitle">
         <h1> Classroom </h1>
+        <h4 id="currentLogin"> Currently login as: </h4>
     </div>    
 </header> 
 
@@ -37,20 +38,18 @@
     
     <div id="LoginSec">
         <form id=loginForm>
-           <div class="Username" align=center>
-                <p>  Username 
-                <input id="logUsername" type="string" name="Username" value=""></br>
-                </p>
-            </div>
+           <div class="Matricula" align=center>
+    			<p> ID Number (Employee: L0XXXXXXX)</p>
+    			<input id="logMat" type="string" value=""></br>
+    		</div>
 
-            <div class="Password" align=center>
-                <p>  Password 
-                <input id="logPassword" type="password" name="Password" value=""></br>
-                </p>
-            </div>
+    		<div class="Password" align=center>
+                <p>  Password  </p>
+    			<input id="logPassword" type="password" value=""></br>
+    		</div>
 
-            <div class="Remember" align=center>
-                <input id="logRemember" type="checkbox" name="Remember">Remember me
+    		<div class="Remember" align=center>
+    			<input id="logRemember" type="checkbox" name="Remember">Remember me
             </div>
              <div align="center"> <span id="loginButton"> Login </span> </div>
              <br>
@@ -58,10 +57,40 @@
     </div>
 
 
+
     <div id="RegSec">
-        <h1> Register Here! </h1>
-        <p id="banner">Sign up now to monitor</p>
-      
+        <table id="RegOption">
+            <tr>
+                <caption><h2> Select one option for registration: </h2> </caption>
+            </tr>
+            
+            <tr>
+                <th><div> <span class="btn"  id="BtnClass"> Register a new classroom </span> </div></th>
+                <th> <span class= "btn" id="BtnUser"> Register a new user </span> </th>
+            </tr>
+        </table>
+     </div>
+    
+    <div id="RegClass">
+        <h2>Register a new classroom:</h2> 
+            
+         <div class="classR">
+            <p> Building: (Format: AX-CIAP-CEDES-CETEC) </p>
+            <input id="inBuilding" type="string" value="">
+            </br>
+        </div>
+        <div class="classNum">
+            <p> Classroom number: (Format: XXX) </p>
+            <input id="inClassNum" type="string" value="">
+            </br>
+        </div>
+        <span class="Register">
+            <p id="BtnRegisterClass" class="btn">Register</p>
+        </span>  
+    </div>
+        
+    <div id="RegUser">
+        <h2> Register a new user: </h2>
         <div class="Fname">
             <p> First name </p>
             <input id="inFname" type="string" value="">
@@ -82,18 +111,16 @@
             <input id="inMatricula" type="string" value="">
             </br>
         </div> 
-
         <div class="accessType">
             <p> Access Type  </p>
             <input id="inAccessType" type="string" value="">
             </br>
         </div>
-
         <span class="Register">
-                <p id="registerBtn" class="btn">Register</p>
+            <p id="registerBtn" class="btn">Register</p>
         </span>
     </div>
-
+        
 
 
     <div id="AboutSec">
@@ -107,10 +134,12 @@
         
         <div id="images" >
             <span id="ciap1">
+                <input type="hidden" class="imagemenu" value="ciap">
                 <img id="ciap2" src="images/ciap.png" style=" width: 600px ; height: 390px;">
             </span>
             
             <span id="cedes1">
+                <input type="hidden" class="imagemenu" value="cedes">
                 <img id="cedes2" src="images/cedes.png" style=" width: 600px ; height: 390px; margin-top: 0.5cm">
             </span>
             
@@ -118,46 +147,109 @@
         
         <div id="images2" >
             <span id="biotec1">
+                <input type="hidden" class="imagemenu" value="biotec">
                 <img id="biotec2" src="images/biotec.jpg" style=" width: 600px ; height: 390px;">
             </span>
             
             <span id="cetec1">
+                  <input type="hidden" class="imagemenu" value="cetec">
                 <img id="cetec2" src="images/cetec.jpg" style=" width: 600px ; height: 390px; margin-top: 0.5cm; margin-bottom: 1cm">
             </span>
             
         </div>
     </div>
 
+    
 
-<!--
     <div id="pickAClassroom">
-        <div class= "title" align= center> <h4> Select a classroom </h4> </div>
-        <div id="menupickC" >
-            <span id="readAct">
-                <input type="checkbox" id="remPassword"> Remember my credentials?<br>
-            <span id="readAct2">
-                <input type="checkbox" id="remPassword"> Remember my credentials?<br>
-            </span>
-            </span>
+    <!----   <div class= "title" align= center> <h4> Select a classroom </h4> </div> ------> 
+        <div id="CiapDropDownMenu">    
+            <div class="SelectClassroom">
+            <p> Select a classroom @Ciap, ex: 432, 510 (just three digits):
+               <input class="inClassNum" type="string" value=""></br>
+                <div align="center"> <span id="searchBtn"> Search </span> </div>
+            </p>
             
-            <span id="writeAct">
-                <input type="checkbox" id="remPassword"> Remember my credentials?<br>
-            <span id="writeAct2">
-                <input type="checkbox" id="remPassword"> Remember my credentials?<br>
-            </span>
-            </span>
-            
+            <p> Building </p>
+             <input class="inBuildingNum" type="string" value=""></br>
+            </div>
         </div>
-    </div>
--->
-      
-    <div id="CommentSec">
+
+        <div id="CedesDropDownMenu">
+        <div class="SelectClassroom">
+            <p> Select a classroom @CEDES, ex: 432, 510 (just three digits):
+               <input class="inClassNum" type="string" value=""></br>
+               <div align="center"> <span id="searchBtn"> Search </span> </div>
+            </p>
+        </div>
+        </div>
+
+        <div id="CetecDropDownMenu">
+        <div class="SelectClassroom">
+            <p> Select a classroom @CETEC, ex: 432, 510 (just three digits):
+               <input class="inClassNum" type="string" value=""></br>
+               <div align="center"> <span id="searchBtn"> Search </span> </div>
+            </p>
+        </div>
+
+        </div>
+
+        <div id="BiotecDropDownMenu">
+        <div class="SelectClassroom">
+            <p> Select a classroom @Biotecnologia, ex: 432, 510 (just three digits):
+               <input class="inClassNum" type="string" value=""></br>
+               <div align="center"> <span id="searchBtn"> Search </span> </div>
+            </p>
+        </div>
+        </div>
+ 
+        <div id="menupickC" >
+            <table>
+                <tr > 
+                    <th class="tableHeader">Change sensors status</th>
+                    <th class="tableHeader">Read sensors status</th>
+                </tr>
+                
+                <tr>
+                    <th> 
+                        <p>Lights</p>
+                         <input id="LturnON" value="1" type="radio" name="LightStatus"> Turn ON lights  <br>
+                         <input id="LturnOFF" value="2" type="radio" name="LightStatus"> Turn OFF lights <br>
+                         <br>  
+                         <p>AC</p>
+                         <input id="ACturnON" value="1" type="radio" name="ACStatus"> Turn ON AC <br>
+                         <input id="ACturnOFF" value="2" type="radio" name="ACStatus"> Turn OFF AC <br>   
+                         <br>
+                    </th>
+            
+                    
+                    <th><p> Temperature: </p><br>
+                        <p> Light level: </p><br>  
+                    </th>
+                
+                </tr>
+                
+                
+                <tr>
+                    <th><div class="tablerow" ><span class= btn id="writeClassroomBtn"> Change Status </span> </div> </th>
+                    <th><div class="tablerow" ><span class= btn id="readClassroomBtn"> Read Status </span> </div> </th>
+                </tr>
+            </table>
+             
+        </div>
+        
+     </div>
+
+    
+   
+
+ <div id="CommentSec">
         <div id="allComment" >  <!----Comments ------>
         <div id="CommLeft"> <!----Comment izquierdo ------>
             <div id="Left">
                 <p> Add a comment! </p>
-                <p>Name:   </p>
-                <input id="comName" type="string" class="Name"  name="Name" value=""></br>
+               <!-- <p>Name:   </p> -->
+               <!-- <input id="comName" type="string" class="Name"  name="Name" value=""></br> -->
                 <p>ID Number:   <p>
                 <input id="comID" type="string" class="ID" name="ID" value=""></br>
                 <p>Comment: </p>
@@ -170,7 +262,6 @@
                 <p> Comment </p>
                 <table id="commentsTable">
                     <tr>
-                        <th>Name </th>
                         <th>ID</th>
                         <th>Comment</th>
                     </tr>
@@ -180,10 +271,12 @@
         </div> <!---End comment izquierdo------>
     </div> <!----End comments ------>
     </div>
-    
        
     <div id="FavSec">
-        <p> Username </p>
+        <div id="Favoritos">
+            <table id="FavsTable">
+            </table>
+        </div>
     </div>
 
     

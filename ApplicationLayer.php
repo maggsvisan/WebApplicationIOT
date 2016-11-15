@@ -25,19 +25,41 @@ switch($action){
                           break;
         
     case "register": registerFunction(); //
+                      break;
+        
+    case "changeSts": changeSts(); //
+                     break;
+    
+    case "registerClassroom": registerClassroom(); //
                         break;
         
-    case "loadComments": loadComments(); //all comments of the DB 
-                            break;
-        
+    
+    case "validateClassroom": validateClassroom();
+                        break;
+    case "loadComment" : loadComments();
+                        break;
+    case "loadFavorites": loadFavorites();
+                        break;
+
+}
+function loadComments(){
+    
+    $result =  loadDBComment();
+    echo json_encode($result);
 }
 
+function loadFavorites(){
+    $mat = $_POST["matricula"];
+    $result = loadDBFavs($mat);
+    echo json_encode($result);
+}
+
+
 function loginFunction(){
-	$userName = $_POST["username"];
+	$mat = $_POST["matricula"];
 	$userPassword = $_POST["password"];
 
-    
-	$result = attemptLogin($userName);  
+	$result = attemptLogin($mat);  
     
 	if ($result["status"] == "SUCCESS"){
 		
@@ -47,11 +69,11 @@ function loginFunction(){
     	if ($decryptedPassword === $userPassword)
 		   	{	
             
-                $newSession= attemptCreateSession($userName, $result['password']);
+                $newSession= attemptCreateSession($mat, $result['password']);
                 echo json_encode(array("message" => "Login Successful", 
                                        "fName" => $result["firstName"] , 
                                         "lName" => $result["lastName"],
-                                        "user" => $result["username"],
+                                        "mat"=> $result["mat"],
                                        ));  
 			}   
         
@@ -66,6 +88,25 @@ function loginFunction(){
 		header('HTTP/1.1 500' . $result["status"]);
 		die($result["status"]);
 	}	
+}
+
+
+
+function verifySession(){
+    
+    // Start session
+    session_start();
+    //verify if username is set in session
+    if(empty($_SESSION['matricula'])) {
+        $response = array("matricula"=>null, "password"=>null, "state"  =>"false");
+        echo json_encode($response);
+    }
+    else {
+    	$response = array("mat"=>$_SESSION['matricula'], "password"=> $_SESSION['password'], "state"  =>"true");
+        
+    	echo json_encode($response);
+    }
+    
 }
 
 
@@ -87,23 +128,6 @@ function deleteSession(){
     
 }
 
-
-function verifySession(){
-    
-    // Start session
-    session_start();
-    //verify if username is set in session
-    if(empty($_SESSION['username'])) {
-        $response = array("username"=>null, "password"=>null, "state"  =>"false");
-        echo json_encode($response);
-    }
-    else {
-    	$response = array("username"=>$_SESSION['username'], "password"=> $_SESSION['password'], "state"  =>"true");
-        
-    	echo json_encode($response);
-    }
-    
-}
 
 
 function registerFunction(){ 
@@ -133,36 +157,6 @@ function registerFunction(){
 }
 
 
-function loadComments(){
-    
-    $result= loadCommentsDB();
-    echo json_encode($result);
-    
-}
-   
-
-
-function insertComment(){
-    $id = $_POST["idcomm"];
-    $name = $_POST["nameComm"]; //POST, parameter passed by the front end
-    $comment= $_POST["comComm"];
-    echo $name;
-    $result= attemptInsertComment ($comment,$id);
-        echo json_encode($result);
-
-    if ($result["status"] == "SUCCESS"){
-		echo json_encode(array("name"=> $name , "comment" =>$comment, "id"=>$id));
-    }
-    
-    else{
-        header('HTTP/1.1 500' . $result["status"]);
-        die($result["status"]); //returns error from DataLayer
-    }	
-    
-
-}
-
-
 function createCookie(){
     
     $cookieName = $_POST["CookieName"];
@@ -180,12 +174,11 @@ function createCookie(){
     
 }
 
-
 function retrieveCookie(){
     
-    if (isset($_COOKIE['username'])) //this checks if a cookie is set or not
+    if (isset($_COOKIE['matID'])) //this checks if a cookie is set or not
 	{
-		echo json_encode(array('cookieUsername' => $_COOKIE['username'])); 
+		echo json_encode(array('cookieMat' => $_COOKIE['matID'])); 
         
 	}
 	else
@@ -252,6 +245,104 @@ function retrieveCookie(){
 
 	    return $userPassword;
 	}
+
+
+    function insertComment(){
+        $id = $_POST["idComm"];
+        //$name = $_POST["nameComm"]; //POST, parameter passed by the front end
+        $comment= $_POST["comComm"];
+      
+        $result= attemptInsertComment ($comment,$id);
+
+        if ($result["status"] == "SUCCESS"){
+            echo json_encode(array("comment" =>$comment, "id"=>$id));
+        }
+        else{
+            header('HTTP/1.1 500' . $result["status"]);
+            die($result["status"]); //returns error from DataLayer
+        }	
+    
+    }
+
+    function registerClassroom(){
+        $building= $_POST["building"];
+        $num= $_POST["classNum"];
+        $result= attemptInsertClassroom ($building, $num);
+        if ($result["status"] == "SUCCESS"){
+            $response = array("message"=> "Now you are register");
+            echo json_encode($response); //sent it to presentation layer
+        }
+
+        else{
+            header('HTTP/1.1 500' . $result["status"]);
+            die($result["status"]); //returns error from DataLayer
+        }	
+        
+    }
+
+
+    function validateClassroom(){ //validate if classroom exists
+        $classNumber= $_POST["classroom"];
+        
+     $result=  verifyClassroom($classNumber);
+            
+     if ($result["status"] == "SUCCESS"){
+         $response = array("message"=> "Classroom Exists!");
+         echo json_encode($response); //sent it to presentation layer  
+      }	
+    
+    else{
+            header('HTTP/1.1 500' . $result["status"]);
+            die($result["status"]); //returns error from DataLayer
+        }	
+            
+    }
+
+
+function changeSts(){
+        $lightStatus= $_POST["lstatus"];
+        $ACStatus= $_POST["ACstatus"];
+        $classNumber= $_POST["classroom"];
+        $buildingNumber= $_POST["building"];
+        
+        $getClassroom= getIDClassroom($classNumber, $buildingNumber); #gets ID classroom    
+
+        
+        if ($getClassroom["status"] == "SUCCESS"){
+                $idClass = $getClassroom["idClassroom"];
+            
+                $getRegister= getIDRegister($idClass); #gets ID Register
+                
+                if($getRegister["status"]== "SUCCESS"){
+                        $idReg= $getRegister["idRegister"];
+                    
+                    $result= attemptChangeSts($idReg, $lightStatus, $ACStatus); #update table
+                            
+                      if ($result["status"] == "SUCCESS"){
+                            $response = array("message"=> "Classroom Updated!");
+                            echo json_encode($response); //sent it to presentation layer  
+                        }	
+    
+                      else{
+                            header('HTTP/1.1 500' . $result["status"]);
+                            die($result["status"]); //returns error from DataLayer
+                     }
+                     
+                    
+                 }     
+                else{
+                    header('HTTP/1.1 500' .  $getRegister["status"]);
+                    die($getRegister["status"]); //returns error from DataLayer
+                }
+        }	
+
+        else{
+            header('HTTP/1.1 500' .  $getClassroom["status"]);
+            die($getClassroom["status"]); //returns error from DataLayer
+        }	        
+        
+    }
+
 
 
 ?>
