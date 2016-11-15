@@ -31,6 +31,19 @@ CREATE TABLE Actuators(
 
 );
 
+
+CREATE TABLE Sensors(  
+    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    tempValue VARCHAR(50) NOT NULL,
+    lightValue VARCHAR(50) NOT NULL,
+    rnum INT NOT NULL,   
+
+    FOREIGN KEY (rnum) REFERENCES Register(id)
+
+);
+
+
+
 CREATE TABLE Comments (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
     commnt VARCHAR(140) NOT NULL,
