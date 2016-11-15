@@ -1,6 +1,28 @@
 $(document).ready(function () {
-    
-    
+    $.ajax({
+        url: 'data/ApplicationLayer.php',
+        type: 'POST' ,
+        data: { "action": "verifySession"},
+        dataType: 'json',
+        success: function(jsonResponse){
+          if(jsonResponse.status === "true"){
+            $("#currentLogin").empty();
+            $("#currentLogin").append(jsonResponse.mat);
+            $("#currentLogin").show();
+            $("#Login").hide();
+          }
+          else{
+            $("#LoginUsername").append("Welcome to out site");
+          }
+
+        },
+        error: function(errorMessage){
+          alert(errorMessage.responseText);
+          alert("False verify");
+          $("#currentLogin").hide();
+
+        }
+  });
 //////////////////////////////////////////////
 ////////// PAGE DIVS SHOW AND HIDE //////////
 //////////////////////////////////////////////
@@ -14,7 +36,6 @@ $(document).ready(function () {
     $("#CommentSec").hide();
     $("#FavSec").hide();
     $("#logoutButton").hide();
-    $("#currentLogin").hide();
     $("#pickAClassroom").hide();
     $("#CiapDropDownMenu").hide();
     $("#CetecDropDownMenu").hide();
