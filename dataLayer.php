@@ -391,7 +391,7 @@ function createActuators($idReg){
 
 
             else{
-                return array("Error create register");
+                return array("Error create sensors");
             }
 
         }
@@ -403,5 +403,66 @@ function createActuators($idReg){
 }
 
 
+
+function createSensors($idReg){
+        
+        $conn = connectionToDataBase();
+        if ($conn != null){
+
+        $sql = "INSERT INTO Sensors(tempValue, lightValue, rnum) 
+                VALUES ('y' , 'y', '$idReg' ) " ;
+        
+        echo $sql;
+
+        $result = $conn->query($sql);
+
+            if ($result != null) {
+                return array("status" => "SUCCESS");   
+            } 
+
+
+            else{
+                return array("Error create sensors");
+            }
+
+        }
+            else {
+                $conn -> close();
+                header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+         }
+                
+}
+
+function attemptReadSensors($idReg){
+    
+    $conn = connectionToDataBase();
+
+	if ($conn != null){
+			
+        $sql = "SELECT tempValue, lightValue FROM Sensors WHERE rnum='$idReg'";
+		
+       // echo $sql;
+			$result = $conn->query($sql);
+
+			if ($result->num_rows > 0)
+			{
+                $row = $result -> fetch_assoc();
+				$conn -> close();
+			
+                return array("tempVal" => $row["tempValue"],"lightVal" => $row["lightValue"], "status" => "SUCCESS");
+			}
+			else{
+				$conn -> close();
+				return array("status" => "Registration form for this classroom does not exists!");
+			}
+		}
+
+    else{
+		$conn -> close();
+		return array("status" => "CONNECTION WITH DB WENT WRONG");
+	}   
+    
+    
+}
 
 ?>

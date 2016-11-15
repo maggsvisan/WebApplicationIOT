@@ -37,10 +37,9 @@ switch($action){
     case "validateClassroom": validateClassroom();
                         break;
     
-    
-    
-        
-        
+    case "readSensors": readSensors();
+                        break;
+            
 }
 
 function loginFunction(){
@@ -283,14 +282,7 @@ function registerClassroom(){ //creates register and actuators
                      
                      $result3= createActuators($idReg); //crea hoja de actuadores
                      
-                   //  if($result3["status"]=="SUCCESS"){
-                         
-                     //    echo $result["status"];
-                    // }
-                     
-                    // else{
-                      //   header('HTTP/1.1 500' .  $result3["status"]); 
-                     //}
+                     $result4= createSensors($idReg); // crea hoja de lectura de sensores
                      
                  }
                  
@@ -382,6 +374,54 @@ function changeSts(){
         }	        
         
     }
+
+
+
+
+function readSensors(){
+
+        $classNumber= $_POST["classroom"];
+        $buildingNumber= $_POST["building"];
+        
+        $getClassroom= getIDClassroom($classNumber, $buildingNumber); #gets ID classroom    
+        
+        
+        if ($getClassroom["status"] == "SUCCESS"){
+                $idClass = $getClassroom["idClassroom"];
+            
+                $getRegister= getIDRegister($idClass); #gets ID Register
+                
+                if($getRegister["status"]== "SUCCESS"){
+                        $idReg= $getRegister["idRegister"];
+                    
+                        $result= attemptReadSensors($idReg); #read values of Sensors
+                            
+                      if ($result["status"] == "SUCCESS"){
+                           // $response = array("tempVal"=> $result["tempVal"],"lightVal"=> $result["lightVal"] );         
+                          echo json_encode($result); //sent it to presentation layer  
+                        }	
+    
+                      else{
+                            header('HTTP/1.1 500' . $result["status"]);
+                            die($result["status"]); //returns error from DataLayer
+                     }
+                     
+                    
+                 }     
+                else{
+                    header('HTTP/1.1 500' .  $getRegister["status"]);
+                    die($getRegister["status"]); //returns error from DataLayer
+                }
+        }	
+
+        else{
+            header('HTTP/1.1 500' .  $getClassroom["status"]);
+            die($getClassroom["status"]); //returns error from DataLayer
+        }	        
+        
+    }
+
+
 
 
 

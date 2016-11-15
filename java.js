@@ -24,6 +24,7 @@ $(document).ready(function () {
     $("#RegClass").hide();
     $("#RegUser").hide();
     
+    
     $("#Home").on("click", function () {
         $("#homeImages").show();
         $("#LoginSec").hide();
@@ -323,6 +324,50 @@ $(document).ready(function () {
 ///////////////////////////////////////////////////// 
 /////////////////////////////////////////////////////
 
+
+/////////////////////////////////////////////////////
+////////////////// READ SENSORS /////////////////////
+/////////////////////////////////////////////////////
+        
+$("#readClassroomBtn").on("click", function () { 
+   
+   var jsonData = { 
+        "action": "readSensors",
+        "classroom": $("#inCNum").val(),
+        "building": imageSelected, 
+    };
+    
+    console.log(jsonData);
+    
+     $.ajax({
+            url: "data/ApplicationLayer.php", 
+            type: "POST", 
+            data: jsonData, 
+            success: function (jsonResponse) {
+                
+                $("#printTemp").empty();
+                $("#printLight").empty();
+                $("#printTemp").append(jsonResponse.tempVal);
+                $("#printLight").append(jsonResponse.lightVal);       
+        }
+            , error: function (errorMessage) {
+                alert(errorMessage.responseText);
+                alert("data error");
+            }
+        });
+   
+});
+    
+    
+/////////////////////////////////////////////////////
+///////////////////////////////////////////////////// 
+/////////////////////////////////////////////////////
+    
+
+    
+/////////////////////////////////////////////////////
+////////////////// WRITE SENSORS /////////////////////
+/////////////////////////////////////////////////////
   $("#writeClassroomBtn").on("click", function () {   //// Change Status 
                
                   var valueLight;
@@ -401,6 +446,7 @@ $(".searchBtn").click(function () {
             
         };
         
+        //$("#inCNum").val("");
         console.log(jsonData);
         
         $.ajax({
@@ -410,7 +456,7 @@ $(".searchBtn").click(function () {
             , success: function (jsonResponse) {
                 alert(jsonResponse.message)
                 //console.log(jsonResponse);
-                 alert("dio click a write");
+                
               
                    
         }
