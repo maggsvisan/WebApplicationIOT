@@ -352,7 +352,7 @@ $(".searchBtn").click(function () {
             
                 
           $("#writeClassroomBtn").on("click", function () {   //// Change Status 
-            
+            alert("dio click a write");
               var valueLight;
               var valueAC;
               
