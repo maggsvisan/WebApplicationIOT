@@ -318,11 +318,8 @@ function registerClassroom(){ //creates register and actuators
 
 
 
-
-
-
-
-    function validateClassroom(){ //validate if classroom exists
+function validateClassroom(){ //validate if classroom exists
+   
     $classNumber= $_POST["classroom"];
     $buildingNum= $_POST["buildNum"];
      
@@ -339,7 +336,7 @@ function registerClassroom(){ //creates register and actuators
             die($result["status"]); //returns error from DataLayer
         }	
             
-    }
+}
  
 
 function changeSts(){

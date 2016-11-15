@@ -218,8 +218,9 @@ function verifyClassroom ($classNumber, $buildingNum){
 
 	if ($conn != null){
 			
-        $sql = "SELECT building, num FROM Classroom WHERE building='$buildingNum' AND num = '$classNumber' ";
-		
+        $sql = "SELECT id FROM Classroom WHERE building='$buildingNum' AND num = '$classNumber' ";
+		echo $sql;
+        
 			$result = $conn->query($sql);
 
 			if ($result->num_rows > 0)

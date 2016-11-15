@@ -323,7 +323,68 @@ $(document).ready(function () {
 ///////////////////////////////////////////////////// 
 /////////////////////////////////////////////////////
 
-    
+  $("#writeClassroomBtn").on("click", function () {   //// Change Status 
+               
+                  var valueLight;
+                  var valueAC;
+
+                  if ($('input:radio[name=LightStatus]:checked').val()>= 0){
+                        valueLight= $('input:radio[name=LightStatus]:checked').val();
+                    }
+
+                    else{
+                        valueLight=-1;
+                    }
+
+                    if ($('input:radio[name=ACStatus]:checked').val()>=0) {
+                         valueAC= $('input:radio[name=ACStatus]:checked').val();
+                    }
+
+                    else{
+                        valueAC =-1;
+                    }
+
+                 alert(imageSelected);
+                 alert(valueAC);
+                 alert(valueLight);
+
+
+                       var jsonData2 = { //hay que mandarle que salón es
+                            "action": "changeSts",
+                            "classroom": $("#inCNum").val(),
+                           "building": imageSelected, 
+                            "lstatus": valueLight,
+                            "ACstatus": valueAC
+                        };
+
+                    console.log(jsonData2)
+
+                        if ((valueAC >= 0) && (valueLight >= 0)) {
+                        alert("entra if");
+
+                            $.ajax({
+                                url: "data/ApplicationLayer.php", 
+                                type: "POST",
+                                data: jsonData2,
+                                dataType: "json",
+                                contentType: "application/x-www-form-urlencoded",
+                                success: function (jsonResponse) {
+                                    console.log(jsonResponse)
+                                },
+
+                                error: function (errorMessage){
+                                    alert(errorMessage.responseText);
+                                    alert("Error changing status");
+                                }
+                            });
+
+                        }
+
+                        else{
+                            alert("Select an option!");
+                        }
+
+            });   
     
  /////////////////////////////////////////////////////
 /////////////// VALIDATE CLASSROOM ////////////////// 
@@ -334,7 +395,7 @@ $(".searchBtn").click(function () {
         alert(imageSelected); 
         
         var jsonData = {
-            "classroom": $(".inCNum").val(), 
+            "classroom": $("#inCNum").val(), 
             "buildNum": imageSelected,
             "action": "validateClassroom"
             
@@ -349,70 +410,8 @@ $(".searchBtn").click(function () {
             , success: function (jsonResponse) {
                 alert(jsonResponse.message)
                 //console.log(jsonResponse);
-            
-                
-          $("#writeClassroomBtn").on("click", function () {   //// Change Status 
-            alert("dio click a write");
-              var valueLight;
-              var valueAC;
+                 alert("dio click a write");
               
-              if ($('input:radio[name=LightStatus]:checked').val()>= 0){
-                    valueLight= $('input:radio[name=LightStatus]:checked').val();
-                }
-
-                else{
-                    valueLight=-1;
-                }
-
-                if ($('input:radio[name=ACStatus]:checked').val()>=0) {
-                     valueAC= $('input:radio[name=ACStatus]:checked').val();
-                }
-
-                else{
-                    valueAC =-1;
-                }
-                
-             alert(imageSelected);
-             alert(valueAC);
-             alert(valueLight);
-              
-
-                   var jsonData2 = { //hay que mandarle que salón es
-                        "action": "changeSts",
-                        "classroom": $(".inClassNum").val(),
-                       "building": imageSelected, 
-                        "lstatus": valueLight,
-                        "ACstatus": valueAC
-                    };
-                    
-                console.log(jsonData2)
-              
-                    if ((valueAC >= 0) && (valueLight >= 0)) {
-                    alert("entra if");
-
-                        $.ajax({
-                            url: "data/ApplicationLayer.php", 
-                            type: "POST",
-                            data: jsonData2,
-                            dataType: "json",
-                            contentType: "application/x-www-form-urlencoded",
-                            success: function (jsonResponse) {
-                                console.log(jsonResponse)
-                            },
-
-                            error: function (errorMessage){
-                                alert(errorMessage.responseText);
-                                alert("Error changing status");
-                            }
-                        });
-
-                    }
-
-                    else{
-                        alert("Select an option!");
-                    }
-
-            });
                    
         }
             , error: function (errorMessage) {
