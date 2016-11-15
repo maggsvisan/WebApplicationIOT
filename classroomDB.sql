@@ -42,10 +42,17 @@ CREATE TABLE Comments (
 
 
 INSERT INTO Register(cnum, timeReg, dateReg)
+values (6, '13:00:15' , '2010-01-02' )
+
+INSERT INTO Register(cnum, timeReg, dateReg)
 values (1, '13:00:00' , '2008-01-02' )
+
 
 INSERT INTO Actuators(stsTemp, stsLight, rnum)
 VALUES (1, 0, 1)
 
 INSERT INTO Actuators(stsTemp, stsLight, rnum)
 VALUES (1, 0, 2)
+
+INSERT INTO Actuators(stsTemp, stsLight, rnum)
+VALUES (0, 0, 3)

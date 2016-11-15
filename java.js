@@ -151,7 +151,7 @@ $(document).ready(function () {
 
     
      $("#cetec2").on("click",function(){
-        imageSelected= "cetec";
+        imageSelected= "CETEC";
       
         $("#LoginSec").hide();
         $("#RegSec").hide(); 
@@ -174,7 +174,7 @@ $(document).ready(function () {
     });
     
      $("#cedes2").on("click",function(){
-        imageSelected= "cedes";
+        imageSelected= "CEDES";
       
         $("#LoginSec").hide();
         $("#RegSec").hide(); 
@@ -198,7 +198,7 @@ $(document).ready(function () {
     
     
      $("#ciap2").on("click",function(){
-        imageSelected= "ciap";
+        imageSelected= "CIAP";
                  
         $("#LoginSec").hide();
         $("#RegSec").hide(); 
@@ -222,7 +222,7 @@ $(document).ready(function () {
     
     
      $("#biotec2").on("click",function(){
-        imageSelected= "biotec";
+        imageSelected= "BIOTEC";
          
         $("#LoginSec").hide();
         $("#RegSec").hide(); 
@@ -330,12 +330,17 @@ $(document).ready(function () {
 /////////////////////////////////////////////////////
     
 $(".searchBtn").click(function () {
-       
+        
+        alert(imageSelected); 
+        
         var jsonData = {
-            "classroom": $(".inClassNum").val(), 
+            "classroom": $(".inCNum").val(), 
+            "buildNum": imageSelected,
             "action": "validateClassroom"
             
         };
+        
+        console.log(jsonData);
         
         $.ajax({
             url: "data/ApplicationLayer.php"
@@ -344,9 +349,10 @@ $(".searchBtn").click(function () {
             , success: function (jsonResponse) {
                 alert(jsonResponse.message)
                 //console.log(jsonResponse);
+            
                 
           $("#writeClassroomBtn").on("click", function () {   //// Change Status 
-                
+            
               var valueLight;
               var valueAC;
               
@@ -366,17 +372,20 @@ $(".searchBtn").click(function () {
                     valueAC =-1;
                 }
                 
-             
+             alert(imageSelected);
+             alert(valueAC);
+             alert(valueLight);
+              
 
                    var jsonData2 = { //hay que mandarle que salón es
                         "action": "changeSts",
                         "classroom": $(".inClassNum").val(),
-                       "building": $(".inBuildingNum").val(), 
+                       "building": imageSelected, 
                         "lstatus": valueLight,
                         "ACstatus": valueAC
                     };
                     
-           
+                console.log(jsonData2)
               
                     if ((valueAC >= 0) && (valueLight >= 0)) {
                     alert("entra if");
@@ -403,38 +412,9 @@ $(".searchBtn").click(function () {
                         alert("Select an option!");
                     }
 
-  });
-   
-    
-/////////////////////////////////////////////////////
-///////////////////////////////////////////////////// 
-/////////////////////////////////////////////////////
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-            }
+            });
+                   
+        }
             , error: function (errorMessage) {
                 alert(errorMessage.responseText);
             }
@@ -454,8 +434,8 @@ $(".searchBtn").click(function () {
     $("#BtnRegisterClass").click(function () {
        
         var jsonData = {
-            "building": $("#inBuilding").val(), 
             "classNum": $("#inClassNum").val(), 
+            "building": $("#inBuilding").val(), 
             "action": "registerClassroom"    
         };
         
@@ -468,10 +448,11 @@ $(".searchBtn").click(function () {
                 alert("Added!");
                 //alert("New Register added" + jsonResponse.fName)
                 console.log(jsonResponse);
+                                
             }
             , error: function (errorMessage) {
                 //alert(errorMessage.responseText);
-                alert("error");
+                alert(errorMessage.responseText);
             }
         });
         
