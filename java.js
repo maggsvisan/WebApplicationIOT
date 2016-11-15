@@ -1,32 +1,35 @@
 $(document).ready(function () {
+
     $.ajax({
         url: 'data/ApplicationLayer.php',
         type: 'POST' ,
         data: { "action": "verifySession"},
         dataType: 'json',
         success: function(jsonResponse){
-          if(jsonResponse.status === "true"){
+          if(jsonResponse.state === "true"){
             $("#currentLogin").empty();
+            $("#currentLogin").append("Welcome, ");
             $("#currentLogin").append(jsonResponse.mat);
             $("#currentLogin").show();
             $("#Login").hide();
+            $("#logoutButton").show();
           }
           else{
-            $("#LoginUsername").append("Welcome to out site");
+            $("#currentLogin").hide();
+            $("#Login").show();
+            $("#logoutButton").hide();
           }
-
         },
         error: function(errorMessage){
           alert(errorMessage.responseText);
           alert("False verify");
           $("#currentLogin").hide();
-
         }
-  });
+    });
 //////////////////////////////////////////////
 ////////// PAGE DIVS SHOW AND HIDE //////////
-//////////////////////////////////////////////
-    
+//////////////////////////////////// 
+    $("#Login").show();
     $("#LoginSec").hide();
     $("#RegSec").hide(); 
     $("#AboutSec").hide(); 
@@ -35,7 +38,6 @@ $(document).ready(function () {
     $("#homeImages").show();
     $("#CommentSec").hide();
     $("#FavSec").hide();
-    $("#logoutButton").hide();
     $("#pickAClassroom").hide();
     $("#CiapDropDownMenu").hide();
     $("#CetecDropDownMenu").hide();
@@ -43,6 +45,7 @@ $(document).ready(function () {
     $("#BiotecDropDownMenu").hide();
     $("#RegClass").hide();
     $("#RegUser").hide();
+
     
     $("#Home").on("click", function () {
         $("#homeImages").show();
@@ -59,6 +62,7 @@ $(document).ready(function () {
         $("#BiotecDropDownMenu").hide();
         $("#RegClass").hide();
         $("#RegUser").hide();
+
   
     });
     
@@ -178,8 +182,6 @@ $(document).ready(function () {
         $("#homeImages").hide();
         $("#CommentSec").hide();
         $("#FavSec").hide();
-        $("#logoutButton").hide();
-        $("#currentLogin").hide();
         $("#pickAClassroom").show();
         $("#CiapDropDownMenu").hide();
         $("#CetecDropDownMenu").show();
@@ -199,8 +201,6 @@ $(document).ready(function () {
         $("#homeImages").hide();
         $("#CommentSec").hide();
         $("#FavSec").hide();
-        $("#logoutButton").hide();
-        $("#currentLogin").hide();
         $("#pickAClassroom").show();
         $("#CiapDropDownMenu").hide();
         $("#CetecDropDownMenu").hide();
@@ -226,8 +226,6 @@ $(document).ready(function () {
         $("#homeImages").hide();
         $("#CommentSec").hide();
         $("#FavSec").hide();
-        $("#logoutButton").hide();
-        $("#currentLogin").hide();
         $("#pickAClassroom").show();
         $("#CiapDropDownMenu").show();
         $("#CetecDropDownMenu").hide();
@@ -250,8 +248,6 @@ $(document).ready(function () {
         $("#homeImages").hide();
         $("#CommentSec").hide();
         $("#FavSec").hide();
-        $("#logoutButton").hide();
-        $("#currentLogin").hide();
         $("#pickAClassroom").show();
         $("#CiapDropDownMenu").hide();
         $("#CetecDropDownMenu").hide();
@@ -275,8 +271,6 @@ $(document).ready(function () {
         $("#homeImages").hide();
         $("#CommentSec").hide();
         $("#FavSec").hide();
-        $("#logoutButton").hide();
-        $("#currentLogin").hide();
         $("#pickAClassroom").hide();
         $("#CiapDropDownMenu").hide();
         $("#CetecDropDownMenu").hide();
@@ -296,8 +290,6 @@ $(document).ready(function () {
         $("#homeImages").hide();
         $("#CommentSec").hide();
         $("#FavSec").hide();
-        $("#logoutButton").hide();
-        $("#currentLogin").hide();
         $("#pickAClassroom").hide();
         $("#CiapDropDownMenu").hide();
         $("#CetecDropDownMenu").hide();
@@ -310,33 +302,55 @@ $(document).ready(function () {
 
     $("#Fav").on("click",function(){
         $("#Favoritos").empty();
-            $.ajax({  
-                    url: "data/ApplicationLayer.php",
-                    type: "POST",
-                    data: {
-                        "matricula" : "A0119182", //aqui debe de agarrar la matricula de la sesion
-                        "action"  : "loadFavorites"
-                    },
-                    success: function (jsonResponse){
-                        if (jsonResponse.length > 0){
-                             var postFavs = "<table> <tr><th>Building</th> <th>Number</th> </tr>";
-                            $.each(jsonResponse,function(index){
-                                postFavs    += "<tr>"
-                                            +  "<td>" + jsonResponse[index].building      + "</td>"
-                                            +  "<td>" + jsonResponse[index].number        + "</td>"
-                                            +  "</tr>";   
-                            });
-                            postFavs+= "</table>";
-                            $("#Favoritos").append(postFavs);
-                        } 
-                        
-                    },
-                    error:function(errorMessage){
-                        if ($("#Favoritos").is(':empty')){
-                            $("#Favoritos").append("No favorites to show. Select some from the classroom section");
-                        }
+        $.ajax({
+            url: 'data/ApplicationLayer.php',
+            type: 'POST' ,
+            data: { "action": "verifySession"},
+            dataType: 'json',
+            success: function(jsonResponse){
+                    if(jsonResponse.state === "true"){
+                        var Matricula = jsonResponse.mat;
+                        alert(Matricula);
+                        dataFav = {
+                            "matricula" : Matricula,
+                            "action" : "loadFavorites"
+                        };
+                        $.ajax({  
+                            url: "data/ApplicationLayer.php",
+                            type: "POST",
+                            data: dataFav,
+                            success: function (jsonResponse){
+                                if (jsonResponse.length > 0){
+                                    alert("Enter loading");
+                                     var postFavs = "<table> <tr><th>Building</th> <th>Number</th> </tr>";
+                                    $.each(jsonResponse,function(index){
+                                        postFavs    += "<tr>"
+                                                    +  "<td>" + jsonResponse[index].building      + "</td>"
+                                                    +  "<td>" + jsonResponse[index].number        + "</td>"
+                                                    +  "</tr>";   
+                                    });
+                                    postFavs+= "</table>";
+                                    $("#Favoritos").append(postFavs);
+                                } 
+                                
+                            },
+                            error:function(errorMessage){
+                                if ($("#Favoritos").is(':empty')){
+                                    $("#Favoritos").append("No favorites to show. Select some from the classroom section");
+                                }
+                            }
+                        });//------------------------
                     }
-            });//------------------------
+
+            },
+            error: function(errorMessage){
+                  alert(errorMessage.responseText);
+                  alert("False verify");
+                  $("#currentLogin").hide();
+            }
+        });
+
+            
     });
 ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////
@@ -371,29 +385,6 @@ $(document).ready(function () {
 /////////////////////////////////////////////////////
 ///////////////// VERIFY SESSION ////////////////// 
 /////////////////////////////////////////////////////
-        
- $.ajax({
-        url: 'data/ApplicationLayer.php',
-        type: 'POST' ,
-        data: { "action": "verifySession"},
-        dataType: 'json',
-        success: function(jsonResponse){
-          if(jsonResponse.state === "true"){
-            $("#currentLogin").append(jsonResponse.mat);
-            $("#LoginSec").hide();
-          }
-          else{
-            $("#LoginUsername").append("Welcome to out site");
-          }
-
-        },
-        error: function(errorMessage){
-          $("#currentLogin").append("Welcome");
-          alert(errorMessage.responseText);
-          $("#logoutButton").hide();
-        }
-  });
-        
 /////////////////////////////////////////////////////
 ///////////////////////////////////////////////////// 
 /////////////////////////////////////////////////////
@@ -625,8 +616,10 @@ $("#searchBtn").click(function () {
                 newHTMLContent = jsonResponse.mat;
                 $("#currentLogin").append(newHTMLContent); //currently login as
                 $("#currentLogin").show();
-                
-             
+                $("#Login").hide();
+                $("#logoutButton").show();
+                $("#homeImages").show();
+                $("#LoginSec").hide();
                 
                 var jsonData2 = {
                     "CookieValue": $("#logMat").val(), 
@@ -657,7 +650,7 @@ $("#searchBtn").click(function () {
             }
         });
         
-        $("#logoutButton").show();
+
     
     });
 ///////////////////////////////////////////////////
@@ -679,6 +672,9 @@ $("#logoutButton").on("click", function () {
             , success: function (jsonResponse) {
                 alert(jsonResponse.success);
                 window.location.replace("index.html");
+                $("#Login").show();
+                $("#logoutButton").hide();
+                $("#currentLogin").hide();
             }
             , error: function (errorMessage) {
                 alert(errorMessage.responseText);
