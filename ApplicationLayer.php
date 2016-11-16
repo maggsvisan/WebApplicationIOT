@@ -282,55 +282,65 @@ function registerClassroom(){ //creates register and actuators
         $building= $_POST["building"];
         $num= $_POST["classNum"];
         
-        $result= attemptInsertClassroom ($building, $num);
-        echo $result["status"];
-        
-        if ($result["status"] == "SUCCESS"){
-            $response = array("message"=> "Now you are register");
-            echo json_encode($response); //sent it to presentation layer
-            
-            
-             $getClassroom= getIDClassroom($num, $building);   
-            // echo $getClassroom["status"];
-                
-                 
-             if ($getClassroom["status"] == "SUCCESS"){
-                $idClass = $getClassroom["idClassroom"]; #gets ID classroom 
-                
-                $result2= createRegister($idClass); //crea la hoja de registro
-                
-                //echo $result2["status"];                
-                
-                 if($result2["status"]== "SUCCESS"){
-                     
-                     $getReg= getIDRegister($idClass);
-                     $idReg= $getReg["idRegister"];
-                     
-                     $result3= createActuators($idReg); //crea hoja de actuadores
-                     
-                     $result4= createSensors($idReg); // crea hoja de lectura de sensores
-                     
-                 }
-                 
-                 else{
-                  header('HTTP/1.1 500' .  $result2["status"]); 
-                  //die($getRegister["status"]); //returns error from DataLayer
-                }    
-            
-                   
-             }
-                 
-              else{
-                  header('HTTP/1.1 500' .  $getRegister["status"]); //classroom no existe
-                  //die($getRegister["status"]); //returns error from DataLayer
-                }    
-            
-        }
+        $valid= validClassroom ($num, $building);
+    
+        if($valid["status"]=="Available"){ //valida si la combinacion de building y classroom es unica
+    
+            $result= attemptInsertClassroom ($building, $num);
+            echo $result["status"];
 
-        else{
-            header('HTTP/1.1 500' . $result["status"]); //no se pudo registrar salon
-            die($result["status"]); //returns error from DataLayer
-        }	
+            if ($result["status"] == "SUCCESS"){
+                $response = array("message"=> "Now you are register");
+                echo json_encode($response); //sent it to presentation layer
+
+
+                 $getClassroom= getIDClassroom($num, $building);   
+                // echo $getClassroom["status"];
+
+
+                 if ($getClassroom["status"] == "SUCCESS"){
+                    $idClass = $getClassroom["idClassroom"]; #gets ID classroom 
+
+                    $result2= createRegister($idClass); //crea la hoja de registro
+
+                    //echo $result2["status"];                
+
+                     if($result2["status"]== "SUCCESS"){
+
+                         $getReg= getIDRegister($idClass);
+                         $idReg= $getReg["idRegister"];
+
+                         $result3= createActuators($idReg); //crea hoja de actuadores
+
+                         $result4= createSensors($idReg); // crea hoja de lectura de sensores
+
+                     }
+
+                     else{
+                      header('HTTP/1.1 500' .  $result2["status"]); 
+                      //die($getRegister["status"]); //returns error from DataLayer
+                    }    
+
+
+                 }
+
+                  else{
+                      header('HTTP/1.1 500' .  $getRegister["status"]); //classroom no existe
+                      //die($getRegister["status"]); //returns error from DataLayer
+                    }    
+
+            }
+
+            else{
+                header('HTTP/1.1 500' . $result["status"]); //no se pudo registrar salon
+                die($result["status"]); //returns error from DataLayer
+            }	
+    }
+    
+     else{
+          header('HTTP/1.1 500' . $valid["status"]); //no se pudo registrar salon
+         die($valid["status"]); //returns error from DataLayer
+     }
         
  }
 

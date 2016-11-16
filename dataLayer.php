@@ -678,5 +678,38 @@ function rmvSensors($idReg){
 }
 
 
+function validClassroom ($classNumber, $buildingNum){
+    
+    $conn = connectionToDataBase();
+
+	if ($conn != null){
+			
+        $sql = "SELECT num, building FROM Classroom WHERE building='$buildingNum' AND num = '$classNumber' ";
+		//echo $sql;
+        
+			$result = $conn->query($sql);
+
+			if ($result->num_rows > 0)
+			{
+                $row = $result -> fetch_assoc();
+				$conn -> close();
+			
+               // return array("build" => $row["building"],"number" => $row["num"],"status" => "SUCCESS");
+               return array("status" => "Duplicated, insert another classroom");
+			}
+			else{
+				$conn -> close();
+				return array("status" => "Available");
+			}
+		}
+
+    else{
+		$conn -> close();
+		return array("status" => "CONNECTION WITH DB WENT WRONG");
+	}
+        
+        
+}
+
 
 ?>
