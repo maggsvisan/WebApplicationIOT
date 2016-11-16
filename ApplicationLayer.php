@@ -39,8 +39,27 @@ switch($action){
     
     case "readSensors": readSensors();
                         break;
+        
+    case "loadComment" : loadComments();
+                        break;
+        
+    case "loadFavorites": loadFavorites();
+                        break;
             
 }
+
+function loadComments(){
+    
+    $result =  loadDBComment();
+    echo json_encode($result);
+}
+
+function loadFavorites(){
+    $mat = $_POST["matricula"];
+    $result = loadDBFavs($mat);
+    echo json_encode($result);
+}
+
 
 function loginFunction(){
 	$mat = $_POST["matricula"];
@@ -234,23 +253,24 @@ function retrieveCookie(){
 	}
 
 
-    function insertComment(){
-        $id = $_POST["idcomm"];
-        $name = $_POST["nameComm"]; //POST, parameter passed by the front end
+
+function insertComment(){
+        $id = $_POST["idComm"];
+        //$name = $_POST["nameComm"]; //POST, parameter passed by the front end
         $comment= $_POST["comComm"];
       
         $result= attemptInsertComment ($comment,$id);
-           
-        if ($result["status"] == "SUCCESS"){
-            echo json_encode(array("name"=> $name , "comment" =>$comment, "id"=>$id));
-        }
 
+        if ($result["status"] == "SUCCESS"){
+            echo json_encode(array("comment" =>$comment, "id"=>$id));
+        }
         else{
             header('HTTP/1.1 500' . $result["status"]);
             die($result["status"]); //returns error from DataLayer
         }	
     
-    }
+}
+
 
 function registerClassroom(){ //creates register and actuators
         $building= $_POST["building"];
@@ -308,7 +328,7 @@ function registerClassroom(){ //creates register and actuators
         
  }
 
-
+ 
 
 function validateClassroom(){ //validate if classroom exists
    

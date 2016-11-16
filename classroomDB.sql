@@ -31,7 +31,7 @@ CREATE TABLE Actuators(
 
 );
 
-
+ 
 CREATE TABLE Sensors(  
     id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
     tempValue VARCHAR(50) NOT NULL,
@@ -52,6 +52,11 @@ CREATE TABLE Comments (
     FOREIGN KEY (mat) REFERENCES Users(matricula)
 ); 
 
+CREATE TABLE Favorites (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+    building VARCHAR(140) NOT NULL,
+    mat  VARCHAR(50) NOT NULL
+);
 
 
 INSERT INTO Register(cnum, timeReg, dateReg)

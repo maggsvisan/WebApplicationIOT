@@ -461,8 +461,72 @@ function attemptReadSensors($idReg){
 		$conn -> close();
 		return array("status" => "CONNECTION WITH DB WENT WRONG");
 	}   
-    
-    
-}
+       
+} 
+
+
+function loadDBComment(){
+        $conn = connectionToDataBase();
+
+        if($conn != null){
+
+            $sql = "SELECT * FROM Comments";
+            $result = $conn -> query($sql); //resultado del query
+            
+            
+            if ($result->num_rows > 0){    
+                $response = array();     
+                
+                while($row = $result -> fetch_assoc()) 
+                {     
+                    array_push($response,array("comment" => $row["commnt"], 
+                                                "matricula" => $row["mat"]));
+                }
+
+                return ($response) ;
+            }  
+
+            else{
+                header('HTTP/1.1 406 User not found');   
+            }
+        }
+        else{
+            $conn -> close();
+            header('HTTP/1.1 500 Bad connection to Database');
+        }
+    }
+
+
+function loadDBFavs($mat){
+        $conn = connectionToDataBase();
+
+        if($conn != null){
+            
+            $sql = "SELECT building , num  FROM favorites WHERE mat= '$mat'";
+            $result = $conn -> query($sql); //resultado del query
+            
+            
+            if ($result->num_rows > 0){    
+
+                $response = array();     
+                
+                while($row = $result -> fetch_assoc()) 
+                {     
+                    array_push($response,array("building" => $row["building"], 
+                                                "number" => $row["num"]));
+                }
+
+                return ($response) ;
+            }  
+
+            else{
+                header('HTTP/1.1 406 User not found');   
+            }
+        }
+        else{
+            $conn -> close();
+            header('HTTP/1.1 500 Bad connection to Database');
+        }
+    }
 
 ?>
