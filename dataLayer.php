@@ -46,6 +46,7 @@
 	}
 
 
+
 function attemptCreateSession($mat, $userPassword){
     
     $conn = connectionToDataBase();
@@ -86,6 +87,7 @@ function attemptCreateSession($mat, $userPassword){
 			return array("status" => "CONNECTION WITH DB WENT WRONG");
 		}
 }
+
 
 
 
@@ -219,7 +221,7 @@ function verifyClassroom ($classNumber, $buildingNum){
 	if ($conn != null){
 			
         $sql = "SELECT id FROM Classroom WHERE building='$buildingNum' AND num = '$classNumber' ";
-		echo $sql;
+	//	echo $sql;
         
 			$result = $conn->query($sql);
 
@@ -351,7 +353,7 @@ function createRegister($idClass){
         $sql = "INSERT INTO Register(cnum, timeReg, dateReg) 
                 VALUES ('$idClass','00:00:00' , '0000-00-00' ) " ;
         
-        echo $sql;
+      //  echo $sql;
 
         $result = $conn->query($sql);
 
@@ -381,7 +383,7 @@ function createActuators($idReg){
         $sql = "INSERT INTO Actuators(stsTemp, stsLight, rnum) 
                 VALUES (0 , 0, '$idReg' ) " ;
         
-        echo $sql;
+     //   echo $sql;
 
         $result = $conn->query($sql);
 
@@ -412,7 +414,7 @@ function createSensors($idReg){
         $sql = "INSERT INTO Sensors(tempValue, lightValue, rnum) 
                 VALUES ('y' , 'y', '$idReg' ) " ;
         
-        echo $sql;
+     //   echo $sql;
 
         $result = $conn->query($sql);
 
@@ -603,7 +605,7 @@ function rmvUser($matNumber){
 
         $sql = "DELETE FROM Users WHERE matricula='$matNumber'";
         
-        echo $sql;
+      //  echo $sql;
 
         $result = $conn->query($sql);
 
@@ -631,7 +633,7 @@ function  rmvClassroom($BuildingNumber,$ClassroomNumber){
 
         $sql = "DELETE FROM Classroom WHERE building='$BuildingNumber' AND num='$ClassroomNumber'";
         
-        echo $sql;
+       // echo $sql;
 
         $result = $conn->query($sql);
 
@@ -660,7 +662,7 @@ function  rmvRegister($idReg){
 
         $sql = "DELETE FROM Register WHERE id='$idReg'";
         
-        echo $sql;
+//        echo $sql;
 
         $result = $conn->query($sql);
 
@@ -692,7 +694,7 @@ function rmvActuators($idReg){
 
         $sql = "DELETE FROM Actuators WHERE rnum='$idReg'";
         
-        echo $sql;
+      //  echo $sql;
 
         $result = $conn->query($sql);
 
@@ -721,7 +723,7 @@ function rmvSensors($idReg){
 
         $sql = "DELETE FROM Sensors WHERE rnum='$idReg'";
         
-        echo $sql;
+       // echo $sql;
 
         $result = $conn->query($sql);
 
@@ -776,7 +778,78 @@ function validClassroom ($classNumber, $buildingNum){
 
 
 
+ function validateFavs($mat,$classroom,$building){
+        $conn = connectionToDataBase();
+        if ($conn != null){
+            $sql = "SELECT building from favorites WHERE building='$building' AND num = '$classroom' AND  mat ='$mat'";
+           // echo $sql;
+            
+                $result = $conn->query($sql);
+                if ($result->num_rows > 0)
+                {
+                    $row = $result -> fetch_assoc();
+                    $conn -> close();
 
+                    return array("status" => "SUCCESS");
+                }
+                else{
+                    $conn -> close();
+                    return array("status" => "Not a favorite");
+                }
+            }
+        else{
+            $conn -> close();
+            return array("status" => "CONNECTION WITH DB WENT WRONG");
+        }   
+    }
+
+    function removeFavs($mat,$classroom,$building){
+        $conn = connectionToDataBase();
+
+        if ($conn != null){
+            $sql = "DELETE FROM favorites WHERE mat='$mat' AND building='$building' AND num='$classroom'";
+            // Run query and store resulting data
+            $result = $conn->query($sql);
+            
+            if ($result == TRUE) {
+                $conn -> close();
+                return array("status" => "ERASED");   
+            }  
+        }   
+        else{
+            $conn -> close();
+            return array ("status" => "Something went wrong, can't erase from favorites");
+        }
+    }
+
+
+    function addFavs($mat,$classroom,$building){
+        $conn = connectionToDataBase();
+
+        if ($conn != null){
+        $sql = "INSERT INTO favorites(building,num,mat) 
+                VALUES ('$building','$classroom','$mat')";
+        // Run query and store resulting data
+        $result = $conn->query($sql);
+            
+        if ($result == TRUE) {
+            $conn -> close();
+            return array("status" => "SUCCESS");   
+        } 
+                
+                
+        else{
+            $conn -> close();
+            return array ("status" => "Something went wrong");
+        }
+            
+    }
+
+        else {
+            $conn -> close();
+            header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+        }
+    }
  
 
 

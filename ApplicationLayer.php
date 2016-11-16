@@ -46,6 +46,15 @@ switch($action){
     case "loadFavorites": loadFavorites();
                         break;
     
+    case "addFavorite": addFavorite();
+                        break;
+    
+    case "removeFavorite": removeFavorite();
+                        break;
+    
+    case "validateFavorite": validateFavorite();
+                        break;
+    
     case "removeUser": removeUser();
                         break; 
     
@@ -57,9 +66,37 @@ switch($action){
     
     case "LoadClassrooms": loadAllClassrooms();
                         break;
+        
             
 }
 
+function validateFavorite(){
+    $mat = $_POST["mat"];
+    $classroom = $_POST["classroom"];
+    $building = $_POST["building"];
+
+    $result = validateFavs($mat,$classroom,$building);
+    
+    echo json_encode($result["status"]);
+  
+}
+
+function removeFavorite(){
+    $mat = $_POST["mat"];
+    $classroom = $_POST["classroom"];
+    $building = $_POST["building"];
+    $result = removeFavs($mat,$classroom,$building);
+    echo json_encode($result["status"]);
+}
+
+function addFavorite(){
+    $mat = $_POST["mat"];
+    $classroom = $_POST["classroom"];
+    $building = $_POST["building"];
+    $result = addFavs($mat,$classroom,$building);
+    echo json_encode($result["status"]);
+
+}
 
 function loadAllClassrooms(){
     $result= loadClassrooms();
@@ -305,10 +342,10 @@ function registerClassroom(){ //creates register and actuators
         if($valid["status"]=="Available"){ //valida si la combinacion de building y classroom es unica
     
             $result= attemptInsertClassroom ($building, $num);
-            echo $result["status"];
+            //echo $result["status"];
 
             if ($result["status"] == "SUCCESS"){
-                $response = array("message"=> "Now you are register");
+                $response = array("message"=> "New classroom added");
                 echo json_encode($response); //sent it to presentation layer
 
 
@@ -364,17 +401,16 @@ function registerClassroom(){ //creates register and actuators
 
  
 
+
 function validateClassroom(){ //validate if classroom exists
    
     $classNumber= $_POST["classroom"];
     $buildingNum= $_POST["buildNum"];
      
     $result=  verifyClassroom($classNumber, $buildingNum);
-    echo $result["status"];
         
      if ($result["status"] == "SUCCESS"){
-         $response = array("message"=> "Classroom Exists!");
-         echo json_encode($response); //sent it to presentation layer  
+         echo json_encode($result); //sent it to presentation layer  
       }	
     
     else{
@@ -383,6 +419,7 @@ function validateClassroom(){ //validate if classroom exists
         }	
             
 }
+ 
  
 
 function changeSts(){
