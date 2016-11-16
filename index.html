@@ -19,6 +19,7 @@
     <li id="SearchCl"><a href="#page3"> Classrooms </a></li>
     <li id="Comm"><a href="#page4"> Comments </a></li>
     <li id="Regis"><a href="#page5"> Register </a></li>
+    <li id="RmvReg"><a href="#page6"> Remove </a></li>
     <li id="Fav"><a href="#page6"> Favorites </a></li>
     <li id="Login" align="right" style="display:block"><a href="#page6"> Login </a></li>
     <li id="logoutButton" align="right" style="display:block;" > 
@@ -30,9 +31,26 @@
 <body>
     
      <div id="homeImages">
-            <br> 
-            <img id="tec1" src="images/tec.JPG" style=" width: 600px ; height: 500px;">
-            <br> 
+           
+         <div id="slideshow">
+          
+           <div>
+             <img id="tec2" src="images/explanada.jpg" style=" width: 800px ; height: 700px;">
+           </div>
+            <div>
+             <img id="tec3" src="images/ciap.png" style=" width: 800px ; height: 700px;">
+           </div>
+            <div>
+             <img id="tec1" src="images/tec.JPG" style=" width: 800px ; height: 700px;">
+           </div>
+             <div>
+             <img id="tec4" src="images/biotec.jpg" style=" width: 800px ; height: 700px;">
+           </div>
+             <div>
+             <img id="tec4" src="images/rectoria.jpg" style=" width: 800px ; height: 700px;">
+           </div>
+
+        </div>
      </div>
     
     
@@ -56,6 +74,54 @@
         </form>
     </div>
 
+    
+     <div id="RemoveSec">
+        <table id="DeleteRegistration">
+            <tr>
+                <caption><h2> Select: </h2> </caption>
+            </tr>
+            
+            <tr>
+                <th><div> <span class="btn"  id="BtnRmvClass"> Remove classroom </span> </div></th>
+                <th> <span class= "btn" id="BtnRmvUser"> Remove user </span> </th>
+            </tr>
+        </table>
+     </div>
+
+    <div id="RemoveClass">
+        <h2>To remove classroom, please fill the blanks:</h2> 
+            
+         <div class="classR">
+            <p> Enter which building: (Format: AX-CIAP-CEDES-CETEC) </p>
+            <input id="inRmvBuilding" type="string" value="">
+            </br>
+        </div>
+        <div class="classNum">
+            <p> Enter which classroom number: (Format: XXX) </p>
+            <input id="inRmvClassNum" type="string" value="">
+            </br>
+        </div>
+        <span class="Register">
+            <p id="BtnRmvClass2" class="btn">Remove</p>
+        </span>  
+    </div>
+
+
+
+   <div id="RemoveUser">
+        <h2> Remove a user: </h2>
+  
+        <div class="Matricula">
+            <p> ID Number (Employee: L0XXXXXXX)  </p>
+            <input id="inRmvMatricula" type="string" value="">
+            </br>
+        </div> 
+        
+        <span class="Register">
+            <p id="BtnRmvUser2" class="btn"> Remove </p>
+        </span>
+ </div>
+        
 
 
     <div id="RegSec">

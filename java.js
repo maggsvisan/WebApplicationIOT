@@ -1,5 +1,19 @@
 $(document).ready(function () {
 
+    $("#slideshow > div:gt(0)").hide();
+
+    setInterval(function() {
+      $('#slideshow > div:first')
+        .fadeOut(1500)
+        .next()
+        .fadeIn(1500)
+        .fadeOut(1500)
+        .next()
+        .fadeIn(1500)
+        .end()
+        .appendTo('#slideshow');
+    }, 3000);
+    
     $.ajax({
         url: 'data/ApplicationLayer.php',
         type: 'POST' ,
@@ -27,11 +41,15 @@ $(document).ready(function () {
         }
     });
     
+    
 //////////////////////////////////////////////
 ////////// PAGE DIVS SHOW AND HIDE //////////
 //////////////////////////////////////////////
- var imageSelected;
- var classNum;
+var imageSelected;
+var classNum;
+var matRmvUser;
+var BRmvClass;
+var NumRmClass;
 
     $("#Login").show();
     $("#LoginSec").hide();
@@ -49,7 +67,29 @@ $(document).ready(function () {
     $("#BiotecDropDownMenu").hide();
     $("#RegClass").hide();
     $("#RegUser").hide();
-
+    $("#RemoveSec").hide();
+    $("#RemoveClass").hide();
+    $("#RemoveUser").hide();
+    
+    $("#RmvReg").on("click", function () {
+        $("#homeImages").hide();
+        $("#LoginSec").hide();
+        $("#RegSec").hide(); 
+        $("#AboutSec").hide(); 
+        $("#SearchSec").hide();
+        $("#CommentSec").hide();
+        $("#FavSec").hide();
+        $("#pickAClassroom").hide();
+        $("#CiapDropDownMenu").hide();
+        $("#CetecDropDownMenu").hide();
+        $("#CedesDropDownMenu").hide();
+        $("#BiotecDropDownMenu").hide();
+        $("#RegClass").hide();
+        $("#RegUser").hide();
+        $("#RemoveSec").show();
+        $("#RemoveClass").hide();
+        $("#RemoveUser").hide();
+    });
     
     $("#Home").on("click", function () {
         $("#homeImages").show();
@@ -66,6 +106,9 @@ $(document).ready(function () {
         $("#BiotecDropDownMenu").hide();
         $("#RegClass").hide();
         $("#RegUser").hide();
+        $("#RemoveSec").hide();
+        $("#RemoveClass").hide();
+        $("#RemoveUser").hide();
 
   
     });
@@ -85,6 +128,9 @@ $(document).ready(function () {
         $("#BiotecDropDownMenu").hide();
         $("#RegClass").hide();
         $("#RegUser").hide();
+        $("#RemoveSec").hide();
+        $("#RemoveClass").hide();
+        $("#RemoveUser").hide();
     });
     
     $("#Regis").on("click", function () {
@@ -103,6 +149,9 @@ $(document).ready(function () {
         $("#BiotecDropDownMenu").hide();
         $("#RegClass").hide();
         $("#RegUser").hide();
+        $("#RemoveSec").hide();
+        $("#RemoveClass").hide();
+        $("#RemoveUser").hide();
     });
     
     $("#AboutUs").on("click", function () {
@@ -121,6 +170,9 @@ $(document).ready(function () {
         $("#BiotecDropDownMenu").hide();
         $("#RegClass").hide();
         $("#RegUser").hide();
+        $("#RemoveSec").hide();
+        $("#RemoveClass").hide();
+        $("#RemoveUser").hide();
     });
     
    $("#SearchCl").on("click", function () {
@@ -138,6 +190,9 @@ $(document).ready(function () {
         $("#BiotecDropDownMenu").hide();
         $("#RegClass").hide();
         $("#RegUser").hide();
+        $("#RemoveSec").hide();
+        $("#RemoveClass").hide();
+        $("#RemoveUser").hide();
 
     });
     
@@ -156,6 +211,9 @@ $(document).ready(function () {
         $("#BiotecDropDownMenu").hide();
         $("#RegClass").hide();
         $("#RegUser").hide();
+        $("#RemoveSec").hide();
+        $("#RemoveClass").hide();
+        $("#RemoveUser").hide();
     });  
     
     $("#Fav").on("click", function () {
@@ -173,7 +231,10 @@ $(document).ready(function () {
         $("#CedesDropDownMenu").hide();
         $("#BiotecDropDownMenu").hide();
         $("#RegClass").hide();
-        $("#RegUser").hide();   
+        $("#RegUser").hide();
+        $("#RemoveSec").hide();
+        $("#RemoveClass").hide();
+        $("#RemoveUser").hide();
     });
         
      $("#cetec2").on("click",function(){
@@ -193,8 +254,12 @@ $(document).ready(function () {
         $("#BiotecDropDownMenu").hide();
         $("#RegClass").hide();
         $("#RegUser").hide();
+        $("#RemoveSec").hide();
+        $("#RemoveClass").hide();
+        $("#RemoveUser").hide();
 
     });
+    
      $("#cedes2").on("click",function(){
         imageSelected= "CEDES";
         $("#LoginSec").hide();
@@ -212,8 +277,11 @@ $(document).ready(function () {
         $("#BiotecDropDownMenu").hide();
         $("#RegClass").hide();
         $("#RegUser").hide();
+        $("#RemoveSec").hide();
+        $("#RemoveClass").hide();
+        $("#RemoveUser").hide();
          
-          alert($(".imagemenu").val());
+    
     });
     
     
@@ -237,6 +305,9 @@ $(document).ready(function () {
         $("#BiotecDropDownMenu").hide();
         $("#RegClass").hide();
         $("#RegUser").hide();
+        $("#RemoveSec").hide();
+        $("#RemoveClass").hide();
+        $("#RemoveUser").hide();
          
         
     });
@@ -259,11 +330,56 @@ $(document).ready(function () {
         $("#BiotecDropDownMenu").show();
         $("#RegClass").hide();
         $("#RegUser").hide();
-        
+        $("#RemoveSec").hide();
+        $("#RemoveClass").hide();
+        $("#RemoveUser").hide();
 
 
     });
     
+    
+    $("#BtnRmvClass").on("click", function(){
+        $("#LoginSec").hide();
+        $("#RegSec").hide(); 
+        $("#AboutSec").hide(); 
+        $("#SearchSec").hide(); 
+        $("#CommentSec").hide(); 
+        $("#homeImages").hide();
+        $("#CommentSec").hide();
+        $("#FavSec").hide();
+        $("#pickAClassroom").hide();
+        $("#CiapDropDownMenu").hide();
+        $("#CetecDropDownMenu").hide();
+        $("#CedesDropDownMenu").hide();
+        $("#BiotecDropDownMenu").hide();
+        $("#RegClass").hide();
+        $("#RegUser").hide();
+        $("#RemoveSec").hide();
+        $("#RemoveClass").show();
+        $("#RemoveUser").hide();
+        
+    });   
+    
+    $("#BtnRmvUser").on("click", function(){
+        $("#LoginSec").hide();
+        $("#RegSec").hide(); 
+        $("#AboutSec").hide(); 
+        $("#SearchSec").hide(); 
+        $("#CommentSec").hide(); 
+        $("#homeImages").hide();
+        $("#CommentSec").hide();
+        $("#FavSec").hide();
+        $("#pickAClassroom").hide();
+        $("#CiapDropDownMenu").hide();
+        $("#CetecDropDownMenu").hide();
+        $("#CedesDropDownMenu").hide();
+        $("#BiotecDropDownMenu").hide();
+        $("#RegClass").hide();
+        $("#RegUser").hide();
+        $("#RemoveSec").hide();
+        $("#RemoveClass").hide();
+        $("#RemoveUser").show();
+    });
     
     
     $("#BtnClass").on("click", function(){
@@ -282,6 +398,9 @@ $(document).ready(function () {
         $("#BiotecDropDownMenu").hide();
         $("#RegClass").show();
         $("#RegUser").hide();
+        $("#RemoveSec").hide();
+        $("#RemoveClass").hide();
+        $("#RemoveUser").hide();
         
     });   
     
@@ -301,11 +420,95 @@ $(document).ready(function () {
         $("#BiotecDropDownMenu").hide();
         $("#RegClass").hide();
         $("#RegUser").show();
+        $("#RemoveSec").hide();
+        $("#RemoveClass").hide();
+        $("#RemoveUser").hide();
         
     });
 ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////
     
+    
+
+///////////////////////////////////////////////////
+//////////////// REMOVE A USER ////////////////////
+///////////////////////////////////////////////////
+
+    $("#BtnRmvUser2").on("click", function () {
+        
+ 
+        matRmvUser= $("#inRmvMatricula").val();
+        
+        $("#inRmvMatricula").val("");
+        
+        
+         var jsonData = { 
+                "action": "removeUser",
+                "mat":matRmvUser
+            };
+        
+        console.log(jsonData);
+
+        $.ajax({  
+            url: "data/ApplicationLayer.php",
+            type: "POST",
+            data: jsonData,
+            success: function (jsonResponse){
+                alert(jsonResponse.message);
+            },
+            error:function(errorMessage){
+                alert(errorMessage.responseText);
+            }
+        });//------------------------
+    });
+    
+/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////    
+
+    
+///////////////////////////////////////////////////
+//////////////// REMOVE A CLASSROOM ////////////////////
+///////////////////////////////////////////////////
+
+    $("#BtnRmvClass2").on("click", function () {
+        
+        BRmvClass= $("#inRmvBuilding").val();
+        NumRmClass= $("#inRmvClassNum").val();
+        
+        $("#inRmvBuilding").val("");
+        $("#inRmvClassNum").val("");
+        
+        
+         var jsonData = { 
+                "action": "removeClassroom",
+                "building":BRmvClass,
+                "number":NumRmClass
+            };
+        
+        console.log(jsonData);
+
+        $.ajax({  
+            url: "data/ApplicationLayer.php",
+            type: "POST",
+            data: jsonData,
+            success: function (jsonResponse){
+                alert(jsonResponse.message);
+            },
+            error:function(errorMessage){
+                alert(errorMessage.responseText);
+            }
+        });//------------------------
+    });
+    
+/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////    
+
+    
+    
+///////////////////////////////////////////////////
+//////////////// ADD A FAVORITE //////////////////////
+///////////////////////////////////////////////////
+
    $("#Fav").on("click",function(){
         $("#Favoritos").empty();
         $.ajax({
@@ -364,6 +567,7 @@ $(document).ready(function () {
 ///////////////////////////////////////////////////
 
     $("#Comm").on("click", function () {
+        
         $.ajax({  
             url: "data/ApplicationLayer.php",
             type: "POST",

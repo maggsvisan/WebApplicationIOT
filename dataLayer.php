@@ -529,4 +529,154 @@ function loadDBFavs($mat){
         }
     }
 
+
+
+function rmvUser($matNumber){
+    
+    $conn = connectionToDataBase();
+    if ($conn != null){
+
+        $sql = "DELETE FROM Users WHERE matricula='$matNumber'";
+        
+        echo $sql;
+
+        $result = $conn->query($sql);
+
+            if ($result != null) {
+                return array("status" => "SUCCESS", "message" => "User Removed");   
+            } 
+
+
+            else{
+                return array("Error create removing user");
+            }
+
+    }
+     else {
+            $conn -> close();
+            header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+         }
+    
+}
+
+function  rmvClassroom($BuildingNumber,$ClassroomNumber){
+    
+    $conn = connectionToDataBase();
+    if ($conn != null){
+
+        $sql = "DELETE FROM Classroom WHERE building='$BuildingNumber' AND num='$ClassroomNumber'";
+        
+        echo $sql;
+
+        $result = $conn->query($sql);
+
+            if ($result != null) {
+                return array("status" => "SUCCESS", "message" => "Classroom removed");   
+            } 
+
+
+            else{
+                return array("Error create removing user");
+            }
+
+    }
+     else {
+            $conn -> close();
+            header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+         }
+    
+}
+
+
+function  rmvRegister($idReg){
+    
+    $conn = connectionToDataBase();
+    if ($conn != null){
+
+        $sql = "DELETE FROM Register WHERE id='$idReg'";
+        
+        echo $sql;
+
+        $result = $conn->query($sql);
+
+            if ($result != null) {
+                return array("status" => "SUCCESS", "message" => "Classroom removed");   
+            } 
+
+
+            else{
+                return array("Error create removing user");
+            }
+
+    }
+     else {
+            $conn -> close();
+            header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+         }
+    
+}
+
+
+
+
+
+function rmvActuators($idReg){
+    
+    $conn = connectionToDataBase();
+    if ($conn != null){
+
+        $sql = "DELETE FROM Actuators WHERE rnum='$idReg'";
+        
+        echo $sql;
+
+        $result = $conn->query($sql);
+
+            if ($result != null) {
+                return array("status" => "SUCCESS");   
+            } 
+
+
+            else{
+                return array("Error create removing user");
+            }
+
+    }
+     else {
+            $conn -> close();
+            header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+         }
+    
+}
+
+
+function rmvSensors($idReg){
+    
+    $conn = connectionToDataBase();
+    if ($conn != null){
+
+        $sql = "DELETE FROM Sensors WHERE rnum='$idReg'";
+        
+        echo $sql;
+
+        $result = $conn->query($sql);
+
+            if ($result != null) {
+                return array("status" => "SUCCESS");   
+            } 
+
+
+            else{
+                return array("Error create removing user");
+            }
+
+    }
+     else {
+            $conn -> close();
+            header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+         }
+    
+}
+
+
+
 ?>

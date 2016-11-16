@@ -45,6 +45,12 @@ switch($action){
         
     case "loadFavorites": loadFavorites();
                         break;
+    
+    case "removeUser": removeUser();
+                        break; 
+    
+    case "removeClassroom": removeClassroom();
+                        break;
             
 }
 
@@ -442,6 +448,86 @@ function readSensors(){
     }
 
 
+function removeUser(){
+    $matNumber= $_POST["mat"];
+    
+    $result= rmvUser($matNumber);
+    
+    if($result["status"]== "SUCCESS"){
+         echo json_encode($result["message"]);
+    }
+    
+    else {
+        header('HTTP/1.1 500' . $result["status"]);
+        die($result["status"]); //returns error from DataLayer
+    }
+    
+}
+
+
+
+
+function removeClassroom(){ // deletes classroom records
+    $BuildingNumber= $_POST["building"];
+    $ClassroomNumber= $_POST["number"];
+    
+  
+    $getClassroom= getIDClassroom($ClassroomNumber, $BuildingNumber);   
+    echo $getClassroom["status"];
+                             
+    if ($getClassroom["status"] == "SUCCESS"){
+        $idClass = $getClassroom["idClassroom"]; #gets ID classroom 
+                
+        $getReg= getIDRegister($idClass);
+   
+        if($getReg["status"]== "SUCCESS"){
+            
+            $idReg= $getReg["idRegister"];   
+            
+            $result1= rmvActuators($idReg); //elimina hoja de actuadores              
+            $result2= rmvSensors($idReg); // elimina hoja de lectura de sensores
+            
+            if($result1["status"]=="SUCCESS" && $result2["status"]=="SUCCESS"){
+                
+                $result3= rmvRegister($idReg); //elimina hoja de registros
+                
+                if($result3["status"]=="SUCCESS"){
+                    
+                  $result4= rmvClassroom($BuildingNumber,$ClassroomNumber); //deletes a classroom
+                  echo json_encode($result4["message"]);
+                }
+                
+                else{
+                  header('HTTP/1.1 500' .  $result3["status"]); 
+                  die($result3["status"]); //returns error from DataLayer
+                }  
+                
+            }
+            
+            else{
+              header('HTTP/1.1 500' .  $result1["status"]); 
+              die($result1["status"]); //returns error from DataLayer
+            }           
+            
+        }    
+        
+         else{
+          header('HTTP/1.1 500' .  $getReg["status"]); 
+          die($getReg["status"]); //returns error from DataLayer
+        }              
+                     
+                     
+    }
+                 
+     else{
+        header('HTTP/1.1 500' .  $getClassroom["status"]); 
+        die($getClassroom["status"]); //returns error from DataLayer
+    }    
+            
+                     
+ }
+
+ 
 
 
 
