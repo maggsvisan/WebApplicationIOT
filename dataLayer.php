@@ -87,6 +87,8 @@ function attemptCreateSession($mat, $userPassword){
 		}
 }
 
+
+
 function attemptRegistration($fName, $lName, $mat, $userPassword, $access){
     
     $conn = connectionToDataBase();
@@ -117,15 +119,19 @@ function attemptRegistration($fName, $lName, $mat, $userPassword, $access){
      }
         
 }
+
+
 function attemptInsertClassroom ($building, $num){  
     $conn = connectionToDataBase();
+
     if ($conn != null){
+    
     $sql = "INSERT INTO Classroom(building, num) 
             VALUES ('$building','$num')";
         
     // Run query and store resulting data
     $result = $conn->query($sql);
-
+        
         if ($result == TRUE) {
             $conn -> close();
             return array("status" => "SUCCESS");   
@@ -138,9 +144,9 @@ function attemptInsertClassroom ($building, $num){
         }
             
     }
-    else {
-        $conn -> close();
-        header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+        else {
+            $conn -> close();
+            header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
      }
         
 }
@@ -176,7 +182,7 @@ function attemptInsertClassroom ($building, $num){
     }
 
     
-    function attemptChangeStatus($lightStatus, $ACStatus){
+function attemptChangeStatus($lightStatus, $ACStatus){
         
         $conn = connectionToDataBase();
         if ($conn != null){
@@ -201,21 +207,20 @@ function attemptInsertClassroom ($building, $num){
                 $conn -> close();
                 header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
          }
-        
-        
-        
-    }
+                
+}
 
 
 
-function verifyClassroom ($classNumber){
+function verifyClassroom ($classNumber, $buildingNum){
     
     $conn = connectionToDataBase();
 
 	if ($conn != null){
 			
-        $sql = "SELECT building, num FROM Classroom WHERE num = '$classNumber'";
-		
+        $sql = "SELECT id FROM Classroom WHERE building='$buildingNum' AND num = '$classNumber' ";
+		echo $sql;
+        
 			$result = $conn->query($sql);
 
 			if ($result->num_rows > 0)
@@ -223,7 +228,8 @@ function verifyClassroom ($classNumber){
                 $row = $result -> fetch_assoc();
 				$conn -> close();
 			
-                return array("status" => "SUCCESS");
+               // return array("build" => $row["building"],"number" => $row["num"],"status" => "SUCCESS");
+               return array("status" => "SUCCESS");
 			}
 			else{
 				$conn -> close();
@@ -311,15 +317,19 @@ function attemptChangeSts($idRegister, $lightStatus, $ACStatus){
     $conn = connectionToDataBase();
 
 	if ($conn != null){
-        
+       
         $sql = "UPDATE Actuators SET stsTemp='$ACStatus', stsLight='$lightStatus' WHERE rnum='$idRegister'";
-              
+        
+        
         if (mysqli_query($conn, $sql)) {
+            $conn -> close();
             return array("status" => "SUCCESS" );
         }
         
         else {
+            $conn -> close();
             return array("Error updating status");
+            
         }
 
     }
@@ -330,6 +340,131 @@ function attemptChangeSts($idRegister, $lightStatus, $ACStatus){
      }
     
 }
+
+
+
+function createRegister($idClass){
+        
+        $conn = connectionToDataBase();
+        if ($conn != null){
+
+        $sql = "INSERT INTO Register(cnum, timeReg, dateReg) 
+                VALUES ('$idClass','00:00:00' , '0000-00-00' ) " ;
+        
+        echo $sql;
+
+        $result = $conn->query($sql);
+
+            if ($result != null) {
+                return array("status" => "SUCCESS");   
+            } 
+
+
+            else{
+                return array("Error create register");
+            }
+
+        }
+            else {
+                $conn -> close();
+                header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+         }
+                
+}
+
+
+function createActuators($idReg){
+        
+        $conn = connectionToDataBase();
+        if ($conn != null){
+
+        $sql = "INSERT INTO Actuators(stsTemp, stsLight, rnum) 
+                VALUES (0 , 0, '$idReg' ) " ;
+        
+        echo $sql;
+
+        $result = $conn->query($sql);
+
+            if ($result != null) {
+                return array("status" => "SUCCESS");   
+            } 
+
+
+            else{
+                return array("Error create sensors");
+            }
+
+        }
+            else {
+                $conn -> close();
+                header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+         }
+                
+}
+
+
+
+function createSensors($idReg){
+        
+        $conn = connectionToDataBase();
+        if ($conn != null){
+
+        $sql = "INSERT INTO Sensors(tempValue, lightValue, rnum) 
+                VALUES ('y' , 'y', '$idReg' ) " ;
+        
+        echo $sql;
+
+        $result = $conn->query($sql);
+
+            if ($result != null) {
+                return array("status" => "SUCCESS");   
+            } 
+
+
+            else{
+                return array("Error create sensors");
+            }
+
+        }
+            else {
+                $conn -> close();
+                header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+         }
+                
+}
+
+function attemptReadSensors($idReg){
+    
+    $conn = connectionToDataBase();
+
+	if ($conn != null){
+			
+        $sql = "SELECT tempValue, lightValue FROM Sensors WHERE rnum='$idReg'";
+		
+       // echo $sql;
+			$result = $conn->query($sql);
+
+			if ($result->num_rows > 0)
+			{
+                $row = $result -> fetch_assoc();
+				$conn -> close();
+			
+                return array("tempVal" => $row["tempValue"],"lightVal" => $row["lightValue"], "status" => "SUCCESS");
+			}
+			else{
+				$conn -> close();
+				return array("status" => "Registration form for this classroom does not exists!");
+			}
+		}
+
+    else{
+		$conn -> close();
+		return array("status" => "CONNECTION WITH DB WENT WRONG");
+	}   
+       
+} 
+
+
 function loadDBComment(){
         $conn = connectionToDataBase();
 
@@ -360,6 +495,7 @@ function loadDBComment(){
             header('HTTP/1.1 500 Bad connection to Database');
         }
     }
+
 
 function loadDBFavs($mat){
         $conn = connectionToDataBase();
@@ -392,6 +528,5 @@ function loadDBFavs($mat){
             header('HTTP/1.1 500 Bad connection to Database');
         }
     }
-
 
 ?>

@@ -36,12 +36,20 @@ switch($action){
     
     case "validateClassroom": validateClassroom();
                         break;
+    
+    case "readSensors": readSensors();
+                        break;
+        
     case "loadComment" : loadComments();
                         break;
+        
     case "loadFavorites": loadFavorites();
                         break;
-
+    case "AddFavorite": addFavorite();
+                        break;
+            
 }
+
 function loadComments(){
     
     $result =  loadDBComment();
@@ -247,7 +255,8 @@ function retrieveCookie(){
 	}
 
 
-    function insertComment(){
+
+function insertComment(){
         $id = $_POST["idComm"];
         //$name = $_POST["nameComm"]; //POST, parameter passed by the front end
         $comment= $_POST["comComm"];
@@ -262,30 +271,75 @@ function retrieveCookie(){
             die($result["status"]); //returns error from DataLayer
         }	
     
-    }
+}
 
-    function registerClassroom(){
+
+function registerClassroom(){ //creates register and actuators
         $building= $_POST["building"];
         $num= $_POST["classNum"];
+        
         $result= attemptInsertClassroom ($building, $num);
+        echo $result["status"];
+        
         if ($result["status"] == "SUCCESS"){
             $response = array("message"=> "Now you are register");
             echo json_encode($response); //sent it to presentation layer
+            
+            
+             $getClassroom= getIDClassroom($num, $building);   
+            // echo $getClassroom["status"];
+                
+                 
+             if ($getClassroom["status"] == "SUCCESS"){
+                $idClass = $getClassroom["idClassroom"]; #gets ID classroom 
+                
+                $result2= createRegister($idClass); //crea la hoja de registro
+                
+                //echo $result2["status"];                
+                
+                 if($result2["status"]== "SUCCESS"){
+                     
+                     $getReg= getIDRegister($idClass);
+                     $idReg= $getReg["idRegister"];
+                     
+                     $result3= createActuators($idReg); //crea hoja de actuadores
+                     
+                     $result4= createSensors($idReg); // crea hoja de lectura de sensores
+                     
+                 }
+                 
+                 else{
+                  header('HTTP/1.1 500' .  $result2["status"]); 
+                  //die($getRegister["status"]); //returns error from DataLayer
+                }    
+            
+                   
+             }
+                 
+              else{
+                  header('HTTP/1.1 500' .  $getRegister["status"]); //classroom no existe
+                  //die($getRegister["status"]); //returns error from DataLayer
+                }    
+            
         }
 
         else{
-            header('HTTP/1.1 500' . $result["status"]);
+            header('HTTP/1.1 500' . $result["status"]); //no se pudo registrar salon
             die($result["status"]); //returns error from DataLayer
         }	
         
-    }
+ }
 
+ 
 
-    function validateClassroom(){ //validate if classroom exists
-        $classNumber= $_POST["classroom"];
+function validateClassroom(){ //validate if classroom exists
+   
+    $classNumber= $_POST["classroom"];
+    $buildingNum= $_POST["buildNum"];
+     
+    $result=  verifyClassroom($classNumber, $buildingNum);
+    echo $result["status"];
         
-     $result=  verifyClassroom($classNumber);
-            
      if ($result["status"] == "SUCCESS"){
          $response = array("message"=> "Classroom Exists!");
          echo json_encode($response); //sent it to presentation layer  
@@ -296,8 +350,8 @@ function retrieveCookie(){
             die($result["status"]); //returns error from DataLayer
         }	
             
-    }
-
+}
+ 
 
 function changeSts(){
         $lightStatus= $_POST["lstatus"];
@@ -306,7 +360,7 @@ function changeSts(){
         $buildingNumber= $_POST["building"];
         
         $getClassroom= getIDClassroom($classNumber, $buildingNumber); #gets ID classroom    
-
+        
         
         if ($getClassroom["status"] == "SUCCESS"){
                 $idClass = $getClassroom["idClassroom"];
@@ -342,6 +396,54 @@ function changeSts(){
         }	        
         
     }
+
+
+
+
+function readSensors(){
+
+        $classNumber= $_POST["classroom"];
+        $buildingNumber= $_POST["building"];
+        
+        $getClassroom= getIDClassroom($classNumber, $buildingNumber); #gets ID classroom    
+        
+        
+        if ($getClassroom["status"] == "SUCCESS"){
+                $idClass = $getClassroom["idClassroom"];
+            
+                $getRegister= getIDRegister($idClass); #gets ID Register
+                
+                if($getRegister["status"]== "SUCCESS"){
+                        $idReg= $getRegister["idRegister"];
+                    
+                        $result= attemptReadSensors($idReg); #read values of Sensors
+                            
+                      if ($result["status"] == "SUCCESS"){
+                           // $response = array("tempVal"=> $result["tempVal"],"lightVal"=> $result["lightVal"] );         
+                          echo json_encode($result); //sent it to presentation layer  
+                        }	
+    
+                      else{
+                            header('HTTP/1.1 500' . $result["status"]);
+                            die($result["status"]); //returns error from DataLayer
+                     }
+                     
+                    
+                 }     
+                else{
+                    header('HTTP/1.1 500' .  $getRegister["status"]);
+                    die($getRegister["status"]); //returns error from DataLayer
+                }
+        }	
+
+        else{
+            header('HTTP/1.1 500' .  $getClassroom["status"]);
+            die($getClassroom["status"]); //returns error from DataLayer
+        }	        
+        
+    }
+
+
 
 
 

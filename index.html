@@ -1,13 +1,11 @@
-    <html>
+<html>
 
 <head>
-    <title>Classroom</title>
     <link rel="stylesheet" type="text/css" href="styles.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 
-<header>  
-
+<header>    
     <div id="PageTitle">
         <h1> Classroom </h1>
         <h4 id="currentLogin"> Currently login as: </h4>
@@ -27,7 +25,7 @@
         <span id="logButton" type="subBut"> Log out </span>
     </li>
     </ul>
-</div>    
+    </div>    
 
 <body>
     
@@ -163,89 +161,92 @@
 
     
 
-    <div id="pickAClassroom">
-    <!----   <div class= "title" align= center> <h4> Select a classroom </h4> </div> ------> 
-        <div id="CiapDropDownMenu">    
-            <div class="SelectClassroom">
-            <p> Select a classroom @Ciap, ex: 432, 510 (just three digits):
-               <input class="inClassNum" type="string" value=""></br>
-                <div align="center"> <span id="searchBtn"> Search </span> </div>
-            </p>
+    <div id="pickAClassroom">  
+        <div id="Pick">
+            <div id="CiapDropDownMenu">    
+                <div class="SelectClassroom">
+                    <p> Select a classroom @Ciap, ex: 432, 510 (just three digits):</p>
+                </div>
+            </div>
             
-            <p> Building </p>
-             <input class="inBuildingNum" type="string" value=""></br>
+            <div id="CedesDropDownMenu">
+                <div class="SelectClassroom">
+                    <p> Select a classroom @CEDES, ex: 432, 510 (just three digits):</p>
+                </div>
+            </div>
+
+            <div id="CetecDropDownMenu">
+                <div class="SelectClassroom">
+                    <p> Select a classroom @CETEC, ex: 432, 510 (just three digits):</p>
+                </div>
+            </div>
+
+            <div id="BiotecDropDownMenu">
+                <div class="SelectClassroom">
+                    <p> Select a classroom @Biotecnologia, ex: 432, 510 (just three digits):</p>
+                </div>
+            </div>
+            </br>
+            <div align="center" >
+                <input id="inCNum" type="string" value="">
+                </br> 
+            </div>
+            <div align="center"> 
+                <span id="btnSearch" class="searchBtn"> Search </span> 
             </div>
         </div>
-
-        <div id="CedesDropDownMenu">
-        <div class="SelectClassroom">
-            <p> Select a classroom @CEDES, ex: 432, 510 (just three digits):
-               <input class="inClassNum" type="string" value=""></br>
-               <div align="center"> <span id="searchBtn"> Search </span> </div>
-            </p>
-        </div>
-        </div>
-
-        <div id="CetecDropDownMenu">
-        <div class="SelectClassroom">
-            <p> Select a classroom @CETEC, ex: 432, 510 (just three digits):
-               <input class="inClassNum" type="string" value=""></br>
-               <div align="center"> <span id="searchBtn"> Search </span> </div>
-            </p>
-        </div>
-
-        </div>
-
-        <div id="BiotecDropDownMenu">
-        <div class="SelectClassroom">
-            <p> Select a classroom @Biotecnologia, ex: 432, 510 (just three digits):
-               <input class="inClassNum" type="string" value=""></br>
-               <div align="center"> <span id="searchBtn"> Search </span> </div>
-            </p>
-        </div>
-        </div>
- 
-        <div id="menupickC" >
-            <table>
-                <tr > 
-                    <th class="tableHeader">Change sensors status</th>
-                    <th class="tableHeader">Read sensors status</th>
-                </tr>
-                
-                <tr>
-                    <th> 
-                        <p>Lights</p>
-                         <input id="LturnON" value="1" type="radio" name="LightStatus"> Turn ON lights  <br>
-                         <input id="LturnOFF" value="2" type="radio" name="LightStatus"> Turn OFF lights <br>
-                         <br>  
-                         <p>AC</p>
-                         <input id="ACturnON" value="1" type="radio" name="ACStatus"> Turn ON AC <br>
-                         <input id="ACturnOFF" value="2" type="radio" name="ACStatus"> Turn OFF AC <br>   
-                         <br>
-                    </th>
-            
+        
+        <div id="Status" style="display:none">
+            <div id="room">
+            </div>
+            <div id="addFav" class="Fav">
+                <span id="Favorite" class="searchBtn btnFav"> Add to Favorite </span>
+            </div>
+            <div id="removeFav" class="Fav">
+                <span id="UnFavorite" class="searchBtn btnFav" style="display:none"> Remove from favorites 
+                </span> 
+            </div>
+            <div align="center" id="menupickC" >
+                <table align="center">
+                    <tr > 
+                        <th class="tableHeader">Change sensors status</th>
+                        <th class="tableHeader">Read sensors status</th>
+                    </tr>
                     
-                    <th><p> Temperature: </p><br>
-                        <p> Light level: </p><br>  
-                    </th>
+                    <tr>
+                        <th> 
+                            <p>Lights</p>
+                             <input id="LturnON" value="1" type="radio" name="LightStatus"> Turn ON lights  <br>
+                             <input id="LturnOFF" value="0" type="radio" name="LightStatus"> Turn OFF lights <br>
+                             <br>  
+                             <p>AC</p>
+                             <input id="ACturnON" value="1" type="radio" name="ACStatus"> Turn ON AC <br>
+                             <input id="ACturnOFF" value="0" type="radio" name="ACStatus"> Turn OFF AC <br>   
+                             <br>
+                        </th>
                 
-                </tr>
-                
-                
-                <tr>
-                    <th><div class="tablerow" ><span class= btn id="writeClassroomBtn"> Change Status </span> </div> </th>
-                    <th><div class="tablerow" ><span class= btn id="readClassroomBtn"> Read Status </span> </div> </th>
-                </tr>
-            </table>
-             
+                        
+                        <th><p> Temperature: </p>
+                            <p id="printTemp"></p>
+                            <br> 
+                            <p> Light level: </p>
+                            <p id="printLight"></p>
+                        </th>
+                    
+                    </tr>
+                    <tr>
+                        <th><div class="tablerow" ><span class= btn id="writeClassroomBtn"> Change Status </span> </div> </th>
+                        <th><div class="tablerow" ><span class= btn id="readClassroomBtn"> Read Status </span> </div> </th>
+                    </tr>
+                </table>
+            </div>
         </div>
         
-     </div>
+    </div>
 
     
-   
 
- <div id="CommentSec">
+    <div id="CommentSec">
         <div id="allComment" >  <!----Comments ------>
         <div id="CommLeft"> <!----Comment izquierdo ------>
             <div id="Left">
@@ -274,6 +275,7 @@
     </div> <!----End comments ------>
     </div>
        
+    
     <div id="FavSec">
         <div id="Favoritos">
 

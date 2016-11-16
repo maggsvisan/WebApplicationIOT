@@ -26,9 +26,13 @@ $(document).ready(function () {
           $("#currentLogin").hide();
         }
     });
+    
 //////////////////////////////////////////////
 ////////// PAGE DIVS SHOW AND HIDE //////////
-//////////////////////////////////// 
+//////////////////////////////////////////////
+ var imageSelected;
+ var classNum;
+
     $("#Login").show();
     $("#LoginSec").hide();
     $("#RegSec").hide(); 
@@ -173,7 +177,9 @@ $(document).ready(function () {
     });
         
      $("#cetec2").on("click",function(){
-      
+        imageSelected= "CETEC";
+        $("#Status").hide();
+        $("#Pick").show(); 
         $("#LoginSec").hide();
         $("#RegSec").hide(); 
         $("#AboutSec").hide(); 
@@ -192,7 +198,7 @@ $(document).ready(function () {
 
     });
      $("#cedes2").on("click",function(){
-      
+        imageSelected= "CEDES";
         $("#LoginSec").hide();
         $("#RegSec").hide(); 
         $("#AboutSec").hide(); 
@@ -208,16 +214,16 @@ $(document).ready(function () {
         $("#BiotecDropDownMenu").hide();
         $("#RegClass").hide();
         $("#RegUser").hide();
-         
+        $("#menupickC").hide;
+
           alert($(".imagemenu").val());
     });
     
     
      $("#ciap2").on("click",function(){
-     //   var imageSelected;
-         
-       // localStorage.setItem('imageSelected', $(".imagemenu").val());
-        
+        $("#Status").hide();
+        $("#Pick").show();
+        imageSelected= "CIAP";
         $("#LoginSec").hide();
         $("#RegSec").hide(); 
         $("#AboutSec").hide(); 
@@ -233,13 +239,15 @@ $(document).ready(function () {
         $("#BiotecDropDownMenu").hide();
         $("#RegClass").hide();
         $("#RegUser").hide();
-         
+        $("#Status").hide;
         
     });
     
     
      $("#biotec2").on("click",function(){
-      
+         $("#Status").hide();
+        $("#Pick").show();
+        imageSelected= "BIOTEC";
         $("#LoginSec").hide();
         $("#RegSec").hide(); 
         $("#AboutSec").hide(); 
@@ -255,9 +263,6 @@ $(document).ready(function () {
         $("#BiotecDropDownMenu").show();
         $("#RegClass").hide();
         $("#RegUser").hide();
-        
-
-
     });
     
     
@@ -299,8 +304,10 @@ $(document).ready(function () {
         $("#RegUser").show();
         
     });
-
-    $("#Fav").on("click",function(){
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+    
+   $("#Fav").on("click",function(){
         $("#Favoritos").empty();
         $.ajax({
             url: 'data/ApplicationLayer.php',
@@ -351,11 +358,12 @@ $(document).ready(function () {
         });
 
             
-    });
-///////////////////////////////////////////////////
+    });    
+
 ///////////////////////////////////////////////////
 ///////////LOAD COMMENTS///////////////////////////
 ///////////////////////////////////////////////////
+
     $("#Comm").on("click", function () {
         $.ajax({  
             url: "data/ApplicationLayer.php",
@@ -383,103 +391,154 @@ $(document).ready(function () {
     });
     
 /////////////////////////////////////////////////////
-///////////////// VERIFY SESSION ////////////////// 
 /////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////
+////////////////// READ SENSORS /////////////////////
+/////////////////////////////////////////////////////
+        
+$("#readClassroomBtn").on("click", function () { 
+   
+   var jsonData = { 
+        "action": "readSensors",
+      //  "classroom": $("#inCNum").val(),
+        "classroom": classNum,
+        "building": imageSelected, 
+    };
+    
+    console.log(jsonData);
+    
+     $.ajax({
+            url: "data/ApplicationLayer.php", 
+            type: "POST", 
+            data: jsonData, 
+            success: function (jsonResponse) {
+                
+                $("#printTemp").empty();
+                $("#printLight").empty();
+                $("#printTemp").append(jsonResponse.tempVal);
+                $("#printLight").append(jsonResponse.lightVal);       
+        }
+            , error: function (errorMessage) {
+                alert(errorMessage.responseText);
+                alert("data error");
+            }
+        });
+   
+});
+    
+    
 /////////////////////////////////////////////////////
 ///////////////////////////////////////////////////// 
 /////////////////////////////////////////////////////
+    
 
     
+/////////////////////////////////////////////////////
+////////////////// WRITE SENSORS /////////////////////
+/////////////////////////////////////////////////////
+  $("#writeClassroomBtn").on("click", function () {   //// Change Status 
+               
+                  var valueLight;
+                  var valueAC;
+
+                  if ($('input:radio[name=LightStatus]:checked').val()>= 0){
+                        valueLight= $('input:radio[name=LightStatus]:checked').val();
+                    }
+
+                    else{
+                        valueLight=-1;
+                    }
+
+                    if ($('input:radio[name=ACStatus]:checked').val()>=0) {
+                         valueAC= $('input:radio[name=ACStatus]:checked').val();
+                    }
+
+                    else{
+                        valueAC =-1;
+                    }
+
+        
+                       var jsonData2 = { //hay que mandarle que salón es
+                            "action": "changeSts",
+                           // "classroom": $("#inCNum").val(),
+                            "classroom": classNum,
+                           "building": imageSelected, 
+                            "lstatus": valueLight,
+                            "ACstatus": valueAC
+                        };
+
+                    console.log(jsonData2)
+
+                        if ((valueAC >= 0) && (valueLight >= 0)) {
+                        alert("entra if");
+
+                            $.ajax({
+                                url: "data/ApplicationLayer.php", 
+                                type: "POST",
+                                data: jsonData2,
+                                dataType: "json",
+                                contentType: "application/x-www-form-urlencoded",
+                                success: function (jsonResponse) {
+                                    console.log(jsonResponse)
+                                },
+
+                                error: function (errorMessage){
+                                    alert(errorMessage.responseText);
+                                    alert("Error changing status");
+                                }
+                            });
+
+                        }
+
+                        else{
+                            alert("Select an option!");
+                        }
+
+            });    
     
  /////////////////////////////////////////////////////
 /////////////// VALIDATE CLASSROOM ////////////////// 
 /////////////////////////////////////////////////////
     
-$("#searchBtn").click(function () {
+$("#btnSearch").click(function () {
+        $("#Status").show();
+        $("#Pick").hide();
+        alert("");
+         $("#room").empty();
+        $("#room").append(imageSelected);
+        alert(imageSelected); 
+        classNum= $("#inCNum").val();
        
         var jsonData = {
-            "classroom": $(".inClassNum").val(), 
+          //  "classroom": $("#inCNum").val(), 
+            "classroom":classNum, 
+            "buildNum": imageSelected,
             "action": "validateClassroom"
             
         };
-        
+        $("#inCNum").val("");
+        console.log(jsonData);
+       
         $.ajax({
             url: "data/ApplicationLayer.php"
             , type: "POST"
             , data: jsonData
             , success: function (jsonResponse) {
                 alert(jsonResponse.message)
+
                 //console.log(jsonResponse);
-                
-          $("#writeClassroomBtn").on("click", function () {   //// Change Status 
-                
-              var valueLight;
-              var valueAC;
+
               
-              if ($('input:radio[name=LightStatus]:checked').val()> 0){
-                    valueLight= $('input:radio[name=LightStatus]:checked').val();
-                }
-
-                else{
-                    valueLight=-1;
-                }
-
-                if ($('input:radio[name=ACStatus]:checked').val()>=0) {
-                     valueAC= $('input:radio[name=ACStatus]:checked').val();
-                }
-
-                else{
-                    valueAC =-1;
-                }
-                
-                alert(valueAC);
-                alert(valueLight);
-
-                   var jsonData2 = { //hay que mandarle que salón es
-                        "action": "changeSts",
-                        "classroom": $(".inClassNum").val(),
-                       "building": $(".inBuildingNum").val(), 
-                        "lstatus": "valueLight",
-                        "ACstatus": "valueAC"
-                    };
-                    
-              
-                    if ((valueAC > 0) && (valueLight > 0)) {
-                    alert("entra if");
-
-                        $.ajax({
-                            url: "data/ApplicationLayer.php", 
-                            type: "POST",
-                            data: jsonData2,
-                            dataType: "json",
-                            contentType: "application/x-www-form-urlencoded",
-                            success: function (jsonResponse) {
-                                console.log(jsonResponse)
-                            },
-
-                            error: function (errorMessage){
-                                alert(errorMessage.responseText);
-                                alert("Error changing status");
-                            }
-                        });
-
-                    }
-
-                    else{
-                        alert("Select an option!");
-                    }
-
-  });  
-/////////////////////////////////////////////////////
-///////////////////////////////////////////////////// 
-/////////////////////////////////////////////////////   
-            }
+                   
+        }
             , error: function (errorMessage) {
                 alert(errorMessage.responseText);
             }
         });
         
-    });
+    });    
+
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 
@@ -490,43 +549,27 @@ $("#searchBtn").click(function () {
 /////////////////////////////////////////////////////
 
     $("#BtnRegisterClass").click(function () {
-/*        var valClassroom = {
-            "building": $("#inBuilding").val(), 
+       
+        var jsonData = {
             "classNum": $("#inClassNum").val(), 
-            "action": "valClassroom"    
+            "building": $("#inBuilding").val(), 
+            "action": "registerClassroom"    
         };
         
         console.log(jsonData);
         $.ajax({
-            url:"data/ApplicationLayer.php",
-            type: "POST",
-            data: valClassroom,
-            success: function(jsonResponse){
-
-            },
-            error: function(errorMessage){
-
-            }
-        });
-*/
-        var jsonData = {
-            "building": $("#inBuilding").val(), 
-            "classNum": $("#inClassNum").val(), 
-            "action": "registerClassroom"    
-        };
-        $.ajax({
             url: "data/ApplicationLayer.php"
             , type: "POST"
-            , data: jsonData    
+            , data: jsonData
             , success: function (jsonResponse) {
                 alert("Added!");
                 //alert("New Register added" + jsonResponse.fName)
                 console.log(jsonResponse);
+                                
             }
             , error: function (errorMessage) {
                 //alert(errorMessage.responseText);
-                $("#inBuilding").val('');
-                $("#inClassNum").val('');
+                alert(errorMessage.responseText);
             }
         });
         
@@ -654,6 +697,7 @@ $("#searchBtn").click(function () {
     
     });
 ///////////////////////////////////////////////////
+///////////////////////////////////////////////////
     
     
 ///////////////////////////////////////////////////
@@ -682,9 +726,10 @@ $("#logoutButton").on("click", function () {
         });
     });
 ///////////////////////////////////////////////////    
+///////////////////////////////////////////////////    
     
     
-///////////////////////////////////////////////////
+//////////////////////////////////////////////////
 //////////////// ADD COMMENTS /////////////////////
 ///////////////////////////////////////////////////
      $("#postCommentButton").on("click", function () {
@@ -725,9 +770,63 @@ $("#logoutButton").on("click", function () {
                     }
                 });
         }
-     });
+    });
+
+
+/////////////////////////////////////////////////
+/////////////////////////////////////////////////
+    var Liked=false;
+    $(".btnFav").on("click",function(){
+
+        if(!Liked){
+            $.ajax({
+                url: 'data/ApplicationLayer.php',
+                type: 'POST' ,
+                data: { "action": "verifySession"},
+                dataType: 'json',
+                success: function(jsonResponse){
+                    if(jsonResponse.state === "true"){
+                        var Mat=jsonResponse.mat;
+                        dataFav={
+                           "mat":Mat,
+                           "classroom": classNum,
+                           "building": imageSelected ,
+                           "action" : "AddFavorite"
+                        }
+                        $.ajax({
+                            url: 'data/ApplicationLayer.php',
+                            type: 'POST',
+                            data: dataFav,
+                            dataType: 'json',
+                            success: function(jsonResponse){
+                                if(jsonResponse.status == "SUCCESS")
+                                alert(Liked);
+                                Liked=!Liked;
+                                $("#Favorite").hide();
+                                $("#UnFavorite").show();
+                            },
+                            error: function(errorMessage){
+                                alert("Error Adding to Favorites, try again later");
+                            }
+                        }); 
+                    }   
+                },
+                error: function(errorMessage){
+                  alert(errorMessage.responseText);
+                  alert("False verify");
+                  $("#currentLogin").hide();
+            }
+    });
 
 
 
+        }
+        else {
+            alert(Liked);
+            Liked=!Liked;
+            $("#Favorite").show();
+            $("#UnFavorite").hide();
+        }
+    });
     
 });

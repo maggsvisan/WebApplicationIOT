@@ -31,20 +31,48 @@ CREATE TABLE Actuators(
 
 );
 
+ 
+CREATE TABLE Sensors(  
+    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    tempValue VARCHAR(50) NOT NULL,
+    lightValue VARCHAR(50) NOT NULL,
+    rnum INT NOT NULL,   
+
+    FOREIGN KEY (rnum) REFERENCES Register(id)
+
+);
+
+ 
+
 CREATE TABLE Comments (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
     commnt VARCHAR(140) NOT NULL,
     mat  VARCHAR(50) NOT NULL, 
+    
+    FOREIGN KEY (mat) REFERENCES Users(matricula)
 ); 
 
 CREATE TABLE Favorites (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
     building VARCHAR(140) NOT NULL,
+    num VARCHAR(50) NOT NULL,
     mat  VARCHAR(50) NOT NULL
 );
+
+
+INSERT INTO Register(cnum, timeReg, dateReg)
+values (6, '13:00:15' , '2010-01-02' )
 
 INSERT INTO Register(cnum, timeReg, dateReg)
 values (1, '13:00:00' , '2008-01-02' )
 
+
+
+INSERT INTO Sensors(tempValue, lightValue, rnum)
+VALUES ('x', 'x', 1)
+
 INSERT INTO Actuators(stsTemp, stsLight, rnum)
-VALUES (1, 0, 1)
+VALUES (1, 0, 2)
+
+INSERT INTO Actuators(stsTemp, stsLight, rnum)
+VALUES (0, 0, 3)
