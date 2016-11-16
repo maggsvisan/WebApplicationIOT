@@ -381,6 +381,8 @@ $(document).ready(function () {
                                     +  "<td>" + jsonResponse[index].comment        + "</td></tr>";   
                     });
                 } 
+                $("#submitTable").empty();
+
                 $("#submitTable").append(postComment);
             },
             error:function(errorMessage){
@@ -504,38 +506,137 @@ $("#readClassroomBtn").on("click", function () {
 $("#btnSearch").click(function () {
         $("#Status").show();
         $("#Pick").hide();
-        alert("");
          $("#room").empty();
         $("#room").append(imageSelected);
-        alert(imageSelected); 
         classNum= $("#inCNum").val();
        
         var jsonData = {
           //  "classroom": $("#inCNum").val(), 
             "classroom":classNum, 
             "buildNum": imageSelected,
-            "action": "validateClassroom"
-            
+            "action": "validateClassroom"  
         };
+
         $("#inCNum").val("");
-        console.log(jsonData);
-       
+      
         $.ajax({
             url: "data/ApplicationLayer.php"
             , type: "POST"
             , data: jsonData
-            , success: function (jsonResponse) {
-                alert(jsonResponse.message)
+            , success: function (jsonResponse) { 
+                alert(jsonResponse.status);  
 
-                //console.log(jsonResponse);
+                var jsonData2 = {
+                        "action": "verifySession"  
+                    };
+        
+                $.ajax({                                 //detecta salon y hace favorites
+                    url: 'data/ApplicationLayer.php',
+                    type: 'POST' ,
+                    data: jsonData2,
+                    dataType: 'json',
+                    
+                    success: function(jsonResponse2){
+                       // alert(jsonResponse2.state)
+                        
+                        if(jsonResponse2.state){
+                               var jsonData3= {
+                                            "mat":jsonResponse2.mat,
+                                            "classroom":classNum, 
+                                            "building": imageSelected,
+                                            "action": "validateFavorite"
+                                        };
+                                        
+                              
+                              $.ajax({
+                                    url:"data/ApplicationLayer.php",
+                                    type:"POST",
+                                    data: jsonData3,
+                                    success:function(jsonResponse3){
+                                     console.log("Entra al if validate fav");
+                                       alert(jsonResponse3);
+                                       
+                                       if(jsonResponse.status == 'SUCCESS'){
+                                            alert("Already a Favorite");
+                                            $("#Favorite").hide();
+                                            $("#UnFavorite").show();
 
-              
-                   
-        }
+                                        }
+                                        else{
+                                            console.log("Not a favorite");
+                                            $("#Favorite").show();
+                                            $("#UnFavorite").hide();   
+                                        } 
+                                    },
+                                    error: function(errorMessage){
+                                        alert(errorMessage.responseText);
+
+                                    }
+
+
+                                }); 
+                            }  
+                    },
+                    error: function(errorMessage){
+                      alert(errorMessage.responseText);
+                      $("#currentLogin").hide();
+                }
+            });
+
+            }
+        
             , error: function (errorMessage) {
                 alert(errorMessage.responseText);
-            }
+            }  
         });
+/*
+        $.ajax({
+                url: 'data/ApplicationLayer.php',
+                type: 'POST' ,
+                data: { "action": "verifySession"},
+                dataType: 'json',
+                success: function(jsonResponse){
+                    if(jsonResponse.state =="true"){
+                        var dataValidateFav= {
+                                    "mat":jsonResponse.mat,
+                                    "classroom":classNum, 
+                                    "building": imageSelected,
+                                    "action": "validateFavorite"
+                                };
+                        console.log(dataValidateFav);
+                        $.ajax({
+                            url:"data/ApplicationLayer.php",
+                            type:"POST",
+                            data: dataValidateFav,
+                            success:function(jsonResponse){
+                                alert("Entra al if validate fav");
+                                console.log(jsonResponse);
+                                if(jsonResponse.status == 'SUCCESS'){
+                                    alert("Already a Favorite");
+                                    $("#Favorite").hide();
+                                    $("#UnFavorite").show();
+
+                                }
+                                else{
+                                    console.log("Not a favorite");
+                                    $("#Favorite").show();
+                                    $("#UnFavorite").hide();   
+                                }
+                            },
+                            error: function(errorMessage){
+                                alert("Entra Error validate fav");
+                                alert(errorMessage.responseText);
+                            }
+                        });
+                    }   
+                },
+                error: function(errorMessage){
+                  alert(errorMessage.responseText);
+                  alert("Error validating user");
+                  $("#currentLogin").hide();
+            }
+            });
+*/
         
     });    
 
@@ -760,6 +861,7 @@ $("#logoutButton").on("click", function () {
                                             "<td>" + jsonResponse.id      + "</td>"
                                        +  "<td>" + jsonResponse.comment + "</td>"
                                        +  "</tr>";
+
                         $("#submitTable").append(newComment);
                     
                         $("#comID").val("");
@@ -776,9 +878,54 @@ $("#logoutButton").on("click", function () {
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
     var Liked=false;
-    $(".btnFav").on("click",function(){
+    $("#Favorite").on("click",function(){
+            alert("Adding to favorites");
+            $.ajax({
+                url: 'data/ApplicationLayer.php',
+                type: 'POST' ,
+                data: { "action": "verifySession"},
+                dataType: 'json',
+                success: function(jsonResponse){
 
-        if(!Liked){
+                    if(jsonResponse.state === "true"){
+                        alert("Validate True");
+                        var Mat=jsonResponse.mat;
+                        dataFav={
+                           "mat":Mat,
+                           "classroom": classNum,
+                           "building": imageSelected ,
+                           "action" : "addFavorite"
+                        }
+                        console.log(dataFav);
+                        $.ajax({
+                            url: 'data/ApplicationLayer.php',
+                            type: 'POST',
+                            data: dataFav,
+                            dataType: 'json',
+                            success: function(jsonResponse){
+                                console.log(jsonResponse);
+                                if(jsonResponse.status == "SUCCESS")
+                                Liked=!Liked;
+                                $("#Favorite").hide();
+                                $("#UnFavorite").show();
+                            },
+                            error: function(errorMessage){
+                                alert("Error Adding to Favorites, try again later");
+                            }
+                        }); 
+                    } 
+                },
+                error: function(errorMessage){
+                  alert(errorMessage.responseText);
+                  alert("False verify");
+                  $("#currentLogin").hide();
+            }
+            });
+    });
+    
+    $("#UnFavorite").on("click",function(){
+        //Already a favorite  Remove button shown
+            alert("Removing from Favorites");
             $.ajax({
                 url: 'data/ApplicationLayer.php',
                 type: 'POST' ,
@@ -786,27 +933,29 @@ $("#logoutButton").on("click", function () {
                 dataType: 'json',
                 success: function(jsonResponse){
                     if(jsonResponse.state === "true"){
+                        alert("Enter validate");
                         var Mat=jsonResponse.mat;
                         dataFav={
                            "mat":Mat,
                            "classroom": classNum,
                            "building": imageSelected ,
-                           "action" : "AddFavorite"
+                           "action" : "removeFavorite"
                         }
+                        console.log(dataFav);
                         $.ajax({
                             url: 'data/ApplicationLayer.php',
                             type: 'POST',
                             data: dataFav,
                             dataType: 'json',
                             success: function(jsonResponse){
-                                if(jsonResponse.status == "SUCCESS")
+                                if(jsonResponse.status == "ERASED")
                                 alert(Liked);
                                 Liked=!Liked;
-                                $("#Favorite").hide();
-                                $("#UnFavorite").show();
+                                $("#Favorite").show();
+                                $("#UnFavorite").hide();
                             },
                             error: function(errorMessage){
-                                alert("Error Adding to Favorites, try again later");
+                                alert("Error Removing from favorites, try again later");
                             }
                         }); 
                     }   
@@ -816,17 +965,7 @@ $("#logoutButton").on("click", function () {
                   alert("False verify");
                   $("#currentLogin").hide();
             }
-    });
-
-
-
-        }
-        else {
-            alert(Liked);
-            Liked=!Liked;
-            $("#Favorite").show();
-            $("#UnFavorite").hide();
-        }
-    });
+            });
     
+    });
 });

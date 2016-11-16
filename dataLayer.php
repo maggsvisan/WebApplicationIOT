@@ -16,7 +16,78 @@
 			return $conn;
 		}
 	}
+    function validateFavs($mat,$classroom,$building){
+        $conn = connectionToDataBase();
+        if ($conn != null){
+            $sql = "SELECT building from favorites WHERE building='$building' AND num = '$classroom' AND  mat ='$mat'";
+           // echo $sql;
+            
+                $result = $conn->query($sql);
+                if ($result->num_rows > 0)
+                {
+                    $row = $result -> fetch_assoc();
+                    $conn -> close();
 
+                    return array("status" => "SUCCESS");
+                }
+                else{
+                    $conn -> close();
+                    return array("status" => "Not a favorite");
+                }
+            }
+        else{
+            $conn -> close();
+            return array("status" => "CONNECTION WITH DB WENT WRONG");
+        }   
+    }
+
+    function removeFavs($mat,$classroom,$building){
+        $conn = connectionToDataBase();
+
+        if ($conn != null){
+            $sql = "DELETE FROM favorites WHERE mat='$mat' AND building='$building' AND num='$classroom'";
+            // Run query and store resulting data
+            $result = $conn->query($sql);
+            
+            if ($result == TRUE) {
+                $conn -> close();
+                return array("status" => "ERASED");   
+            }  
+        }   
+        else{
+            $conn -> close();
+            return array ("status" => "Something went wrong, can't erase from favorites");
+        }
+    }
+
+
+    function addFavs($mat,$classroom,$building){
+        $conn = connectionToDataBase();
+
+        if ($conn != null){
+        $sql = "INSERT INTO favorites(building,num,mat) 
+                VALUES ('$building','$classroom','$mat')";
+        // Run query and store resulting data
+        $result = $conn->query($sql);
+            
+        if ($result == TRUE) {
+            $conn -> close();
+            return array("status" => "SUCCESS");   
+        } 
+                
+                
+        else{
+            $conn -> close();
+            return array ("status" => "Something went wrong");
+        }
+            
+    }
+
+        else {
+            $conn -> close();
+            header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+        }
+    }
 	function attemptLogin($mat){
 
 		$conn = connectionToDataBase();
@@ -219,7 +290,7 @@ function verifyClassroom ($classNumber, $buildingNum){
 	if ($conn != null){
 			
         $sql = "SELECT id FROM Classroom WHERE building='$buildingNum' AND num = '$classNumber' ";
-		echo $sql;
+		
         
 			$result = $conn->query($sql);
 

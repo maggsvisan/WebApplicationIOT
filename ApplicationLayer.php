@@ -45,9 +45,38 @@ switch($action){
         
     case "loadFavorites": loadFavorites();
                         break;
-    case "AddFavorite": addFavorite();
+    case "addFavorite": addFavorite();
                         break;
-            
+    case "removeFavorite": removeFavorite();
+                        break;
+    case "validateFavorite": validateFavorite();
+                        break;
+}
+function validateFavorite(){
+    $mat = $_POST["mat"];
+    $classroom = $_POST["classroom"];
+    $building = $_POST["building"];
+
+    $result = validateFavs($mat,$classroom,$building);
+    
+    echo json_encode($result["status"]);
+  
+}
+
+function removeFavorite(){
+    $mat = $_POST["mat"];
+    $classroom = $_POST["classroom"];
+    $building = $_POST["building"];
+    $result = removeFavs($mat,$classroom,$building);
+    echo json_encode($result["status"]);
+}
+function addFavorite(){
+    $mat = $_POST["mat"];
+    $classroom = $_POST["classroom"];
+    $building = $_POST["building"];
+    $result = addFavs($mat,$classroom,$building);
+    echo json_encode($result["status"]);
+
 }
 
 function loadComments(){
@@ -338,11 +367,9 @@ function validateClassroom(){ //validate if classroom exists
     $buildingNum= $_POST["buildNum"];
      
     $result=  verifyClassroom($classNumber, $buildingNum);
-    echo $result["status"];
         
      if ($result["status"] == "SUCCESS"){
-         $response = array("message"=> "Classroom Exists!");
-         echo json_encode($response); //sent it to presentation layer  
+         echo json_encode($result); //sent it to presentation layer  
       }	
     
     else{
