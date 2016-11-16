@@ -529,6 +529,71 @@ function loadDBFavs($mat){
         }
     }
 
+function loadUsers(){ //shows all users en DB
+    $conn = connectionToDataBase();
+
+    if ($conn != null){
+    
+    //MySQL query
+    $sql = "SELECT * FROM Users";
+    // Run query and store resulting data
+    $result = $conn -> query($sql); //
+           
+        if ($result->num_rows > 0)
+        {    
+            $response = array();    
+            
+            while($row = $result -> fetch_assoc()) {
+                array_push($response, array("mat" => $row["matricula"])); 
+            }
+            return ($response);
+        }
+        
+        else{
+             header("No users register");
+        }
+            
+    }
+        else {
+            $conn -> close();
+            header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+     }
+}
+
+
+function loadClassrooms(){ //shows all classrooms en DB
+    $conn = connectionToDataBase();
+
+    if ($conn != null){
+        $sql = "SELECT * FROM Classroom";
+        
+        //echo $sql;
+        
+        $result = $conn -> query($sql); 
+           
+        if ($result->num_rows > 0)
+        {    
+            $response = array();    
+            
+            while($row = $result -> fetch_assoc()) {
+                array_push($response, array("buildings" => $row["building"], "numbers" => $row["num"])); 
+            }
+            return ($response);
+        }
+        
+        else{
+             header("No users register");
+        }
+            
+    }
+        else {
+            $conn -> close();
+            header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+     }
+}
+
+
+
 
 
 function rmvUser($matNumber){
@@ -706,10 +771,13 @@ function validClassroom ($classNumber, $buildingNum){
     else{
 		$conn -> close();
 		return array("status" => "CONNECTION WITH DB WENT WRONG");
-	}
-        
-        
+	}             
 }
+
+
+
+
+ 
 
 
 ?>

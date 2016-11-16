@@ -133,7 +133,31 @@
             <tr>
                 <th><div> <span class="btn"  id="BtnClass"> Register a new classroom </span> </div></th>
                 <th> <span class= "btn" id="BtnUser"> Register a new user </span> </th>
+                
             </tr>
+           
+            <tr>
+                <td><span class="btn"  id="BtnLoadClass"> Registered classrooms </span> 
+                </br>
+                </br>
+                    <table id="classroomsTable">
+                    <tr>
+                        <th>building</th>
+                        <th>number</th>
+                    </tr>
+                    <tbody id="submitClassroom"></tbody>
+                        
+                </table>
+                </td>
+                
+                <td> <span class= "btn" id="BtnLoadUser"> Registered Users </span> 
+                </br>
+                </br>
+                <ol id="regisUsers" class="UsersList"> Registered users: </ol>
+                
+                </td>
+            </tr>
+            
         </table>
      </div>
     
@@ -199,28 +223,36 @@
         <div class= "title" align= center> <h4> Select a building </h4> </div>
         
         <div id="images" >
-            <span id="ciap1">
+            <div class="hovereffect">
+                <span id="ciap1">
                 <input type="hidden" class="imagemenu" value="ciap">
-                <img id="ciap2" src="images/ciap.png" style=" width: 600px ; height: 390px;">
-            </span>
-            
+                <img id="ciap2" src="images/ciap.png" style=" width: 600px ; height: 390px;"> 
+               </span>
+            </div>
+           <br>
+            <div class="hovereffect">
             <span id="cedes1">
                 <input type="hidden" class="imagemenu" value="cedes">
-                <img id="cedes2" src="images/cedes.png" style=" width: 600px ; height: 390px; margin-top: 0.5cm">
+                <img id="cedes2" src="images/cedes.png" style=" width: 600px ; height: 390px">
             </span>
+            </div>
             
         </div>
         
         <div id="images2" >
+            <div class="hovereffect">
             <span id="biotec1">
                 <input type="hidden" class="imagemenu" value="biotec">
                 <img id="biotec2" src="images/biotec.jpg" style=" width: 600px ; height: 390px;">
             </span>
-            
+             </div>
+             <br>
+            <div class="hovereffect">
             <span id="cetec1">
                   <input type="hidden" class="imagemenu" value="cetec">
-                <img id="cetec2" src="images/cetec.jpg" style=" width: 600px ; height: 390px; margin-top: 0.5cm; margin-bottom: 1cm">
+                <img id="cetec2" src="images/cetec.jpg" style=" width: 600px ; height: 390px">
             </span>
+            </div>
             
         </div>
     </div>

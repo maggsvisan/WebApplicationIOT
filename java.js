@@ -427,9 +427,11 @@ var NumRmClass;
     });
 ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////
-    
+
+   
     
 
+    
 ///////////////////////////////////////////////////
 //////////////// REMOVE A USER ////////////////////
 ///////////////////////////////////////////////////
@@ -562,6 +564,69 @@ var NumRmClass;
             
     });    
 
+///////////////////////////////////////////////////
+//////////////// LOAD USERS ////////////////////
+///////////////////////////////////////////////////
+
+$("#BtnLoadUser").on("click", function () {               
+     $.ajax({
+        url: "data/ApplicationLayer.php",
+        type:"POST",
+        data:{"action" : "LoadUsers"},
+        success:function(jsonResponse){
+        var postUser = "";
+         if (jsonResponse.length > 0){
+                    $.each(jsonResponse,function(index){
+                        postUser += "<li>" + jsonResponse[index].mat + "</li>" + "<br>";   
+                    });
+         } 
+        $("#regisUsers").empty();
+         $("#regisUsers").append(postUser);
+        
+     },
+     error: function(errorMessage){
+         alert(errorMessage.responseText);     }
+         
+     });
+});
+/////////////////////////////////////////////////////
+///////////////////////////////////////////////////// 
+///////////////////////////////////////////////////// 
+    
+///////////////////////////////////////////////////
+//////////////// LOAD CLASSROOMS //////////////////
+///////////////////////////////////////////////////
+
+$("#BtnLoadClass").on("click", function () {
+    alert("print class");
+     $.ajax({
+        url: "data/ApplicationLayer.php",
+        type:"POST",
+        data:{"action" : "LoadClassrooms"},
+        success:function(jsonResponse){
+            var postClassroom = "";
+            if (jsonResponse.length > 0){
+                    $.each(jsonResponse,function(index){
+                        postClassroom += "<tr>"
+                                    +  "<td>" + jsonResponse[index].buildings+ "</td>"
+                                    +  "<td>" + jsonResponse[index].numbers+ "</td></tr>";   
+                    });
+            } 
+                $("#submitClassroom").append(postClassroom);    
+        },
+     error: function(errorMessage){
+         alert(errorMessage.responseText);     
+     }
+         
+     });
+});
+/////////////////////////////////////////////////////
+///////////////////////////////////////////////////// 
+///////////////////////////////////////////////////// 
+
+  
+/////////////////////////////////////////////////////
+///////////////////////////////////////////////////// 
 ///////////////////////////////////////////////////
 ///////////LOAD COMMENTS///////////////////////////
 ///////////////////////////////////////////////////
@@ -781,7 +846,7 @@ $(".searchBtn").click(function () {
     
     
 /////////////////////////////////////////////////////
-///////////////// REGISTER SECTION ////////////////// 
+///////////////// REGISTER USER ////////////////// 
 /////////////////////////////////////////////////////
 
     $("#registerBtn").click(function () {
@@ -802,8 +867,9 @@ $(".searchBtn").click(function () {
             , data: jsonData
             , success: function (jsonResponse) {
                 alert(jsonResponse.message + "!");
-                //alert("New Register added" + jsonResponse.fName)
-                console.log(jsonResponse);
+                $("#homeImages").show();
+                $("#RegUser").hide(); 
+                
             }
             , error: function (errorMessage) {
                 alert(errorMessage.responseText);

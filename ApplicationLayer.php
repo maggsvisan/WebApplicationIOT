@@ -51,7 +51,25 @@ switch($action){
     
     case "removeClassroom": removeClassroom();
                         break;
+    
+    case "LoadUsers": loadAllUsers();
+                        break;
+    
+    case "LoadClassrooms": loadAllClassrooms();
+                        break;
             
+}
+
+
+function loadAllClassrooms(){
+    $result= loadClassrooms();
+    echo json_encode($result);
+}
+
+function loadAllUsers(){
+    $result= loadUsers();
+    
+    echo json_encode($result);
 }
 
 function loadComments(){
@@ -536,9 +554,4 @@ function removeClassroom(){ // deletes classroom records
             
                      
  }
-
- 
-
-
-
 ?>
