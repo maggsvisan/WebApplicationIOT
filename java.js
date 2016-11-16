@@ -783,67 +783,59 @@ $("#readClassroomBtn").on("click", function () {
 /////////////// VALIDATE CLASSROOM ////////////////// 
 /////////////////////////////////////////////////////
     
+
 $("#btnSearch").click(function () {
-        $("#Status").show();
+        
         $("#Pick").hide();
         $("#room").empty();
         $("#room").append(imageSelected);
         classNum= $("#inCNum").val();
        
         var jsonData = {
-          //  "classroom": $("#inCNum").val(), 
             "classroom":classNum, 
             "buildNum": imageSelected,
             "action": "validateClassroom"  
         };
-
         $("#inCNum").val("");
-      
-        
-    
         $.ajax({
             url: "data/ApplicationLayer.php"
             , type: "POST"
             , data: jsonData
             , success: function (jsonResponse) { 
-               // alert(jsonResponse.status);  
-                
-                var jsonData2 = {
-                        "action": "verifySession"  
-                    };
-                
-               
-                $.ajax({                                 //detecta salon y hace favorites
-                    url: 'data/ApplicationLayer.php',
-                    type: 'POST' ,
-                    data: jsonData2,
-                    dataType: 'json',
-                    
-                    success: function(jsonResponse2){
-                        //alert(jsonResponse2.state)
-                       
-                        if(jsonResponse2.state){
-                               var jsonData3= {
-                                            "mat":jsonResponse2.mat,
-                                            "classroom":classNum, 
-                                            "building": imageSelected,
-                                            "action": "validateFavorite"
-                                        };
-                                        
-                              
-                              $.ajax({
+                 $("#Status").hide();
+                if(jsonResponse.status == "SUCCESS"){
+                    $("#Status").show();
+                    alert("Entra a validar classroom");
+                    alert(jsonResponse.status);  
+                    var jsonData2 = {"action": "verifySession"  };
+            
+                    $.ajax({                                 //detecta salon y hace favorites
+                        url: 'data/ApplicationLayer.php',
+                        type: 'POST' ,
+                        data: jsonData2,
+                        dataType: 'json',
+                        success: function(jsonResponse2){
+                            alert("Entra a validar favorite");
+                            alert(jsonResponse2.state)
+                            if(jsonResponse2.state){
+                                var jsonData3= {
+                                    "mat":jsonResponse2.mat,
+                                    "classroom":classNum, 
+                                    "building": imageSelected,
+                                    "action": "validateFavorite"
+                                };
+                                alert("Validate Favorite)");
+                                $.ajax({
                                     url:"data/ApplicationLayer.php",
                                     type:"POST",
                                     data: jsonData3,
                                     success:function(jsonResponse3){
-                                     console.log("Entra al if validate fav");
-                                       alert(jsonResponse3);
-                                       
-                                       if(jsonResponse3.status == 'SUCCESS'){
-                                            alert("Already a Favorite");
+                                        console.log("Entra al if validate fav");
+                                        alert(jsonResponse3);
+                                        if(jsonResponse3.status == 'SUCCESS'){
+                                            console.log("Already a Favorite");
                                             $("#Favorite").hide();
                                             $("#UnFavorite").show();
-
                                         }
                                         else{
                                             console.log("Not a favorite");
@@ -853,19 +845,22 @@ $("#btnSearch").click(function () {
                                     },
                                     error: function(errorMessage){
                                         alert(errorMessage.responseText);
-
                                     }
-
-
                                 }); 
                             }  
-                    },
-                    error: function(errorMessage){
-                      alert(errorMessage.responseText);
-                      $("#currentLogin").hide();
+                        },
+                        error: function(errorMessage){
+                            alert(errorMessage.responseText);
+                            $("#currentLogin").hide();
+                        }
+                    });
                 }
-            });
-
+                else{
+                    $("#Status").hide();
+                    $("#inCNum").val("");
+                    $("#homeImages").show();
+                    alert("Classroom not registered");
+                }
             }
         
             , error: function (errorMessage) {
@@ -873,7 +868,7 @@ $("#btnSearch").click(function () {
             }  
         });
         
-    });    
+    });
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 

@@ -411,15 +411,18 @@ function validateClassroom(){ //validate if classroom exists
         
      if ($result["status"] == "SUCCESS"){
          echo json_encode($result); //sent it to presentation layer  
-      }	
+      }
+    else if ($result["status"] == "CLASSROOM NOT FOUND")
+        {
+            echo json_encode("NotFound");
+        }
     
     else{
             header('HTTP/1.1 500' . $result["status"]);
             die($result["status"]); //returns error from DataLayer
-        }	
+        }   
             
 }
- 
  
 
 function changeSts(){
