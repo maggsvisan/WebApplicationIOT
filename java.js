@@ -257,6 +257,9 @@ var NumRmClass;
         $("#RemoveSec").hide();
         $("#RemoveClass").hide();
         $("#RemoveUser").hide();
+        $("#Status").hide();
+        $("#Pick").show();
+
 
     });
     
@@ -280,6 +283,9 @@ var NumRmClass;
         $("#RemoveSec").hide();
         $("#RemoveClass").hide();
         $("#RemoveUser").hide();
+        $("#Status").hide();
+        $("#Pick").show();
+
          
     
     });
@@ -308,6 +314,9 @@ var NumRmClass;
         $("#RemoveSec").hide();
         $("#RemoveClass").hide();
         $("#RemoveUser").hide();
+        $("#Status").hide();
+        $("#Pick").show();
+
          
         
     });
@@ -333,6 +342,9 @@ var NumRmClass;
         $("#RemoveSec").hide();
         $("#RemoveClass").hide();
         $("#RemoveUser").hide();
+        $("#Status").hide();
+        $("#Pick").show();
+
 
 
     });
@@ -805,7 +817,7 @@ $("#btnSearch").click(function () {
                     dataType: 'json',
                     
                     success: function(jsonResponse2){
-                       // alert(jsonResponse2.state)
+                        alert(jsonResponse2.state)
                         
                         if(jsonResponse2.state){
                                var jsonData3= {
