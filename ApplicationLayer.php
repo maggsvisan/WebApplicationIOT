@@ -144,7 +144,7 @@ function loginFunction(){
                                        ));  
 			}   
         
-        
+         
         else
 			{
 				header('HTTP/1.1 306 Wrong credentials');

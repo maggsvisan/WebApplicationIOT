@@ -245,7 +245,7 @@ function verifyClassroom ($classNumber, $buildingNum){
 	}
         
         
-}
+} 
 
 
 

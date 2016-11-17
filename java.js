@@ -535,7 +535,7 @@ var NumRmClass;
             success: function(jsonResponse){
                     if(jsonResponse.state === "true"){
                         var Matricula = jsonResponse.mat;
-                        alert(Matricula);
+                       // alert(Matricula);
                         dataFav = {
                             "matricula" : Matricula,
                             "action" : "loadFavorites"
@@ -546,7 +546,7 @@ var NumRmClass;
                             data: dataFav,
                             success: function (jsonResponse){
                                 if (jsonResponse.length > 0){
-                                    alert("Enter loading");
+                                   // alert("Enter loading");
                                      var postFavs = "<table> <tr><th>Building</th> <th>Number</th> </tr>";
                                     $.each(jsonResponse,function(index){
                                         postFavs    += "<tr>"
@@ -570,7 +570,7 @@ var NumRmClass;
             },
             error: function(errorMessage){
                   alert(errorMessage.responseText);
-                  alert("False verify");
+                  //alert("False verify");
                   $("#currentLogin").hide();
             }
         });
@@ -805,8 +805,8 @@ $("#btnSearch").click(function () {
                  $("#Status").hide();
                 if(jsonResponse.status == "SUCCESS"){
                     $("#Status").show();
-                    alert("Entra a validar classroom");
-                    alert(jsonResponse.status);  
+                  //  alert("Entra a validar classroom");
+                //    alert(jsonResponse.status);  
                     var jsonData2 = {"action": "verifySession"  };
             
                     $.ajax({                                 //detecta salon y hace favorites
@@ -815,8 +815,8 @@ $("#btnSearch").click(function () {
                         data: jsonData2,
                         dataType: 'json',
                         success: function(jsonResponse2){
-                            alert("Entra a validar favorite");
-                            alert(jsonResponse2.state)
+                          //  alert("Entra a validar favorite");
+                        //    alert(jsonResponse2.state)
                             if(jsonResponse2.state){
                                 var jsonData3= {
                                     "mat":jsonResponse2.mat,
@@ -824,14 +824,14 @@ $("#btnSearch").click(function () {
                                     "building": imageSelected,
                                     "action": "validateFavorite"
                                 };
-                                alert("Validate Favorite)");
+                               // alert("Validate Favorite)");
                                 $.ajax({
                                     url:"data/ApplicationLayer.php",
                                     type:"POST",
                                     data: jsonData3,
                                     success:function(jsonResponse3){
-                                        console.log("Entra al if validate fav");
-                                        alert(jsonResponse3);
+                                       // console.log("Entra al if validate fav");
+                                    //    alert(jsonResponse3);
                                         if(jsonResponse3.status == 'SUCCESS'){
                                             console.log("Already a Favorite");
                                             $("#Favorite").hide();
@@ -877,7 +877,7 @@ $("#btnSearch").click(function () {
 /////////////////////////////////////////////////
     var Liked=false;
     $("#Favorite").on("click",function(){
-            alert("Adding to favorites");
+            //alert("Adding to favorites");
             $.ajax({
                 url: 'data/ApplicationLayer.php',
                 type: 'POST' ,
@@ -886,7 +886,7 @@ $("#btnSearch").click(function () {
                 success: function(jsonResponse){
 
                     if(jsonResponse.state === "true"){
-                        alert("Validate True");
+                      //  alert("Validate True");
                         var Mat=jsonResponse.mat;
                         dataFav={
                            "mat":Mat,
@@ -894,14 +894,14 @@ $("#btnSearch").click(function () {
                            "building": imageSelected ,
                            "action" : "addFavorite"
                         }
-                        console.log(dataFav);
+                        //console.log(dataFav);
                         $.ajax({
                             url: 'data/ApplicationLayer.php',
                             type: 'POST',
                             data: dataFav,
                             dataType: 'json',
                             success: function(jsonResponse){
-                                console.log(jsonResponse);
+                              //  console.log(jsonResponse);
                                 if(jsonResponse.status == "SUCCESS")
                                 Liked=!Liked;
                                 $("#Favorite").hide();
@@ -915,7 +915,7 @@ $("#btnSearch").click(function () {
                 },
                 error: function(errorMessage){
                   alert(errorMessage.responseText);
-                  alert("False verify");
+                 // alert("False verify");
                   $("#currentLogin").hide();
             }
             });
@@ -923,7 +923,7 @@ $("#btnSearch").click(function () {
     
     $("#UnFavorite").on("click",function(){
         //Already a favorite  Remove button shown
-            alert("Removing from Favorites");
+           // alert("Removing from Favorites");
             $.ajax({
                 url: 'data/ApplicationLayer.php',
                 type: 'POST' ,
@@ -931,7 +931,7 @@ $("#btnSearch").click(function () {
                 dataType: 'json',
                 success: function(jsonResponse){
                     if(jsonResponse.state === "true"){
-                        alert("Enter validate");
+                        ///alert("Enter validate");
                         var Mat=jsonResponse.mat;
                         dataFav={
                            "mat":Mat,
@@ -939,7 +939,7 @@ $("#btnSearch").click(function () {
                            "building": imageSelected ,
                            "action" : "removeFavorite"
                         }
-                        console.log(dataFav);
+                        //console.log(dataFav);
                         $.ajax({
                             url: 'data/ApplicationLayer.php',
                             type: 'POST',
@@ -947,7 +947,7 @@ $("#btnSearch").click(function () {
                             dataType: 'json',
                             success: function(jsonResponse){
                                 if(jsonResponse.status == "ERASED")
-                                alert(Liked);
+                               // alert(Liked);
                                 Liked=!Liked;
                                 $("#Favorite").show();
                                 $("#UnFavorite").hide();
@@ -960,7 +960,7 @@ $("#btnSearch").click(function () {
                 },
                 error: function(errorMessage){
                   alert(errorMessage.responseText);
-                  alert("False verify");
+                 // alert("False verify");
                   $("#currentLogin").hide();
             }
             });
@@ -972,7 +972,14 @@ $("#btnSearch").click(function () {
 /////////////////////////////////////////////////////
 
     $("#BtnRegisterClass").click(function () {
-       
+    
+    if( $("#inClassNum").val()==("") || $("#inBuilding").val()==("") ){
+       /*$("#inBuilding").val()!="CIAP" || $("#inBuilding").val()!="CEDES" ||                   $("#inBuilding").val()!="CETEC" || $("#inBuilding").val()!="BIOTEC"){ */
+        alert("Invalid entries");
+        $("#inClassNum").val("");
+        $("#inBuilding").val("");
+    }
+    else{
         var jsonData = {
             "classNum": $("#inClassNum").val(), 
             "building": $("#inBuilding").val(), 
@@ -995,11 +1002,12 @@ $("#btnSearch").click(function () {
                 alert(errorMessage.responseText);
             }
         });
+        $("#homeImages").show();
+        $("#RegClass").hide(); 
+        $("#inClassNum").val("");
+        $("#inBuilding").val("");
+    }
                 
-                $("#homeImages").show();
-                $("#RegClass").hide(); 
-                $("#inClassNum").val("");
-                $("#inBuilding").val("");
         
     });
 /////////////////////////////////////////////////////////////
@@ -1203,7 +1211,7 @@ $("#logoutButton").on("click", function () {
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
-
+ 
 
     
 });

@@ -58,7 +58,7 @@ CREATE TABLE Favorites (
     num VARCHAR(50) NOT NULL,
     mat  VARCHAR(50) NOT NULL
 );
-
+ 
 
 INSERT INTO Register(cnum, timeReg, dateReg)
 values (6, '13:00:15' , '2010-01-02' )
