@@ -7,7 +7,7 @@
 
 <header>    
     <div id="PageTitle">
-        <h1> Classroom </h1>
+        <h1 class="imageBanner"> Classroom's Monitor </h1>
         <h4 id="currentLogin"> Currently login as: </h4>
     </div>    
 </header> 
@@ -22,8 +22,7 @@
     <li id="RmvReg"><a href="#page6"> Remove </a></li>
     <li id="Fav"><a href="#page6"> Favorites </a></li>
     <li id="Login" align="right" style="display:block"><a href="#page6"> Login </a></li>
-    <li id="logoutButton" align="right" style="display:block;" > 
-        <span id="logButton" type="subBut"> Log out </span>
+    <li id="logoutButton" align="right" style="display:block"><a > Logout </a></li>
     </li>
     </ul>
     </div>    
@@ -31,6 +30,13 @@
 <body>
     
      <div id="homeImages">
+         
+        <div id="MissionBanner"  class="imageBanner" style="align-content: center;">
+            <h2 > Mission </h2>
+         <p class="pBanner">
+            The objective of this project is to develop a web application along with a controller that will make more efficient the energy consumption of the classrooms at ITESM Campus Monterrey. This application will provide the users an easy way to control the classroom lights and temperature remotely.
+         </p>     
+        </div>
            
          <div id="slideshow" class= "displayed">
           
@@ -51,6 +57,19 @@
            </div>
 
         </div>
+         
+         <br>
+        <div id="visionBanner" class="imageBanner" style="align-content: center;">
+            <h2 > Vision </h2>
+         <p>
+             To provide information and control to the users about a classroom lights and temperature at anytime, just by having Internet connection.
+         </p>     
+        </div>
+         
+         
+        
+         
+         
      </div>
     
     
@@ -213,8 +232,50 @@
         
 
 
+
+        
     <div id="AboutSec">
-        <p> Username </p>
+        <div>
+            <table>
+                <tr>
+                    <th> Team members </th>
+                    <th> Contact info </th>
+                </tr>
+                <tr>
+                    <td>Eva Margarita Villareal Sanchez</td>
+                    <td>evamargarita.villareal@gmail.com</td>
+                </tr>
+                <tr>
+                    <td>Jonathan Rosas Sandoval</td>
+                    <td>jonthanrosassandoval@gmail.com</td>
+                </tr>
+            </table>
+            </br>
+             <table>
+                <tr>
+                    <th> Project purpose: </th>
+                </tr>
+                <tr>
+                    <td> This web application is intended to help energy consumpltion inside TEC classrooms </td>
+                </tr>
+            </table>
+            </br>
+             <table>
+                <tr>
+                    <th> Future updates: </th>
+                </tr>
+                <tr>
+                    <td> More sensors </td>
+                </tr>
+                <tr>
+                    <td> Adding more buildings</td>
+                </tr>
+                <tr>
+                    <td> Analytics</td>
+                </tr>
+            </table>
+            </br>
+        </div>
     </div>
 
     
@@ -297,7 +358,7 @@
             <div id="room">
             </div>
             <div id="addFav" class="Fav">
-                <span id="Favorite" class="searchBtn btnFav" style="display:none"> Add to Favorite </span>
+                <span id="Favorite" class="searchBtn btnFav" style="display:none"> Add Favorite </span>
             </div>
             <div id="removeFav" class="Fav">
                 <span id="UnFavorite" class="searchBtn btnFav" style="display:none"> Remove from favorites 

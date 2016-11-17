@@ -57,26 +57,6 @@ li a:hover {
   text-decoration: none;
 }
 
-#logoutButton{
-    padding: 5px;
-    float: right;
-    margin-top: 10px;
-    margin-right: 4px;
-    margin-left: 10px;
-    margin-bottom: 6px;
-}
-
-
-#logButton:hover{
-  background: #3cb0fd;
-  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
-  text-decoration: none;
-  cursor: pointer;
-}
 
 
 #tec1{
@@ -331,7 +311,7 @@ caption {
 .Fav{
   display: block;
   border-radius: 0px;
-  background-color:gold ;
+  margin-bottom: 0.5cm;
   color:black;
 
 }
@@ -433,4 +413,16 @@ transition-delay:.2s;
     display: block;
     margin-left: auto;
     margin-right: auto 
+}
+
+.pBanner{
+    margin: 10px 110px;
+} 
+
+.imageBanner {
+    text-align: center;
+    padding-bottom: .5cm;
+    padding-top: .5cm;
+    padding-left: .5cm;
+    padding-right: .5cm;
 }
