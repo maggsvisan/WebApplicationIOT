@@ -26,7 +26,7 @@ CREATE TABLE Actuators(
     stsTemp INT NOT NULL, #boolean value
     stsLight INT NOT NULL, #boolean value
     rnum INT NOT NULL,   
-
+    
     FOREIGN KEY (rnum) REFERENCES Register(id)
 
 );
@@ -36,7 +36,9 @@ CREATE TABLE Sensors(
     id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
     tempValue VARCHAR(50) NOT NULL,
     lightValue VARCHAR(50) NOT NULL,
-    rnum INT NOT NULL,   
+    rnum INT NOT NULL,  
+    timeReg TIME NOT NULL, 
+    dateReg DATE NOT NULL,
 
     FOREIGN KEY (rnum) REFERENCES Register(id)
 
