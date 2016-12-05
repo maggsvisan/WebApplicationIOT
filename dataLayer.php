@@ -197,6 +197,7 @@ function attemptChangeStatus($lightStatus, $ACStatus){
 
             if ($result != null) {
                 return array("status" => "SUCCESS");   
+                //regresar los valores de los leds y de la temperatura
             } 
 
 
@@ -411,8 +412,8 @@ function createSensors($idReg){
         $conn = connectionToDataBase();
         if ($conn != null){
 
-        $sql = "INSERT INTO Sensors(tempValue, lightValue, rnum) 
-                VALUES ('y' , 'y', '$idReg' ) " ;
+        $sql = "INSERT INTO Sensors(tempValue, lightValue, rnum, timeReg, dateReg ) 
+                VALUES ('0' , '0', '$idReg','00:00:00' , '0000-00-00' ) " ;
         
      //   echo $sql;
 
@@ -441,9 +442,9 @@ function attemptReadSensors($idReg){
 
 	if ($conn != null){
 			
-        $sql = "SELECT tempValue, lightValue FROM Sensors WHERE rnum='$idReg'";
+        $sql = "SELECT tempValue, lightValue, timeReg, DateReg FROM Sensors WHERE rnum='$idReg'";
 		
-       // echo $sql;
+        // echo $sql;
 			$result = $conn->query($sql);
 
 			if ($result->num_rows > 0)
@@ -451,7 +452,8 @@ function attemptReadSensors($idReg){
                 $row = $result -> fetch_assoc();
 				$conn -> close();
 			
-                return array("tempVal" => $row["tempValue"],"lightVal" => $row["lightValue"], "status" => "SUCCESS");
+                return array("tempVal" => $row["tempValue"],"lightVal" => $row["lightValue"], "time" => $row["timeReg"],
+                             "date" => $row["DateReg"],"status" => "SUCCESS");
 			}
 			else{
 				$conn -> close();
@@ -531,6 +533,8 @@ function loadDBFavs($mat){
         }
     }
 
+
+
 function loadUsers(){ //shows all users en DB
     $conn = connectionToDataBase();
 
@@ -584,7 +588,7 @@ function loadClassrooms(){ //shows all classrooms en DB
         }
         
         else{
-             header("No users register");
+             header("No classrooms registered");
         }
             
     }
@@ -850,7 +854,46 @@ function validClassroom ($classNumber, $buildingNum){
             header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
         }
     }
- 
+
+
+function retrieveRecords ($classNumber, $buildingNum){ //shows all records of a classroom
+    $conn = connectionToDataBase();
+
+    if ($conn != null){
+        $sql = "SELECT building, num, tempValue, lightValue, d FROM Record 
+                WHERE building='$buildingNum' AND num='$classNumber'";
+        
+        
+        $result = $conn -> query($sql); 
+           
+        if ($result->num_rows > 0)
+        {    
+            $response = array();    
+            
+            while($row = $result -> fetch_assoc()) {
+                array_push($response,array("building" => $row["building"], 
+                                           "num" => $row["num"],
+                                           "temp" => $row["tempValue"],
+                                           "light" => $row["lightValue"],
+                                           "date" => $row["d"]));
+            }
+            return ($response);
+        }
+        
+        else{
+              header("No classroom's records");
+        }
+            
+    }
+        else {
+            $conn -> close();
+            header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+     }
+}
+
+
+
+
 
 
 ?>

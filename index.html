@@ -389,6 +389,13 @@
                             <br> 
                             <p> Light level: </p>
                             <p id="printLight"></p>
+                            <br>
+                            <p> Date: </p>
+                            <p id="printDate"></p>
+                            <br>
+                            <p> Time: </p>
+                            <p id="printTime"></p>
+                            <br>
                         </th>
                     
                     </tr>
@@ -396,13 +403,30 @@
                         <th><div class="tablerow" ><span class= btn id="writeClassroomBtn"> Change Status </span> </div> </th>
                         <th><div class="tablerow" ><span class= btn id="readClassroomBtn"> Read Status </span> </div> </th>
                     </tr>
+                    
                 </table>
+                <br>
+                <th><div class="tablerow" ><span class= btn id="btnHistory"> History </span> </div> </th> 
+                
+                <br>
+                 <div id="Records" class="tablerow">
+                        <table id="recordsTable">
+                            <tr>
+                                <th>Building</th>
+                                <th>Classroom Number</th>
+                                <th>Temperature value</th>
+                                <th>Light value</th>
+                                <th>Hour and date</th>
+                            </tr>
+                            <tbody id="submitRecords"></tbody>
+                        </table>
+                </div>
+              
+                
             </div>
         </div>
         
     </div>
-
-
     
 
     <div id="CommentSec">

@@ -70,6 +70,7 @@ var NumRmClass;
     $("#RemoveSec").hide();
     $("#RemoveClass").hide();
     $("#RemoveUser").hide();
+    $("#Records").hide();
     
     $("#RmvReg").on("click", function () {
         $("#homeImages").hide();
@@ -607,6 +608,9 @@ $("#BtnLoadUser").on("click", function () {
 ///////////////////////////////////////////////////// 
 ///////////////////////////////////////////////////// 
     
+
+
+        
 ///////////////////////////////////////////////////
 //////////////// LOAD CLASSROOMS //////////////////
 ///////////////////////////////////////////////////
@@ -698,8 +702,13 @@ $("#readClassroomBtn").on("click", function () {
                 
                 $("#printTemp").empty();
                 $("#printLight").empty();
+                $("#printDate").empty();
+                $("#printTime").empty();
+               
                 $("#printTemp").append(jsonResponse.tempVal);
                 $("#printLight").append(jsonResponse.lightVal);       
+                $("#printDate").append(jsonResponse.date);       
+                $("#printTime").append(jsonResponse.time);       
         }
             , error: function (errorMessage) {
                 alert(errorMessage.responseText);
@@ -750,11 +759,10 @@ $("#readClassroomBtn").on("click", function () {
                             "ACstatus": valueAC
                         };
 
-                    console.log(jsonData2)
+                        console.log(jsonData2)
 
                         if ((valueAC >= 0) && (valueLight >= 0)) {
-                        alert("entra if");
-
+        
                             $.ajax({
                                 url: "data/ApplicationLayer.php", 
                                 type: "POST",
@@ -763,6 +771,7 @@ $("#readClassroomBtn").on("click", function () {
                                 contentType: "application/x-www-form-urlencoded",
                                 success: function (jsonResponse) {
                                     console.log(jsonResponse)
+                                    alert("Actuator's change updated!");
                                 },
 
                                 error: function (errorMessage){
@@ -872,6 +881,49 @@ $("#btnSearch").click(function () {
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 
+    
+$("#btnHistory").on("click", function () {    //////////////LOAD RECORDS OF A CLASSROOM           
+     $("#Records").show();
+    var jsonData = {
+            "classroom":classNum, 
+            "buildNum": imageSelected,
+            "action": "loadRecords"  
+    };
+    
+    $.ajax({
+        url: "data/ApplicationLayer.php",
+        type:"POST",
+        data:jsonData,
+        success:function(jsonResponse){
+        
+        alert("entra success");
+                
+        if (jsonResponse.length > 0){
+             alert(jsonResponse.length);
+             alert("Enter loading");
+              var newComment = "<tr>"
+              $.each(jsonResponse,function(index){
+                  newComment += "<td>" + jsonResponse[index].building + "</td>"
+                   +  "<td>" + jsonResponse[index].num + "</td>"
+                   +  "<td>" + jsonResponse[index].temp + "</td>"
+                   +  "<td>" + jsonResponse[index].light + "</td>"
+                   +  "<td>" + jsonResponse[index].date + "</td>"
+                   +  "</tr>";
+                  
+             
+            });
+            $("#submitRecords").append(newComment);
+            
+            }
+        },
+        
+        error: function(errorMessage){
+             alert(errorMessage.responseText);
+         }
+
+     });
+});
+        
     
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////

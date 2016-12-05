@@ -67,6 +67,9 @@ switch($action){
     case "LoadClassrooms": loadAllClassrooms();
                         break;
         
+    case "loadRecords": loadRecords();
+                        break;
+        
             
 }
 
@@ -108,6 +111,17 @@ function loadAllUsers(){
     
     echo json_encode($result);
 }
+
+
+function loadRecords(){
+    $classNumber= $_POST["classroom"];
+    $buildingNum= $_POST["buildNum"];
+    
+    $result= retrieveRecords ($classNumber, $buildingNum);  //prints the records
+    echo json_encode($result);
+}
+
+
 
 function loadComments(){
     
@@ -531,7 +545,6 @@ function removeUser(){
     }
     
 }
-
 
 
 
