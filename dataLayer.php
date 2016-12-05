@@ -5,7 +5,7 @@
         $servername = "localhost";
         $username = "root";
         $password = "";
-        $dbname = "tec";
+        $dbname = "tec2";
 
 		$conn = new mysqli($servername, $username, $password, $dbname);
 		
@@ -16,78 +16,7 @@
 			return $conn;
 		}
 	}
-    function validateFavs($mat,$classroom,$building){
-        $conn = connectionToDataBase();
-        if ($conn != null){
-            $sql = "SELECT building from favorites WHERE building='$building' AND num = '$classroom' AND  mat ='$mat'";
-           // echo $sql;
-            
-                $result = $conn->query($sql);
-                if ($result->num_rows > 0)
-                {
-                    $row = $result -> fetch_assoc();
-                    $conn -> close();
 
-                    return array("status" => "SUCCESS");
-                }
-                else{
-                    $conn -> close();
-                    return array("status" => "Not a favorite");
-                }
-            }
-        else{
-            $conn -> close();
-            return array("status" => "CONNECTION WITH DB WENT WRONG");
-        }   
-    }
-
-    function removeFavs($mat,$classroom,$building){
-        $conn = connectionToDataBase();
-
-        if ($conn != null){
-            $sql = "DELETE FROM favorites WHERE mat='$mat' AND building='$building' AND num='$classroom'";
-            // Run query and store resulting data
-            $result = $conn->query($sql);
-            
-            if ($result == TRUE) {
-                $conn -> close();
-                return array("status" => "ERASED");   
-            }  
-        }   
-        else{
-            $conn -> close();
-            return array ("status" => "Something went wrong, can't erase from favorites");
-        }
-    }
-
-
-    function addFavs($mat,$classroom,$building){
-        $conn = connectionToDataBase();
-
-        if ($conn != null){
-        $sql = "INSERT INTO favorites(building,num,mat) 
-                VALUES ('$building','$classroom','$mat')";
-        // Run query and store resulting data
-        $result = $conn->query($sql);
-            
-        if ($result == TRUE) {
-            $conn -> close();
-            return array("status" => "SUCCESS");   
-        } 
-                
-                
-        else{
-            $conn -> close();
-            return array ("status" => "Something went wrong");
-        }
-            
-    }
-
-        else {
-            $conn -> close();
-            header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
-        }
-    }
 	function attemptLogin($mat){
 
 		$conn = connectionToDataBase();
@@ -115,6 +44,7 @@
 			return array("status" => "CONNECTION WITH DB WENT WRONG");
 		}
 	}
+
 
 
 function attemptCreateSession($mat, $userPassword){
@@ -157,6 +87,7 @@ function attemptCreateSession($mat, $userPassword){
 			return array("status" => "CONNECTION WITH DB WENT WRONG");
 		}
 }
+
 
 
 
@@ -266,6 +197,7 @@ function attemptChangeStatus($lightStatus, $ACStatus){
 
             if ($result != null) {
                 return array("status" => "SUCCESS");   
+                //regresar los valores de los leds y de la temperatura
             } 
 
 
@@ -290,7 +222,7 @@ function verifyClassroom ($classNumber, $buildingNum){
 	if ($conn != null){
 			
         $sql = "SELECT id FROM Classroom WHERE building='$buildingNum' AND num = '$classNumber' ";
-		
+	//	echo $sql;
         
 			$result = $conn->query($sql);
 
@@ -314,7 +246,7 @@ function verifyClassroom ($classNumber, $buildingNum){
 	}
         
         
-}
+} 
 
 
 
@@ -422,7 +354,7 @@ function createRegister($idClass){
         $sql = "INSERT INTO Register(cnum, timeReg, dateReg) 
                 VALUES ('$idClass','00:00:00' , '0000-00-00' ) " ;
         
-        echo $sql;
+      //  echo $sql;
 
         $result = $conn->query($sql);
 
@@ -452,7 +384,7 @@ function createActuators($idReg){
         $sql = "INSERT INTO Actuators(stsTemp, stsLight, rnum) 
                 VALUES (0 , 0, '$idReg' ) " ;
         
-        echo $sql;
+     //   echo $sql;
 
         $result = $conn->query($sql);
 
@@ -480,10 +412,10 @@ function createSensors($idReg){
         $conn = connectionToDataBase();
         if ($conn != null){
 
-        $sql = "INSERT INTO Sensors(tempValue, lightValue, rnum) 
-                VALUES ('y' , 'y', '$idReg' ) " ;
+        $sql = "INSERT INTO Sensors(tempValue, lightValue, rnum, timeReg, dateReg ) 
+                VALUES ('0' , '0', '$idReg','00:00:00' , '0000-00-00' ) " ;
         
-        echo $sql;
+     //   echo $sql;
 
         $result = $conn->query($sql);
 
@@ -510,9 +442,9 @@ function attemptReadSensors($idReg){
 
 	if ($conn != null){
 			
-        $sql = "SELECT tempValue, lightValue FROM Sensors WHERE rnum='$idReg'";
+        $sql = "SELECT tempValue, lightValue FROM sensors WHERE rnum='$idReg'";
 		
-       // echo $sql;
+        // echo $sql;
 			$result = $conn->query($sql);
 
 			if ($result->num_rows > 0)
@@ -520,7 +452,8 @@ function attemptReadSensors($idReg){
                 $row = $result -> fetch_assoc();
 				$conn -> close();
 			
-                return array("tempVal" => $row["tempValue"],"lightVal" => $row["lightValue"], "status" => "SUCCESS");
+                return array("tempVal" => $row["tempValue"],"lightVal" => $row["lightValue"],
+                             "status" => "SUCCESS");
 			}
 			else{
 				$conn -> close();
@@ -599,5 +532,368 @@ function loadDBFavs($mat){
             header('HTTP/1.1 500 Bad connection to Database');
         }
     }
+
+
+
+function loadUsers(){ //shows all users en DB
+    $conn = connectionToDataBase();
+
+    if ($conn != null){
+    
+    //MySQL query
+    $sql = "SELECT * FROM Users";
+    // Run query and store resulting data
+    $result = $conn -> query($sql); //
+           
+        if ($result->num_rows > 0)
+        {    
+            $response = array();    
+            
+            while($row = $result -> fetch_assoc()) {
+                array_push($response, array("mat" => $row["matricula"])); 
+            }
+            return ($response);
+        }
+        
+        else{
+             header("No users register");
+        }
+            
+    }
+        else {
+            $conn -> close();
+            header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+     }
+}
+
+
+function loadClassrooms(){ //shows all classrooms en DB
+    $conn = connectionToDataBase();
+
+    if ($conn != null){
+        $sql = "SELECT * FROM Classroom";
+        
+        //echo $sql;
+        
+        $result = $conn -> query($sql); 
+           
+        if ($result->num_rows > 0)
+        {    
+            $response = array();    
+            
+            while($row = $result -> fetch_assoc()) {
+                array_push($response, array("buildings" => $row["building"], "numbers" => $row["num"])); 
+            }
+            return ($response);
+        }
+        
+        else{
+             header("No classrooms registered");
+        }
+            
+    }
+        else {
+            $conn -> close();
+            header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+     }
+}
+
+
+
+
+
+function rmvUser($matNumber){
+    
+    $conn = connectionToDataBase();
+    if ($conn != null){
+
+        $sql = "DELETE FROM Users WHERE matricula='$matNumber'";
+        
+      //  echo $sql;
+
+        $result = $conn->query($sql);
+
+            if ($result != null) {
+                return array("status" => "SUCCESS", "message" => "User Removed");   
+            } 
+
+
+            else{
+                return array("Error create removing user");
+            }
+
+    }
+     else {
+            $conn -> close();
+            header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+         }
+    
+}
+
+function  rmvClassroom($BuildingNumber,$ClassroomNumber){
+    
+    $conn = connectionToDataBase();
+    if ($conn != null){
+
+        $sql = "DELETE FROM Classroom WHERE building='$BuildingNumber' AND num='$ClassroomNumber'";
+        
+       // echo $sql;
+
+        $result = $conn->query($sql);
+
+            if ($result != null) {
+                return array("status" => "SUCCESS", "message" => "Classroom removed");   
+            } 
+
+
+            else{
+                return array("Error create removing user");
+            }
+
+    }
+     else {
+            $conn -> close();
+            header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+         }
+    
+}
+
+
+function  rmvRegister($idReg){
+    
+    $conn = connectionToDataBase();
+    if ($conn != null){
+
+        $sql = "DELETE FROM Register WHERE id='$idReg'";
+        
+//        echo $sql;
+
+        $result = $conn->query($sql);
+
+            if ($result != null) {
+                return array("status" => "SUCCESS", "message" => "Classroom removed");   
+            } 
+
+
+            else{
+                return array("Error create removing user");
+            }
+
+    }
+     else {
+            $conn -> close();
+            header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+         }
+    
+}
+
+
+
+
+
+function rmvActuators($idReg){
+    
+    $conn = connectionToDataBase();
+    if ($conn != null){
+
+        $sql = "DELETE FROM Actuators WHERE rnum='$idReg'";
+        
+      //  echo $sql;
+
+        $result = $conn->query($sql);
+
+            if ($result != null) {
+                return array("status" => "SUCCESS");   
+            } 
+
+
+            else{
+                return array("Error create removing user");
+            }
+
+    }
+     else {
+            $conn -> close();
+            header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+         }
+    
+}
+
+
+function rmvSensors($idReg){
+    
+    $conn = connectionToDataBase();
+    if ($conn != null){
+
+        $sql = "DELETE FROM Sensors WHERE rnum='$idReg'";
+        
+       // echo $sql;
+
+        $result = $conn->query($sql);
+
+            if ($result != null) {
+                return array("status" => "SUCCESS");   
+            } 
+
+
+            else{
+                return array("Error create removing user");
+            }
+
+    }
+     else {
+            $conn -> close();
+            header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+         }
+    
+}
+
+
+function validClassroom ($classNumber, $buildingNum){
+    
+    $conn = connectionToDataBase();
+
+	if ($conn != null){
+			
+        $sql = "SELECT num, building FROM Classroom WHERE building='$buildingNum' AND num = '$classNumber' ";
+		//echo $sql;
+        
+			$result = $conn->query($sql);
+
+			if ($result->num_rows > 0)
+			{
+                $row = $result -> fetch_assoc();
+				$conn -> close();
+			
+               // return array("build" => $row["building"],"number" => $row["num"],"status" => "SUCCESS");
+               return array("status" => "Duplicated, insert another classroom");
+			}
+			else{
+				$conn -> close();
+				return array("status" => "Available");
+			}
+		}
+
+    else{
+		$conn -> close();
+		return array("status" => "CONNECTION WITH DB WENT WRONG");
+	}             
+}
+
+
+
+ function validateFavs($mat,$classroom,$building){
+        $conn = connectionToDataBase();
+        if ($conn != null){
+            $sql = "SELECT building from favorites WHERE building='$building' AND num = '$classroom' AND  mat ='$mat'";
+           // echo $sql;
+            
+                $result = $conn->query($sql);
+                if ($result->num_rows > 0)
+                {
+                    $row = $result -> fetch_assoc();
+                    $conn -> close();
+
+                    return array("status" => "SUCCESS");
+                }
+                else{
+                    $conn -> close();
+                    return array("status" => "Not a favorite");
+                }
+            }
+        else{
+            $conn -> close();
+            return array("status" => "CONNECTION WITH DB WENT WRONG");
+        }   
+    }
+
+    function removeFavs($mat,$classroom,$building){
+        $conn = connectionToDataBase();
+
+        if ($conn != null){
+            $sql = "DELETE FROM favorites WHERE mat='$mat' AND building='$building' AND num='$classroom'";
+            // Run query and store resulting data
+            $result = $conn->query($sql);
+            
+            if ($result == TRUE) {
+                $conn -> close();
+                return array("status" => "ERASED");   
+            }  
+        }   
+        else{
+            $conn -> close();
+            return array ("status" => "Something went wrong, can't erase from favorites");
+        }
+    }
+
+
+    function addFavs($mat,$classroom,$building){
+        $conn = connectionToDataBase();
+
+        if ($conn != null){
+        $sql = "INSERT INTO favorites(building,num,mat) 
+                VALUES ('$building','$classroom','$mat')";
+        // Run query and store resulting data
+        $result = $conn->query($sql);
+            
+        if ($result == TRUE) {
+            $conn -> close();
+            return array("status" => "SUCCESS");   
+        } 
+                
+                
+        else{
+            $conn -> close();
+            return array ("status" => "Something went wrong");
+        }
+            
+    }
+
+        else {
+            $conn -> close();
+            header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+        }
+    }
+
+
+function retrieveRecords ($classNumber, $buildingNum){ //shows all records of a classroom
+    $conn = connectionToDataBase();
+
+    if ($conn != null){
+        $sql = "SELECT building, num, tempValue, lightValue, d FROM Record 
+                WHERE building='$buildingNum' AND num='$classNumber'";
+        
+        
+        $result = $conn -> query($sql); 
+           
+        if ($result->num_rows > 0)
+        {    
+            $response = array();    
+            
+            while($row = $result -> fetch_assoc()) {
+                array_push($response,array("building" => $row["building"], 
+                                           "num" => $row["num"],
+                                           "temp" => $row["tempValue"],
+                                           "light" => $row["lightValue"],
+                                           "date" => $row["d"]));
+            }
+            return ($response);
+        }
+        
+        else{
+              header("No classroom's records");
+        }
+            
+    }
+        else {
+            $conn -> close();
+            header('HTTP/1.1 500 Bad connection, something went wrong while saving your data, please try again later');
+     }
+}
+
+
+
+
+
 
 ?>

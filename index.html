@@ -7,7 +7,7 @@
 
 <header>    
     <div id="PageTitle">
-        <h1> Classroom </h1>
+        <h1 class="imageBanner"> Classroom's Monitor </h1>
         <h4 id="currentLogin"> Currently login as: </h4>
     </div>    
 </header> 
@@ -19,10 +19,10 @@
     <li id="SearchCl"><a href="#page3"> Classrooms </a></li>
     <li id="Comm"><a href="#page4"> Comments </a></li>
     <li id="Regis"><a href="#page5"> Register </a></li>
+    <li id="RmvReg"><a href="#page6"> Remove </a></li>
     <li id="Fav"><a href="#page6"> Favorites </a></li>
     <li id="Login" align="right" style="display:block"><a href="#page6"> Login </a></li>
-    <li id="logoutButton" align="right" style="display:block;" > 
-        <span id="logButton" type="subBut"> Log out </span>
+    <li id="logoutButton" align="right" style="display:block"><a > Logout </a></li>
     </li>
     </ul>
     </div>    
@@ -30,9 +30,46 @@
 <body>
     
      <div id="homeImages">
-            <br> 
-            <img id="tec1" src="images/tec.JPG" style=" width: 600px ; height: 500px;">
-            <br> 
+         
+        <div id="MissionBanner"  class="imageBanner" style="align-content: center;">
+            <h2 > Mission </h2>
+         <p class="pBanner">
+            The objective of this project is to develop a web application along with a controller that will make more efficient the energy consumption of the classrooms at ITESM Campus Monterrey. This application will provide the users an easy way to control the classroom lights and temperature remotely.
+         </p>     
+        </div>
+           
+         <div id="slideshow" class= "displayed">
+          
+           <div>
+             <img id="tec2" src="images/explanada.jpg" style=" width: 600px ; height: 390px;">
+           </div>
+            <div>
+             <img id="tec3" src="images/ciap.png" style=" width: 600px ; height: 390px;">
+           </div>
+            <div>
+             <img id="tec1" src="images/tec.JPG" style=" width: 600px ; height: 390px;">
+           </div>
+             <div>
+             <img id="tec4" src="images/biotec.jpg" style=" width: 600px ; height: 390px;">
+           </div>
+             <div>
+             <img id="tec4" src="images/rectoria.jpg" style=" width: 600px ; height: 390px;">
+           </div>
+
+        </div>
+         
+         <br>
+        <div id="visionBanner" class="imageBanner" style="align-content: center;">
+            <h2 > Vision </h2>
+         <p>
+             To provide information and control to the users about a classroom lights and temperature at anytime, just by having Internet connection.
+         </p>     
+        </div>
+         
+         
+         
+         
+         
      </div>
     
     
@@ -56,6 +93,54 @@
         </form>
     </div>
 
+    
+     <div id="RemoveSec">
+        <table id="DeleteRegistration">
+            <tr>
+                <caption><h2> Select: </h2> </caption>
+            </tr>
+            
+            <tr>
+                <th><div> <span class="btn"  id="BtnRmvClass"> Remove classroom </span> </div></th>
+                <th> <span class= "btn" id="BtnRmvUser"> Remove user </span> </th>
+            </tr>
+        </table>
+     </div>
+
+    <div id="RemoveClass">
+        <h2>To remove classroom, please fill the blanks:</h2> 
+            
+         <div class="classR">
+            <p> Enter which building: (Format: AX-CIAP-CEDES-CETEC) </p>
+            <input id="inRmvBuilding" type="string" value="">
+            </br>
+        </div>
+        <div class="classNum">
+            <p> Enter which classroom number: (Format: XXX) </p>
+            <input id="inRmvClassNum" type="string" value="">
+            </br>
+        </div>
+        <span class="Register">
+            <p id="BtnRmvClass2" class="btn">Remove</p>
+        </span>  
+    </div>
+
+
+
+   <div id="RemoveUser">
+        <h2> Remove a user: </h2>
+  
+        <div class="Matricula">
+            <p> ID Number (Employee: L0XXXXXXX)  </p>
+            <input id="inRmvMatricula" type="string" value="">
+            </br>
+        </div> 
+        
+        <span class="Register">
+            <p id="BtnRmvUser2" class="btn"> Remove </p>
+        </span>
+ </div>
+        
 
 
     <div id="RegSec">
@@ -65,9 +150,33 @@
             </tr>
             
             <tr>
-                <th><div> <span class="btn"  id="BtnClass"> Register a new classroom </span> </div></th>
+                <th><div> <span class="btn" id="BtnClass"> Register a new classroom </span> </div></th>
                 <th> <span class= "btn" id="BtnUser"> Register a new user </span> </th>
+                
             </tr>
+           
+            <tr>
+                <td><span class="btn"  id="BtnLoadClass"> Registered classrooms </span> 
+                </br>
+                </br>
+                    <table id="classroomsTable">
+                    <tr>
+                        <th>building</th>
+                        <th>number</th>
+                    </tr>
+                    <tbody id="submitClassroom"></tbody>
+                        
+                </table>
+                </td>
+                
+                <td> <span class= "btn" id="BtnLoadUser"> Registered Users </span> 
+                </br>
+                </br>
+                <ol id="regisUsers" class="UsersList"> Registered users: </ol>
+                
+                </td>
+            </tr>
+            
         </table>
      </div>
     
@@ -123,8 +232,50 @@
         
 
 
+
+        
     <div id="AboutSec">
-        <p> Username </p>
+        <div>
+            <table>
+                <tr>
+                    <th> Team members </th>
+                    <th> Contact info </th>
+                </tr>
+                <tr>
+                    <td>Eva Margarita Villareal Sanchez</td>
+                    <td>evamargarita.villareal@gmail.com</td>
+                </tr>
+                <tr>
+                    <td>Jonathan Rosas Sandoval</td>
+                    <td>jonthanrosassandoval@gmail.com</td>
+                </tr>
+            </table>
+            </br>
+             <table>
+                <tr>
+                    <th> Project purpose: </th>
+                </tr>
+                <tr>
+                    <td> This web application is intended to help energy consumpltion inside TEC classrooms </td>
+                </tr>
+            </table>
+            </br>
+             <table>
+                <tr>
+                    <th> Future updates: </th>
+                </tr>
+                <tr>
+                    <td> More sensors </td>
+                </tr>
+                <tr>
+                    <td> Adding more buildings</td>
+                </tr>
+                <tr>
+                    <td> Analytics</td>
+                </tr>
+            </table>
+            </br>
+        </div>
     </div>
 
     
@@ -133,35 +284,42 @@
         <div class= "title" align= center> <h4> Select a building </h4> </div>
         
         <div id="images" >
-            <span id="ciap1">
+            <div class="hovereffect">
+                <span id="ciap1">
                 <input type="hidden" class="imagemenu" value="ciap">
-                <img id="ciap2" src="images/ciap.png" style=" width: 600px ; height: 390px;">
-            </span>
-            
+                <img id="ciap2" src="images/ciap.png" style=" width: 600px ; height: 390px;"> 
+               </span>
+            </div>
+           <br>
+            <div class="hovereffect">
             <span id="cedes1">
                 <input type="hidden" class="imagemenu" value="cedes">
-                <img id="cedes2" src="images/cedes.png" style=" width: 600px ; height: 390px; margin-top: 0.5cm">
+                <img id="cedes2" src="images/cedes.png" style=" width: 600px ; height: 390px">
             </span>
+            </div>
             
         </div>
         
         <div id="images2" >
+            <div class="hovereffect">
             <span id="biotec1">
                 <input type="hidden" class="imagemenu" value="biotec">
                 <img id="biotec2" src="images/biotec.jpg" style=" width: 600px ; height: 390px;">
             </span>
-            
+             </div>
+             <br>
+            <div class="hovereffect">
             <span id="cetec1">
                   <input type="hidden" class="imagemenu" value="cetec">
-                <img id="cetec2" src="images/cetec.jpg" style=" width: 600px ; height: 390px; margin-top: 0.5cm; margin-bottom: 1cm">
+                <img id="cetec2" src="images/cetec.jpg" style=" width: 600px ; height: 390px">
             </span>
+            </div>
             
         </div>
     </div>
 
     
-
-    <div id="pickAClassroom">  
+ <div id="pickAClassroom">  
         <div id="Pick">
             <div id="CiapDropDownMenu">    
                 <div class="SelectClassroom">
@@ -200,7 +358,7 @@
             <div id="room">
             </div>
             <div id="addFav" class="Fav">
-                <span id="Favorite" class="searchBtn btnFav" style="display:none"> Add to Favorite </span>
+                <span id="Favorite" class="searchBtn btnFav" style="display:none"> Add Favorite </span>
             </div>
             <div id="removeFav" class="Fav">
                 <span id="UnFavorite" class="searchBtn btnFav" style="display:none"> Remove from favorites 
@@ -231,6 +389,8 @@
                             <br> 
                             <p> Light level: </p>
                             <p id="printLight"></p>
+                            <br>
+                            
                         </th>
                     
                     </tr>
@@ -238,19 +398,37 @@
                         <th><div class="tablerow" ><span class= btn id="writeClassroomBtn"> Change Status </span> </div> </th>
                         <th><div class="tablerow" ><span class= btn id="readClassroomBtn"> Read Status </span> </div> </th>
                     </tr>
+                    
                 </table>
+                <br>
+                <th><div class="tablerow" ><span class= btn id="btnHistory"> History </span> </div> </th> 
+                
+                <br>
+                 <div id="Records" class="tablerow">
+                        <table id="recordsTable">
+                            <tr>
+                                <th>Building</th>
+                                <th>Classroom Number</th>
+                                <th>Temperature value</th>
+                                <th>Light value</th>
+                                <th>Hour and date</th>
+                            </tr>
+                            <tbody id="submitRecords"></tbody>
+                        </table>
+                </div>
+              
+                
             </div>
         </div>
         
     </div>
-
     
 
     <div id="CommentSec">
         <div id="allComment" >  <!----Comments ------>
         <div id="CommLeft"> <!----Comment izquierdo ------>
             <div id="Left">
-                <p> Add a comment! </p>
+                <h2> Add a comment! </h2>
                <!-- <p>Name:   </p> -->
                <!-- <input id="comName" type="string" class="Name"  name="Name" value=""></br> -->
                 <p>ID Number:   <p>
@@ -262,7 +440,7 @@
         </div> <!----End comment izquierdo ------>
         <div id="CommRight"> <!----Comment derecho------>
             <div id="Right">
-                <p> Comment </p>
+                <h2> Comment </h2>
                 <table id="commentsTable">
                     <tr>
                         <th>ID</th>
